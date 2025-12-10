@@ -1,0 +1,1 @@
+An app that will create social media content, including but not limited to Instagram Reels, videos, etc., for businesses using AI, specifically using Google's Veo 3.1 video generation model and Nano Banana model for images.
