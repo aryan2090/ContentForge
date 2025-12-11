@@ -1,0 +1,335 @@
+# ContentForge - Product Requirements Document
+
+## 1. Executive Summary
+
+ContentForge is an AI-powered social media content generation platform designed for businesses. It enables users to create professional-quality videos and images for social media using Google's Veo 3.1 video generation model and Nano Banana (Gemini Image) for image generation.
+
+### Vision
+Empower businesses to create engaging social media content quickly and affordably using cutting-edge AI technology, without requiring design expertise.
+
+### Target Users
+- Small to medium businesses
+- Startups
+- Marketing professionals
+- Solopreneurs and content creators
+
+### MVP Scope
+A web-based content generation tool focused on creating downloadable video and image content using AI, with brand customization capabilities.
+
+---
+
+## 2. Technical Specifications
+
+### Tech Stack
+- Frontend/Backend: Next.js 14+ with TypeScript (App Router)
+- Authentication: NextAuth.js with email/password
+- Database: PostgreSQL
+- ORM: Prisma
+- Styling: Tailwind CSS
+- AI APIs:
+  - Google Veo 3.1 (video generation)
+  - Google Gemini Image API / Nano Banana (image generation)
+
+### AI Model Capabilities
+
+#### Veo 3.1 (Video Generation)
+- Resolutions: 720p, 1080p at 24 FPS
+- Aspect Ratios: 16:9 (landscape), 9:16 (portrait/vertical)
+- Durations: 4, 6, or 8 seconds
+- Output Format: MP4
+- Features: Text-to-video, image-to-video, video extension
+
+#### Nano Banana / Gemini Image (Image Generation)
+- Resolution: Up to 4K
+- Features:
+  - Text rendering in images (ideal for marketing)
+  - Character consistency across generations
+  - Mix up to 8 reference images
+  - Maintain consistency of up to 5 people
+- Output Format: PNG, JPG
+
+### Storage
+- MVP: Download-only (no cloud storage for generated content)
+- User-uploaded brand assets stored temporarily for generation
+
+---
+
+## 3. Core Features (MVP)
+
+### 3.1 User Authentication
+- Email/password registration
+- Email/password login
+- Password reset via email
+- Session management
+- Secure password hashing (bcrypt)
+
+### 3.2 Brand Profile Setup
+Users can create and manage their brand profile with:
+- Brand name
+- Logo upload (PNG, JPG, SVG)
+- Brand colors:
+  - Primary color
+  - Secondary color
+  - Accent color
+- Brand voice/tone description (text field for AI context)
+- Industry selection (dropdown):
+  - E-commerce
+  - Food & Restaurant
+  - Health & Fitness
+  - Technology
+  - Fashion & Beauty
+  - Real Estate
+  - Professional Services
+  - Entertainment
+  - Education
+  - Other
+
+### 3.3 Content Generation Interface
+Main generation screen with:
+
+#### Input Section
+- Text prompt input (textarea with placeholder suggestions)
+- Prompt enhancement toggle (AI improves user's prompt)
+
+#### Content Type Selection
+- Video (Veo 3.1)
+- Image (Nano Banana)
+
+#### Format Options
+Video Settings:
+- Aspect ratio: 9:16 (vertical/Reels), 16:9 (landscape)
+- Duration: 4, 6, or 8 seconds
+- Resolution: 720p, 1080p
+
+Image Settings:
+- Aspect ratio: 9:16 (vertical), 16:9 (landscape), 1:1 (square)
+- Resolution: Standard (1080p), High (2K), Ultra (4K)
+
+#### Brand Integration
+- Toggle to include brand elements
+- When enabled, AI incorporates:
+  - Brand colors in generated content
+  - Brand voice/tone in visual style
+  - Industry-appropriate aesthetics
+
+### 3.4 Generation Preview & Download
+- Loading state with progress indicator
+- Preview player (video) or image display
+- Download button (MP4 for video, PNG/JPG for images)
+- Regenerate button (create new version with same settings)
+- New generation button (start fresh)
+
+### 3.5 Generation History
+- List of past generations (metadata only)
+- Shows: prompt, content type, format, date/time
+- Note: Actual generated files are not stored (download-only MVP)
+
+---
+
+## 4. User Flow
+
+### New User Flow
+1. Land on homepage
+2. Click "Get Started" / "Sign Up"
+3. Create account (email + password)
+4. Onboarding: Create brand profile
+5. Redirect to generation interface
+6. Enter prompt and select options
+7. Click "Generate"
+8. Preview result
+9. Download or regenerate
+
+### Returning User Flow
+1. Log in
+2. Go to dashboard
+3. Start new generation or view history
+4. Generate content
+5. Download
+
+---
+
+## 5. Pages & Routes
+
+### Public Routes
+- `/` - Landing page with product info, features, pricing preview
+- `/login` - User login
+- `/signup` - User registration
+- `/forgot-password` - Password reset request
+- `/reset-password` - Password reset form (with token)
+
+### Protected Routes (require authentication)
+- `/dashboard` - Main dashboard with quick actions and recent generations
+- `/generate` - Content generation interface
+- `/brand` - Brand profile setup and editing
+- `/history` - Past generation history
+- `/settings` - Account settings (email, password change)
+
+---
+
+## 6. Database Schema
+
+### Users Table
+- id (UUID, primary key)
+- email (string, unique)
+- password_hash (string)
+- created_at (timestamp)
+- updated_at (timestamp)
+
+### Brands Table
+- id (UUID, primary key)
+- user_id (UUID, foreign key to users)
+- name (string)
+- logo_url (string, nullable)
+- primary_color (string)
+- secondary_color (string)
+- accent_color (string)
+- voice_description (text)
+- industry (string)
+- created_at (timestamp)
+- updated_at (timestamp)
+
+### Generations Table
+- id (UUID, primary key)
+- user_id (UUID, foreign key to users)
+- prompt (text)
+- content_type (enum: video, image)
+- aspect_ratio (string)
+- duration (integer, nullable - for videos)
+- resolution (string)
+- include_brand (boolean)
+- created_at (timestamp)
+
+---
+
+## 7. API Endpoints
+
+### Authentication
+- POST /api/auth/register - Create new account
+- POST /api/auth/login - User login
+- POST /api/auth/logout - User logout
+- POST /api/auth/forgot-password - Request password reset
+- POST /api/auth/reset-password - Reset password with token
+
+### Brand
+- GET /api/brand - Get user's brand profile
+- POST /api/brand - Create brand profile
+- PUT /api/brand - Update brand profile
+- POST /api/brand/logo - Upload logo
+
+### Generation
+- POST /api/generate/video - Generate video content
+- POST /api/generate/image - Generate image content
+
+### History
+- GET /api/history - Get user's generation history
+
+### User
+- GET /api/user - Get current user
+- PUT /api/user - Update user settings
+- PUT /api/user/password - Change password
+
+---
+
+## 8. UI/UX Requirements
+
+### Design Principles
+- Clean, modern interface
+- Mobile-responsive
+- Fast loading times
+- Clear feedback during generation (progress states)
+- Intuitive navigation
+
+### Key UI Components
+- Navigation bar with logo and user menu
+- Brand color picker with hex input
+- Prompt textarea with character count
+- Toggle switches for options
+- Loading spinner/progress bar for generation
+- Video player for preview
+- Toast notifications for success/error states
+
+---
+
+## 9. Security Requirements
+
+- Passwords hashed with bcrypt (minimum 10 rounds)
+- HTTPS only
+- CSRF protection
+- Rate limiting on auth endpoints
+- JWT or session-based authentication
+- Input validation and sanitization
+- Secure API key storage (environment variables)
+
+---
+
+## 10. Performance Requirements
+
+- Page load time: < 3 seconds
+- Generation API response: < 60 seconds for video, < 30 seconds for images
+- Support concurrent users: 100+ simultaneous generations
+
+---
+
+## 11. Out of Scope (Post-MVP)
+
+The following features are explicitly NOT included in the MVP:
+- Content scheduling and auto-posting
+- Direct social media platform integration
+- Analytics and performance tracking
+- Team collaboration and multi-user accounts
+- Cloud storage for generated content
+- Mobile applications (iOS/Android)
+- Template library
+- Batch generation
+- Video editing tools
+- A/B testing for content
+- Subscription/payment processing
+
+---
+
+## 12. Success Metrics
+
+- User registration rate
+- Generation completion rate
+- Downloads per user
+- Return user rate
+- Average generations per session
+
+---
+
+## 13. Dependencies
+
+### External Services
+- Google Cloud (Veo 3.1 API, Gemini Image API)
+- Email service for password reset (e.g., Resend, SendGrid)
+- PostgreSQL database hosting
+
+### API Keys Required
+- GOOGLE_API_KEY (for Veo 3.1 and Gemini Image)
+- Database connection string
+- Email service API key
+
+---
+
+## 14. Timeline Considerations
+
+### Phase 1: Foundation
+- Project setup (Next.js, TypeScript, Tailwind)
+- Database schema and Prisma setup
+- Authentication system
+
+### Phase 2: Core Features
+- Brand profile management
+- Generation interface UI
+- AI API integration
+
+### Phase 3: Polish
+- History feature
+- Error handling
+- Loading states
+- Responsive design
+
+### Phase 4: Launch Prep
+- Testing
+- Performance optimization
+- Deployment
