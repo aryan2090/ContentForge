@@ -1,0 +1,109 @@
+{
+	"meta": {
+		"generatedAt": "2025-12-12T22:52:14.332Z",
+		"tasksAnalyzed": 12,
+		"totalTasks": 12,
+		"analysisCount": 12,
+		"thresholdScore": 5,
+		"projectName": "Taskmaster",
+		"usedResearch": true
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Initialize Next.js Project with TypeScript and Core Dependencies",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the Next.js project initialization into subtasks covering: 1) Running create-next-app with correct flags, 2) Installing npm dependencies (prisma, bcryptjs, zod, react-hook-form), 3) Initializing and configuring shadcn/ui with required components, 4) Creating the directory structure per PRD specifications, 5) Setting up TypeScript path aliases in tsconfig.json, 6) Creating .env.local template with required environment variables",
+			"reasoning": "Standard greenfield setup with well-documented tooling. The create-next-app command handles most configuration. shadcn/ui initialization is straightforward. Main effort is creating the directory structure (15+ directories) and installing dependencies. No complex integration or custom logic required - just following established patterns."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Set Up Prisma Schema and Vercel Postgres Database",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the Prisma and database setup into subtasks covering: 1) Initializing Prisma with npx prisma init, 2) Writing the complete schema.prisma file with User, Brand, Generation, Session models and ContentType enum with proper relations, 3) Creating the Prisma client singleton in src/lib/db/index.ts with global caching for dev mode, 4) Provisioning Vercel Postgres and configuring DATABASE_URL/DIRECT_URL, 5) Running prisma db push and prisma generate to deploy schema",
+			"reasoning": "Moderate complexity with 4 models, 2 enums, and multiple relations including one-to-one (User-Brand) and one-to-many (User-Generations, User-Sessions). Requires understanding Prisma relations syntax and Vercel Postgres provisioning. The schema includes onDelete cascades and proper defaults. External dependency on Vercel dashboard access adds coordination complexity."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Create TypeScript Types and Zod Validation Schemas",
+			"complexityScore": 4,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the TypeScript types and Zod schemas into subtasks covering: 1) Creating auth schemas in src/types/auth.ts (registerSchema, loginSchema, passwordResetRequestSchema, passwordResetSchema with refinements for password matching), 2) Creating brand schemas in src/types/brand.ts (brandSchema with hex color regex, INDUSTRIES const), 3) Creating generation schemas in src/types/generation.ts (VIDEO_MODELS/IMAGE_MODELS arrays with pricing, generateVideoSchema, generateImageSchema, getEstimatedCost function), 4) Creating API response types in src/types/api.ts (ApiResponse<T>, PaginatedResponse<T>), 5) Creating barrel export in src/types/index.ts",
+			"reasoning": "Straightforward schema definitions with clear specifications in the PRD. Main complexity is in Zod refinements for password matching and hex color regex validation. The VIDEO_MODELS and IMAGE_MODELS arrays with pricing are well-defined. No external dependencies - just pure TypeScript/Zod code following existing patterns."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Implement Error Handling Utilities",
+			"complexityScore": 3,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Break down error handling utilities into subtasks covering: 1) Creating custom AppError class with static factory methods (badRequest, unauthorized, forbidden, notFound, tooManyRequests, internal) in src/lib/utils/errors.ts, 2) Creating validation helper with validateInput and formatZodErrors functions in src/lib/utils/validation.ts, 3) Creating API response helpers (successResponse, errorResponse) in src/lib/utils/api.ts using NextResponse, 4) Creating barrel export in src/lib/utils/index.ts",
+			"reasoning": "Low-to-moderate complexity - this is a standard error handling pattern. The code is mostly boilerplate with clear implementation details provided in the task. No external dependencies beyond Zod and Next.js. Main consideration is ensuring consistent error formatting across the application."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "Implement Authentication System with NextAuth.js",
+			"complexityScore": 7,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down the authentication system into subtasks covering: 1) Installing next-auth@beta and configuring environment variables, 2) Creating password utilities (hashPassword, verifyPassword) with bcryptjs in src/lib/auth/password.ts, 3) Creating NextAuth configuration with Credentials provider in src/lib/auth/index.ts including jwt and session callbacks, 4) Creating the auth route handler in src/app/api/auth/[...nextauth]/route.ts, 5) Creating the registration endpoint in src/app/api/auth/register/route.ts with validation and duplicate email checking, 6) Creating session helper utilities (getSession, requireAuth) in src/lib/auth/session.ts with React cache, 7) Implementing middleware.ts for protected route matching",
+			"reasoning": "High complexity due to NextAuth.js v5 (Auth.js) beta API changes from v4. Requires understanding of JWT/session callbacks, Credentials provider configuration, and Next.js middleware integration. Multiple files must work together correctly. Password hashing with bcrypt adds cryptographic concerns. The session helper with React cache is a Next.js 14+ pattern that requires careful implementation."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "Build Authentication UI Components and Pages",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down authentication UI into subtasks covering: 1) Creating LoginForm component with react-hook-form, zodResolver, signIn from next-auth/react, error handling, and loading state, 2) Creating SignupForm component with similar pattern but calling /api/auth/register, 3) Creating PasswordResetForm and ForgotPasswordForm components (can be placeholder for MVP), 4) Creating auth layout in src/app/(auth)/layout.tsx with redirect logic for authenticated users, 5) Creating auth pages (/login, /signup, /forgot-password, /reset-password) using the form components, 6) Adding navigation links between auth pages",
+			"reasoning": "Moderate complexity with multiple form components using react-hook-form and Zod validation. The signIn integration from next-auth/react requires understanding of the API. Auth layout with server-side redirect logic adds complexity. Four separate pages need consistent styling and navigation. shadcn/ui Form components help reduce boilerplate."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "Implement Brand Management API and UI",
+			"complexityScore": 5,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down brand management into subtasks covering: 1) Creating brand API route with GET (fetch user's brand) and POST (upsert brand) handlers in src/app/api/brand/route.ts, 2) Creating ColorPicker component with color input and hex text input synchronization, 3) Creating LogoUploader component with file validation (PNG/JPG/SVG, 5MB max), preview display, and temporary storage, 4) Creating BrandForm component combining all brand fields with react-hook-form and brandSchema validation, 5) Creating /brand page with the BrandForm and proper data fetching/hydration",
+			"reasoning": "Moderate complexity with straightforward CRUD operations. The upsert pattern simplifies create/update logic. ColorPicker is simple HTML5 color input with text sync. LogoUploader is more complex with file validation and preview, but MVP can use local state (no upload service). The main challenge is coordinating form state across multiple subcomponents."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "Integrate Google Veo and Gemini Image AI APIs",
+			"complexityScore": 8,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down AI API integration into subtasks covering: 1) Installing @google/generative-ai SDK and creating models config in src/lib/ai/models.ts with getVideoModel/getImageModel helpers, 2) Creating Veo client in src/lib/ai/veo.ts with generateVideo function handling multiple model variants, 3) Implementing async polling mechanism for video generation completion with exponential backoff and timeout handling, 4) Creating Gemini Image client in src/lib/ai/gemini-image.ts with generateImage function supporting both model variants, 5) Creating prompt enhancer in src/lib/ai/prompt-enhancer.ts using Gemini 1.5 Flash for prompt improvement, 6) Implementing comprehensive error handling for API failures, rate limits, and timeouts",
+			"reasoning": "High complexity due to external API integration with Google's AI services. Video generation is async and requires polling implementation with proper timeout handling. Multiple model variants (veo-3.1, veo-3.1-fast, veo-3, veo-2 for video; gemini-3-pro-image, gemini-2.5-flash-image for image) need proper configuration. The actual Veo API structure may differ from the placeholder in the task - requires consulting Google's documentation. Error handling for API rate limits and failures is critical."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Build Content Generation API Routes and UI",
+			"complexityScore": 7,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Break down content generation API and UI into subtasks covering: 1) Creating /api/generate/video endpoint with auth, validation, brand context fetching, AI generation call, and history logging, 2) Creating /api/generate/image endpoint with similar pattern, 3) Creating ModelSelector component with pricing display and estimated cost calculation based on duration, 4) Creating FormatSelector component for aspect ratio, duration (video only), and resolution selection, 5) Creating PromptInput component with textarea and enhance button that calls prompt enhancer, 6) Creating VideoPreview and ImagePreview components with download functionality, 7) Creating the /generate page with Tabs for video/image, form state management, and generation workflow",
+			"reasoning": "High complexity with multiple interconnected components and API endpoints. The generation page needs to manage complex form state across tabs, display real-time cost estimates, handle loading states during generation (which can take 30-60+ seconds for video), and provide preview/download. Integration with the AI clients from Task 8 adds dependency risk. Brand context injection requires fetching and formatting brand data."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "Implement Generation History and Dashboard",
+			"complexityScore": 5,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down history and dashboard into subtasks covering: 1) Creating /api/history endpoint with pagination support (page, pageSize params) and proper sorting, 2) Creating history page with client-side state management, infinite scroll or load more pagination, and generation card display, 3) Creating dashboard page with server-side data fetching for recent generations, quick action cards linking to /generate?type=video|image, 4) Creating dashboard layout with navigation sidebar/navbar component for authenticated routes",
+			"reasoning": "Moderate complexity with standard pagination pattern and basic dashboard layout. History page uses client-side fetching which is straightforward. Dashboard uses server components for initial data. The dashboard layout with navigation is reusable across all protected routes. No complex business logic - mainly data fetching and display."
+		},
+		{
+			"taskId": 11,
+			"taskTitle": "Build Landing Page and Polish UI",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down landing page and UI polish into subtasks covering: 1) Creating landing page with hero section, features grid using FeatureCard component, and CTA sections, 2) Setting up toast notifications with shadcn/ui sonner and creating toast provider, 3) Creating global error boundary component and adding to root layout, 4) Creating responsive navbar with logo, auth-aware navigation, and mobile hamburger menu, 5) Creating footer component, 6) Performing responsive design audit and fixing layout issues across all pages for mobile/tablet/desktop",
+			"reasoning": "Moderate complexity but mostly styling and layout work. The landing page is straightforward marketing content. Toast notifications with sonner are well-documented. Error boundary is standard React pattern. Navbar with auth state requires session checking. The responsive design pass requires testing all pages but changes are typically CSS adjustments."
+		},
+		{
+			"taskId": 12,
+			"taskTitle": "Implement Email Service for Password Reset",
+			"complexityScore": 6,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Break down email service and password reset into subtasks covering: 1) Installing Resend and creating email service in src/lib/email/index.ts with sendPasswordResetEmail function, 2) Adding PasswordResetToken model to Prisma schema with proper relations and regenerating client, 3) Creating password reset utilities (generateResetToken, validateResetToken, resetPassword) in src/lib/auth/password-reset.ts, 4) Creating /api/auth/forgot-password endpoint that generates token and sends email, 5) Creating /api/auth/reset-password endpoint that validates token and updates password, 6) Updating forgot-password and reset-password pages with working forms",
+			"reasoning": "Moderate-to-high complexity due to multiple moving parts: email service integration, database schema migration (new model), token generation/validation with expiry logic, and two new API endpoints. The password reset flow spans frontend forms, API endpoints, database operations, and email delivery - requiring end-to-end coordination. Testing requires email verification which adds complexity."
+		}
+	]
+}
