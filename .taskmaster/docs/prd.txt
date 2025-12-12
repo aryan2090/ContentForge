@@ -850,9 +850,9 @@ model Session {
 - **Brand Profile**: User's stored brand identity (colors, logo, voice)
 - **Aspect Ratio**: Width-to-height ratio (9:16 vertical, 16:9 landscape)
 
-## Open Questions
-- What is the exact API pricing for Veo 3.1 and Gemini Image?
-- Should we implement usage limits per user for MVP?
-- What file size limits should we enforce for logo uploads?
-- Should we store generation history indefinitely or implement retention policy?
+## Resolved Questions
+- **API Pricing**: Refer to official Google API documentation for current Veo 3.1 and Gemini Image pricing
+- **Usage Limits**: Max 5 concurrent generations per user, no daily limits
+- **Logo File Size**: 5 MB maximum
+- **Generation History**: Store indefinitely
 </appendix>
