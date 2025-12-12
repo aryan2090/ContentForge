@@ -100,16 +100,16 @@ Enable users to define and store their brand identity for consistent content gen
 Core AI-powered content creation using Veo 3.1 for video and Nano Banana for images.
 
 #### Feature: Video Generation
-- **Description**: Generate short-form video content using Google Veo 3.1 API
-- **Inputs**: Text prompt, aspect ratio (9:16 or 16:9), duration (4/6/8 sec), resolution (720p/1080p), brand context (optional)
+- **Description**: Generate short-form video content using Google Veo API
+- **Inputs**: Text prompt, model (veo-3.1, veo-3.1-fast, veo-3, veo-2), aspect ratio (9:16 or 16:9), duration (4/6/8 sec), resolution (720p/1080p), brand context (optional)
 - **Outputs**: MP4 video file for preview and download
-- **Behavior**: Construct API request with prompt and parameters, call Veo 3.1 API, poll for completion, return video URL
+- **Behavior**: Construct API request with prompt and parameters, call selected Veo model API, poll for completion, return video URL
 
 #### Feature: Image Generation
 - **Description**: Generate static images using Nano Banana / Gemini Image API
-- **Inputs**: Text prompt, aspect ratio (9:16, 16:9, 1:1), resolution (1080p/2K/4K), brand context (optional)
+- **Inputs**: Text prompt, model (gemini-3-pro-image, gemini-2.5-flash-image), aspect ratio (9:16, 16:9, 1:1), resolution (1080p/2K/4K), brand context (optional)
 - **Outputs**: PNG/JPG image file for preview and download
-- **Behavior**: Construct API request, call Gemini Image API, return image data
+- **Behavior**: Construct API request, call selected Gemini Image model API, return image data
 
 #### Feature: Prompt Enhancement
 - **Description**: Optionally improve user prompts using AI for better results
@@ -134,6 +134,22 @@ Core AI-powered content creation using Veo 3.1 for video and Nano Banana for ima
 - **Inputs**: Content URL, desired format
 - **Outputs**: Downloaded file (MP4 for video, PNG/JPG for image)
 - **Behavior**: Fetch content, trigger browser download, track download in history
+
+#### Feature: Model Selection
+- **Description**: Allow users to select AI model variant with pricing displayed
+- **Inputs**: Content type (video/image)
+- **Outputs**: Selected model ID, estimated cost display
+- **Behavior**: Display available models in dropdown with pricing per unit ($/second for video, $/image for images), show estimated cost based on duration/count, default to cost-effective option (veo-3.1-fast, gemini-2.5-flash-image)
+
+Available Video Models:
+- veo-3.1: $0.40/second (Best quality)
+- veo-3.1-fast: $0.15/second (Fast, good quality)
+- veo-3: $0.40/second (Previous generation)
+- veo-2: $0.35/second (Budget option)
+
+Available Image Models:
+- gemini-3-pro-image: $0.15/image (Nano Banana Pro, 4K)
+- gemini-2.5-flash-image: $0.04/image (Nano Banana, fast)
 
 ---
 
@@ -216,6 +232,7 @@ contentforge/
 │   │   ├── generate/                 # Generation components
 │   │   │   ├── prompt-input.tsx
 │   │   │   ├── format-selector.tsx
+│   │   │   ├── model-selector.tsx
 │   │   │   ├── video-preview.tsx
 │   │   │   └── image-preview.tsx
 │   │   └── layout/                   # Layout components
@@ -231,7 +248,8 @@ contentforge/
 │   │   │   ├── index.ts              # Prisma client
 │   │   │   └── schema.prisma
 │   │   ├── ai/                       # AI API clients
-│   │   │   ├── veo.ts                # Veo 3.1 client
+│   │   │   ├── models.ts             # Model definitions and pricing
+│   │   │   ├── veo.ts                # Veo client
 │   │   │   ├── gemini-image.ts       # Nano Banana client
 │   │   │   └── prompt-enhancer.ts
 │   │   ├── email/                    # Email service
@@ -292,6 +310,14 @@ contentforge/
 - **Exports**:
   - `sendPasswordResetEmail()`
 
+### Module: lib/ai/models
+- **Maps to capability**: Content Generation (model selection)
+- **Responsibility**: Model definitions and pricing configuration
+- **Exports**:
+  - `VIDEO_MODELS` - Available video models with pricing
+  - `IMAGE_MODELS` - Available image models with pricing
+  - `getEstimatedCost(modelId, duration?)` - Calculate estimated generation cost
+
 ### Module: lib/ai/veo
 - **Maps to capability**: Content Generation (video)
 - **Responsibility**: Google Veo 3.1 API integration
@@ -329,7 +355,7 @@ contentforge/
 ### Module: components/generate
 - **Maps to capability**: Content Generation UI
 - **Responsibility**: Generation interface components
-- **Exports**: PromptInput, FormatSelector, VideoPreview, ImagePreview
+- **Exports**: PromptInput, FormatSelector, ModelSelector, VideoPreview, ImagePreview
 
 </structural-decomposition>
 
@@ -484,17 +510,20 @@ No dependencies - these are built first.
 **Entry Criteria**: Phase 0 complete (types, utils available)
 
 **Tasks**:
-- [ ] Implement Veo 3.1 client (depends on: [types, lib/utils])
-  - Acceptance criteria: generateVideo() calls API, handles async polling
+- [ ] Create model config with pricing (depends on: [types])
+  - Acceptance criteria: VIDEO_MODELS and IMAGE_MODELS arrays with id, label, price, unit; getEstimatedCost() function
+  - Test strategy: Unit tests for getEstimatedCost() calculations
+- [ ] Implement Veo client (depends on: [types, lib/utils, lib/ai/models])
+  - Acceptance criteria: generateVideo() calls selected model API, handles async polling
   - Test strategy: Unit tests with mocked API, integration test with real API
-- [ ] Implement Gemini Image client (depends on: [types, lib/utils])
-  - Acceptance criteria: generateImage() calls API, returns image data
+- [ ] Implement Gemini Image client (depends on: [types, lib/utils, lib/ai/models])
+  - Acceptance criteria: generateImage() calls selected model API, returns image data
   - Test strategy: Unit tests with mocked API, integration test with real API
 - [ ] Implement prompt enhancer (depends on: [types, lib/utils])
   - Acceptance criteria: enhancePrompt() improves user prompt
   - Test strategy: Unit tests for prompt formatting
 
-**Exit Criteria**: AI clients can generate video and image content
+**Exit Criteria**: AI clients can generate video and image content with model selection
 
 **Delivers**: AI generation capability
 
@@ -507,16 +536,19 @@ No dependencies - these are built first.
 
 **Tasks**:
 - [ ] Create generation API routes (depends on: [lib/auth, lib/ai/*, lib/db])
-  - Acceptance criteria: /api/generate/video, /api/generate/image endpoints
+  - Acceptance criteria: /api/generate/video, /api/generate/image endpoints accept model parameter
   - Test strategy: Integration tests for generation flow
-- [ ] Build generation UI components (depends on: [components/ui])
-  - Acceptance criteria: PromptInput, FormatSelector, previews
+- [ ] Build generation UI components (depends on: [components/ui, lib/ai/models])
+  - Acceptance criteria: PromptInput, FormatSelector, ModelSelector (with pricing display), previews
   - Test strategy: Component tests for UI behavior
+- [ ] Build model selector dropdown (depends on: [lib/ai/models, components/ui])
+  - Acceptance criteria: Shows models with prices, displays estimated cost based on duration/count
+  - Test strategy: Component tests for selection and cost calculation display
 - [ ] Create generation page (depends on: [components/generate, api/generate])
-  - Acceptance criteria: /generate page with full workflow
+  - Acceptance criteria: /generate page with full workflow including model selection
   - Test strategy: E2E test for generation and download
 
-**Exit Criteria**: User can generate and download video/image content
+**Exit Criteria**: User can select model, see pricing, generate and download video/image content
 
 **Delivers**: Core product functionality
 
