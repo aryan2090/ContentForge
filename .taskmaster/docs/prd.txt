@@ -1,335 +1,855 @@
-# ContentForge - Product Requirements Document
+<overview>
+## Problem Statement
+Small businesses and startups struggle to create professional social media content consistently. They lack:
+- Design expertise to create visually appealing posts
+- Budget for professional content creation agencies
+- Time to learn complex video/image editing tools
+- Ability to maintain brand consistency across content
 
-## 1. Executive Summary
+Existing solutions (Canva, Adobe) require manual design work. AI tools exist but lack brand customization and business-focused workflows.
 
-ContentForge is an AI-powered social media content generation platform designed for businesses. It enables users to create professional-quality videos and images for social media using Google's Veo 3.1 video generation model and Nano Banana (Gemini Image) for image generation.
+## Target Users
+**Primary Persona: Small Business Owner / Marketer**
+- Runs a small business or manages marketing for one
+- Needs to post social content regularly (Instagram Reels, Stories, Posts)
+- Has brand guidelines but limited design skills
+- Values speed and simplicity over fine-grained control
 
-### Vision
-Empower businesses to create engaging social media content quickly and affordably using cutting-edge AI technology, without requiring design expertise.
+**Secondary Persona: Solopreneur / Content Creator**
+- Building personal brand on social media
+- Wants professional-looking content quickly
+- May not have formal brand guidelines yet
 
-### Target Users
-- Small to medium businesses
-- Startups
-- Marketing professionals
-- Solopreneurs and content creators
-
-### MVP Scope
-A web-based content generation tool focused on creating downloadable video and image content using AI, with brand customization capabilities.
-
----
-
-## 2. Technical Specifications
-
-### Tech Stack
-- Frontend/Backend: Next.js 14+ with TypeScript (App Router)
-- Authentication: NextAuth.js with email/password
-- Database: PostgreSQL
-- ORM: Prisma
-- Styling: Tailwind CSS
-- AI APIs:
-  - Google Veo 3.1 (video generation)
-  - Google Gemini Image API / Nano Banana (image generation)
-
-### AI Model Capabilities
-
-#### Veo 3.1 (Video Generation)
-- Resolutions: 720p, 1080p at 24 FPS
-- Aspect Ratios: 16:9 (landscape), 9:16 (portrait/vertical)
-- Durations: 4, 6, or 8 seconds
-- Output Format: MP4
-- Features: Text-to-video, image-to-video, video extension
-
-#### Nano Banana / Gemini Image (Image Generation)
-- Resolution: Up to 4K
-- Features:
-  - Text rendering in images (ideal for marketing)
-  - Character consistency across generations
-  - Mix up to 8 reference images
-  - Maintain consistency of up to 5 people
-- Output Format: PNG, JPG
-
-### Storage
-- MVP: Download-only (no cloud storage for generated content)
-- User-uploaded brand assets stored temporarily for generation
+## Success Metrics
+- User registration to first generation: < 5 minutes
+- Generation completion rate: > 90%
+- Downloads per user per session: > 2
+- Return user rate (7-day): > 40%
+</overview>
 
 ---
 
-## 3. Core Features (MVP)
+<functional-decomposition>
+## Capability Tree
 
-### 3.1 User Authentication
-- Email/password registration
-- Email/password login
-- Password reset via email
-- Session management
-- Secure password hashing (bcrypt)
+### Capability: Authentication
+User identity management and session handling for secure access to the platform.
 
-### 3.2 Brand Profile Setup
-Users can create and manage their brand profile with:
-- Brand name
-- Logo upload (PNG, JPG, SVG)
-- Brand colors:
-  - Primary color
-  - Secondary color
-  - Accent color
-- Brand voice/tone description (text field for AI context)
-- Industry selection (dropdown):
-  - E-commerce
-  - Food & Restaurant
-  - Health & Fitness
-  - Technology
-  - Fashion & Beauty
-  - Real Estate
-  - Professional Services
-  - Entertainment
-  - Education
-  - Other
+#### Feature: User Registration
+- **Description**: Allow new users to create accounts with email and password
+- **Inputs**: Email address, password, password confirmation
+- **Outputs**: User account created, session established, redirect to onboarding
+- **Behavior**: Validate email format and uniqueness, hash password with bcrypt, create user record, establish session
 
-### 3.3 Content Generation Interface
-Main generation screen with:
+#### Feature: User Login
+- **Description**: Authenticate existing users and establish sessions
+- **Inputs**: Email address, password
+- **Outputs**: Session token, redirect to dashboard
+- **Behavior**: Validate credentials against stored hash, create session, handle failed attempts
 
-#### Input Section
-- Text prompt input (textarea with placeholder suggestions)
-- Prompt enhancement toggle (AI improves user's prompt)
+#### Feature: Password Reset
+- **Description**: Allow users to recover account access via email
+- **Inputs**: Email address (request), reset token + new password (reset)
+- **Outputs**: Reset email sent, password updated
+- **Behavior**: Generate secure token, send email with reset link, validate token expiry, update password hash
 
-#### Content Type Selection
-- Video (Veo 3.1)
-- Image (Nano Banana)
-
-#### Format Options
-Video Settings:
-- Aspect ratio: 9:16 (vertical/Reels), 16:9 (landscape)
-- Duration: 4, 6, or 8 seconds
-- Resolution: 720p, 1080p
-
-Image Settings:
-- Aspect ratio: 9:16 (vertical), 16:9 (landscape), 1:1 (square)
-- Resolution: Standard (1080p), High (2K), Ultra (4K)
-
-#### Brand Integration
-- Toggle to include brand elements
-- When enabled, AI incorporates:
-  - Brand colors in generated content
-  - Brand voice/tone in visual style
-  - Industry-appropriate aesthetics
-
-### 3.4 Generation Preview & Download
-- Loading state with progress indicator
-- Preview player (video) or image display
-- Download button (MP4 for video, PNG/JPG for images)
-- Regenerate button (create new version with same settings)
-- New generation button (start fresh)
-
-### 3.5 Generation History
-- List of past generations (metadata only)
-- Shows: prompt, content type, format, date/time
-- Note: Actual generated files are not stored (download-only MVP)
+#### Feature: Session Management
+- **Description**: Maintain user authentication state across requests
+- **Inputs**: Session token (cookie/header)
+- **Outputs**: User context for authenticated routes
+- **Behavior**: Validate token, refresh expiry, handle logout, protect routes
 
 ---
 
-## 4. User Flow
+### Capability: Brand Management
+Enable users to define and store their brand identity for consistent content generation.
 
-### New User Flow
-1. Land on homepage
-2. Click "Get Started" / "Sign Up"
-3. Create account (email + password)
-4. Onboarding: Create brand profile
-5. Redirect to generation interface
-6. Enter prompt and select options
-7. Click "Generate"
-8. Preview result
-9. Download or regenerate
+#### Feature: Brand Profile Creation
+- **Description**: Create a new brand profile with core identity elements
+- **Inputs**: Brand name, industry selection
+- **Outputs**: Brand record created, redirect to brand customization
+- **Behavior**: Create brand record linked to user, set defaults for optional fields
 
-### Returning User Flow
-1. Log in
-2. Go to dashboard
-3. Start new generation or view history
-4. Generate content
-5. Download
+#### Feature: Logo Upload
+- **Description**: Upload and store brand logo for use in generated content
+- **Inputs**: Image file (PNG, JPG, SVG), max 5MB
+- **Outputs**: Logo URL stored in brand profile
+- **Behavior**: Validate file type and size, store temporarily for generation, save reference
 
----
+#### Feature: Brand Colors
+- **Description**: Define brand color palette for AI to incorporate in generations
+- **Inputs**: Primary color (hex), secondary color (hex), accent color (hex)
+- **Outputs**: Colors stored in brand profile
+- **Behavior**: Validate hex format, store colors, provide color picker UI
 
-## 5. Pages & Routes
+#### Feature: Brand Voice
+- **Description**: Describe brand personality and tone for AI context
+- **Inputs**: Text description of brand voice/tone (max 500 chars)
+- **Outputs**: Voice description stored in brand profile
+- **Behavior**: Store text, pass to AI as context during generation
 
-### Public Routes
-- `/` - Landing page with product info, features, pricing preview
-- `/login` - User login
-- `/signup` - User registration
-- `/forgot-password` - Password reset request
-- `/reset-password` - Password reset form (with token)
-
-### Protected Routes (require authentication)
-- `/dashboard` - Main dashboard with quick actions and recent generations
-- `/generate` - Content generation interface
-- `/brand` - Brand profile setup and editing
-- `/history` - Past generation history
-- `/settings` - Account settings (email, password change)
+#### Feature: Industry Selection
+- **Description**: Categorize brand for industry-appropriate content suggestions
+- **Inputs**: Industry selection from predefined list
+- **Outputs**: Industry stored in brand profile
+- **Behavior**: Provide dropdown with industries, store selection, use for prompt enhancement
 
 ---
 
-## 6. Database Schema
+### Capability: Content Generation
+Core AI-powered content creation using Veo 3.1 for video and Nano Banana for images.
 
-### Users Table
-- id (UUID, primary key)
-- email (string, unique)
-- password_hash (string)
-- created_at (timestamp)
-- updated_at (timestamp)
+#### Feature: Video Generation
+- **Description**: Generate short-form video content using Google Veo 3.1 API
+- **Inputs**: Text prompt, aspect ratio (9:16 or 16:9), duration (4/6/8 sec), resolution (720p/1080p), brand context (optional)
+- **Outputs**: MP4 video file for preview and download
+- **Behavior**: Construct API request with prompt and parameters, call Veo 3.1 API, poll for completion, return video URL
 
-### Brands Table
-- id (UUID, primary key)
-- user_id (UUID, foreign key to users)
-- name (string)
-- logo_url (string, nullable)
-- primary_color (string)
-- secondary_color (string)
-- accent_color (string)
-- voice_description (text)
-- industry (string)
-- created_at (timestamp)
-- updated_at (timestamp)
+#### Feature: Image Generation
+- **Description**: Generate static images using Nano Banana / Gemini Image API
+- **Inputs**: Text prompt, aspect ratio (9:16, 16:9, 1:1), resolution (1080p/2K/4K), brand context (optional)
+- **Outputs**: PNG/JPG image file for preview and download
+- **Behavior**: Construct API request, call Gemini Image API, return image data
 
-### Generations Table
-- id (UUID, primary key)
-- user_id (UUID, foreign key to users)
-- prompt (text)
-- content_type (enum: video, image)
-- aspect_ratio (string)
-- duration (integer, nullable - for videos)
-- resolution (string)
-- include_brand (boolean)
-- created_at (timestamp)
+#### Feature: Prompt Enhancement
+- **Description**: Optionally improve user prompts using AI for better results
+- **Inputs**: User's raw prompt, brand context
+- **Outputs**: Enhanced prompt text
+- **Behavior**: Send prompt to LLM with brand context, return improved version, allow user to accept/reject
+
+#### Feature: Brand Integration
+- **Description**: Incorporate brand elements into AI generation requests
+- **Inputs**: Brand profile (colors, voice, industry), toggle state
+- **Outputs**: Modified prompt with brand context
+- **Behavior**: When enabled, append brand context to prompt, include color preferences, industry context
+
+#### Feature: Content Preview
+- **Description**: Display generated content before download
+- **Inputs**: Generated content URL/data
+- **Outputs**: Rendered preview (video player or image display)
+- **Behavior**: Render video with controls or display image, show generation metadata
+
+#### Feature: Content Download
+- **Description**: Allow users to download generated content
+- **Inputs**: Content URL, desired format
+- **Outputs**: Downloaded file (MP4 for video, PNG/JPG for image)
+- **Behavior**: Fetch content, trigger browser download, track download in history
 
 ---
 
-## 7. API Endpoints
+### Capability: Generation History
+Track and display past generation metadata for user reference.
 
-### Authentication
-- POST /api/auth/register - Create new account
-- POST /api/auth/login - User login
-- POST /api/auth/logout - User logout
-- POST /api/auth/forgot-password - Request password reset
-- POST /api/auth/reset-password - Reset password with token
+#### Feature: History Logging
+- **Description**: Record metadata for each generation
+- **Inputs**: User ID, prompt, content type, format settings, timestamp
+- **Outputs**: History record created
+- **Behavior**: Create record on successful generation, store metadata only (not files)
 
-### Brand
-- GET /api/brand - Get user's brand profile
-- POST /api/brand - Create brand profile
-- PUT /api/brand - Update brand profile
-- POST /api/brand/logo - Upload logo
+#### Feature: History Display
+- **Description**: Show list of past generations
+- **Inputs**: User ID, pagination params
+- **Outputs**: Paginated list of generation records
+- **Behavior**: Query history records, display in reverse chronological order, show prompt preview and settings
 
-### Generation
-- POST /api/generate/video - Generate video content
-- POST /api/generate/image - Generate image content
+</functional-decomposition>
 
-### History
-- GET /api/history - Get user's generation history
+---
+
+<structural-decomposition>
+## Repository Structure
+
+```
+contentforge/
+├── src/
+│   ├── app/                          # Next.js App Router
+│   │   ├── (auth)/                   # Auth route group (public)
+│   │   │   ├── login/
+│   │   │   │   └── page.tsx
+│   │   │   ├── signup/
+│   │   │   │   └── page.tsx
+│   │   │   ├── forgot-password/
+│   │   │   │   └── page.tsx
+│   │   │   └── reset-password/
+│   │   │       └── page.tsx
+│   │   ├── (dashboard)/              # Dashboard route group (protected)
+│   │   │   ├── layout.tsx            # Auth wrapper
+│   │   │   ├── dashboard/
+│   │   │   │   └── page.tsx
+│   │   │   ├── generate/
+│   │   │   │   └── page.tsx
+│   │   │   ├── brand/
+│   │   │   │   └── page.tsx
+│   │   │   └── history/
+│   │   │       └── page.tsx
+│   │   ├── api/                      # API routes
+│   │   │   ├── auth/
+│   │   │   │   ├── register/
+│   │   │   │   ├── login/
+│   │   │   │   ├── logout/
+│   │   │   │   └── [...nextauth]/
+│   │   │   ├── brand/
+│   │   │   │   └── route.ts
+│   │   │   ├── generate/
+│   │   │   │   ├── video/
+│   │   │   │   │   └── route.ts
+│   │   │   │   └── image/
+│   │   │   │       └── route.ts
+│   │   │   └── history/
+│   │   │       └── route.ts
+│   │   ├── page.tsx                  # Landing page
+│   │   └── layout.tsx                # Root layout
+│   ├── components/                   # React components
+│   │   ├── ui/                       # Base UI components
+│   │   │   ├── button.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── card.tsx
+│   │   │   └── ...
+│   │   ├── auth/                     # Auth-specific components
+│   │   │   ├── login-form.tsx
+│   │   │   ├── signup-form.tsx
+│   │   │   └── password-reset-form.tsx
+│   │   ├── brand/                    # Brand management components
+│   │   │   ├── brand-form.tsx
+│   │   │   ├── logo-uploader.tsx
+│   │   │   └── color-picker.tsx
+│   │   ├── generate/                 # Generation components
+│   │   │   ├── prompt-input.tsx
+│   │   │   ├── format-selector.tsx
+│   │   │   ├── video-preview.tsx
+│   │   │   └── image-preview.tsx
+│   │   └── layout/                   # Layout components
+│   │       ├── navbar.tsx
+│   │       ├── sidebar.tsx
+│   │       └── footer.tsx
+│   ├── lib/                          # Core libraries
+│   │   ├── auth/                     # Authentication logic
+│   │   │   ├── index.ts
+│   │   │   ├── session.ts
+│   │   │   └── password.ts
+│   │   ├── db/                       # Database
+│   │   │   ├── index.ts              # Prisma client
+│   │   │   └── schema.prisma
+│   │   ├── ai/                       # AI API clients
+│   │   │   ├── veo.ts                # Veo 3.1 client
+│   │   │   ├── gemini-image.ts       # Nano Banana client
+│   │   │   └── prompt-enhancer.ts
+│   │   ├── email/                    # Email service
+│   │   │   └── index.ts
+│   │   └── utils/                    # Utilities
+│   │       ├── errors.ts
+│   │       └── validation.ts
+│   └── types/                        # TypeScript types
+│       ├── auth.ts
+│       ├── brand.ts
+│       ├── generation.ts
+│       └── api.ts
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+├── public/
+└── tests/
+    ├── unit/
+    └── integration/
+```
+
+## Module Definitions
+
+### Module: types
+- **Maps to capability**: All (foundation)
+- **Responsibility**: TypeScript type definitions and Zod schemas
+- **Exports**:
+  - `User`, `Brand`, `Generation` types
+  - `RegisterInput`, `LoginInput` schemas
+  - `GenerateVideoInput`, `GenerateImageInput` schemas
+
+### Module: lib/db
+- **Maps to capability**: All (foundation)
+- **Responsibility**: Database connection and Prisma client
+- **Exports**:
+  - `prisma` - Prisma client instance
+  - `connectDB()` - Connection helper
+
+### Module: lib/utils
+- **Maps to capability**: All (foundation)
+- **Responsibility**: Shared utilities and error handling
+- **Exports**:
+  - `AppError` - Custom error class
+  - `handleError()` - Error handler
+  - `validateInput()` - Input validation helper
+
+### Module: lib/auth
+- **Maps to capability**: Authentication
+- **Responsibility**: Authentication and session management
+- **Exports**:
+  - `hashPassword()`, `verifyPassword()`
+  - `createSession()`, `validateSession()`, `destroySession()`
+  - `generateResetToken()`, `validateResetToken()`
+
+### Module: lib/email
+- **Maps to capability**: Authentication (password reset)
+- **Responsibility**: Transactional email sending
+- **Exports**:
+  - `sendPasswordResetEmail()`
+
+### Module: lib/ai/veo
+- **Maps to capability**: Content Generation (video)
+- **Responsibility**: Google Veo 3.1 API integration
+- **Exports**:
+  - `generateVideo()` - Main video generation function
+  - `checkVideoStatus()` - Poll for completion
+
+### Module: lib/ai/gemini-image
+- **Maps to capability**: Content Generation (image)
+- **Responsibility**: Nano Banana / Gemini Image API integration
+- **Exports**:
+  - `generateImage()` - Main image generation function
+
+### Module: lib/ai/prompt-enhancer
+- **Maps to capability**: Content Generation (prompt enhancement)
+- **Responsibility**: Improve user prompts with AI
+- **Exports**:
+  - `enhancePrompt()` - Enhance prompt with brand context
+
+### Module: components/ui
+- **Maps to capability**: All UI
+- **Responsibility**: Reusable base UI components (shadcn/ui)
+- **Exports**: Button, Input, Card, Select, etc.
+
+### Module: components/auth
+- **Maps to capability**: Authentication UI
+- **Responsibility**: Authentication form components
+- **Exports**: LoginForm, SignupForm, PasswordResetForm
+
+### Module: components/brand
+- **Maps to capability**: Brand Management UI
+- **Responsibility**: Brand profile management components
+- **Exports**: BrandForm, LogoUploader, ColorPicker
+
+### Module: components/generate
+- **Maps to capability**: Content Generation UI
+- **Responsibility**: Generation interface components
+- **Exports**: PromptInput, FormatSelector, VideoPreview, ImagePreview
+
+</structural-decomposition>
+
+---
+
+<dependency-graph>
+## Dependency Chain
+
+### Foundation Layer (Phase 0)
+No dependencies - these are built first.
+
+- **types**: TypeScript types and Zod validation schemas for all entities
+- **lib/db**: Prisma client setup and database connection
+- **lib/utils**: Error handling utilities and common helpers
+
+### Data Layer (Phase 1)
+- **lib/auth**: Depends on [types, lib/db, lib/utils]
+  - Needs types for User, session types
+  - Needs db for user queries
+  - Needs utils for error handling
+- **lib/email**: Depends on [types, lib/utils]
+  - Needs types for email templates
+  - Needs utils for error handling
+
+### AI Integration Layer (Phase 2)
+- **lib/ai/veo**: Depends on [types, lib/utils]
+  - Needs types for generation params
+  - Needs utils for error handling
+- **lib/ai/gemini-image**: Depends on [types, lib/utils]
+  - Needs types for generation params
+  - Needs utils for error handling
+- **lib/ai/prompt-enhancer**: Depends on [types, lib/utils]
+  - Needs types for brand context
+  - Needs utils for error handling
+
+### UI Components Layer (Phase 3)
+- **components/ui**: Depends on [types]
+  - Base components, minimal dependencies
+- **components/auth**: Depends on [components/ui, types]
+  - Form components using base UI
+- **components/brand**: Depends on [components/ui, types]
+  - Brand management forms using base UI
+- **components/generate**: Depends on [components/ui, types]
+  - Generation interface using base UI
+
+### API Routes Layer (Phase 4)
+- **api/auth/***: Depends on [lib/auth, lib/email, lib/db, types]
+  - Authentication endpoints
+- **api/brand/***: Depends on [lib/auth, lib/db, types]
+  - Brand CRUD endpoints
+- **api/generate/***: Depends on [lib/auth, lib/ai/*, lib/db, types]
+  - Generation endpoints calling AI APIs
+- **api/history/***: Depends on [lib/auth, lib/db, types]
+  - History query endpoints
+
+### Pages Layer (Phase 5)
+- **app/(auth)/***: Depends on [components/auth, api/auth]
+  - Login, signup, password reset pages
+- **app/(dashboard)/***: Depends on [components/*, api/*, lib/auth]
+  - Protected dashboard pages
+- **app/page.tsx**: Depends on [components/ui]
+  - Landing page (minimal deps)
+
+</dependency-graph>
+
+---
+
+<implementation-roadmap>
+## Development Phases
+
+### Phase 0: Foundation
+**Goal**: Establish project structure, types, and database
+
+**Entry Criteria**: Clean repository with Next.js initialized
+
+**Tasks**:
+- [ ] Initialize Next.js 14 with TypeScript, App Router, Tailwind CSS
+  - Acceptance criteria: Project runs with `npm run dev`
+  - Test strategy: Verify dev server starts, TypeScript compiles
+- [ ] Set up Prisma with PostgreSQL schema
+  - Acceptance criteria: Schema defines users, brands, generations tables
+  - Test strategy: `prisma db push` succeeds, can query empty tables
+- [ ] Create TypeScript types and Zod schemas
+  - Acceptance criteria: Types for User, Brand, Generation, all API inputs
+  - Test strategy: TypeScript compilation, Zod validation tests
+- [ ] Implement error handling utilities
+  - Acceptance criteria: AppError class, handleError function, validation helpers
+  - Test strategy: Unit tests for error formatting
+
+**Exit Criteria**: Can run project, database schema deployed, types available
+
+**Delivers**: Project skeleton ready for feature development
+
+---
+
+### Phase 1: Authentication
+**Goal**: Complete user authentication system
+
+**Entry Criteria**: Phase 0 complete
+
+**Tasks**:
+- [ ] Implement password hashing and verification (depends on: [lib/utils, types])
+  - Acceptance criteria: bcrypt hash/verify functions
+  - Test strategy: Unit tests for hash/verify
+- [ ] Implement session management (depends on: [lib/db, types])
+  - Acceptance criteria: Create, validate, destroy sessions
+  - Test strategy: Unit tests for session lifecycle
+- [ ] Create auth API routes (depends on: [lib/auth])
+  - Acceptance criteria: /api/auth/register, login, logout endpoints
+  - Test strategy: Integration tests for auth flow
+- [ ] Build auth UI components (depends on: [components/ui])
+  - Acceptance criteria: LoginForm, SignupForm components
+  - Test strategy: Component renders, form validation works
+- [ ] Create auth pages (depends on: [components/auth, api/auth])
+  - Acceptance criteria: /login, /signup pages functional
+  - Test strategy: E2E test for registration and login flow
+
+**Exit Criteria**: User can register, log in, log out
+
+**Delivers**: Working authentication system
+
+---
+
+### Phase 2: Brand Management
+**Goal**: Enable users to create and manage brand profiles
+
+**Entry Criteria**: Phase 1 complete (auth working)
+
+**Tasks**:
+- [ ] Create brand API routes (depends on: [lib/auth, lib/db])
+  - Acceptance criteria: CRUD endpoints for brand profile
+  - Test strategy: Integration tests for brand operations
+- [ ] Build brand form components (depends on: [components/ui])
+  - Acceptance criteria: BrandForm, ColorPicker, LogoUploader
+  - Test strategy: Component tests for form behavior
+- [ ] Create brand management page (depends on: [components/brand, api/brand])
+  - Acceptance criteria: /brand page with form, saves to database
+  - Test strategy: E2E test for brand creation and editing
+
+**Exit Criteria**: User can create and edit brand profile
+
+**Delivers**: Brand profile management
+
+---
+
+### Phase 3: AI Integration
+**Goal**: Integrate Veo 3.1 and Nano Banana APIs
+
+**Entry Criteria**: Phase 0 complete (types, utils available)
+
+**Tasks**:
+- [ ] Implement Veo 3.1 client (depends on: [types, lib/utils])
+  - Acceptance criteria: generateVideo() calls API, handles async polling
+  - Test strategy: Unit tests with mocked API, integration test with real API
+- [ ] Implement Gemini Image client (depends on: [types, lib/utils])
+  - Acceptance criteria: generateImage() calls API, returns image data
+  - Test strategy: Unit tests with mocked API, integration test with real API
+- [ ] Implement prompt enhancer (depends on: [types, lib/utils])
+  - Acceptance criteria: enhancePrompt() improves user prompt
+  - Test strategy: Unit tests for prompt formatting
+
+**Exit Criteria**: AI clients can generate video and image content
+
+**Delivers**: AI generation capability
+
+---
+
+### Phase 4: Content Generation UI
+**Goal**: Build generation interface and connect to AI APIs
+
+**Entry Criteria**: Phase 1, 2, 3 complete
+
+**Tasks**:
+- [ ] Create generation API routes (depends on: [lib/auth, lib/ai/*, lib/db])
+  - Acceptance criteria: /api/generate/video, /api/generate/image endpoints
+  - Test strategy: Integration tests for generation flow
+- [ ] Build generation UI components (depends on: [components/ui])
+  - Acceptance criteria: PromptInput, FormatSelector, previews
+  - Test strategy: Component tests for UI behavior
+- [ ] Create generation page (depends on: [components/generate, api/generate])
+  - Acceptance criteria: /generate page with full workflow
+  - Test strategy: E2E test for generation and download
+
+**Exit Criteria**: User can generate and download video/image content
+
+**Delivers**: Core product functionality
+
+---
+
+### Phase 5: History & Dashboard
+**Goal**: Complete dashboard and history features
+
+**Entry Criteria**: Phase 4 complete
+
+**Tasks**:
+- [ ] Create history API routes (depends on: [lib/auth, lib/db])
+  - Acceptance criteria: /api/history endpoint with pagination
+  - Test strategy: Integration tests for history queries
+- [ ] Build history page (depends on: [components/ui, api/history])
+  - Acceptance criteria: /history page displays past generations
+  - Test strategy: E2E test for history display
+- [ ] Build dashboard page (depends on: [components/*, api/*])
+  - Acceptance criteria: /dashboard with quick actions, recent history
+  - Test strategy: E2E test for dashboard navigation
+
+**Exit Criteria**: Complete user dashboard experience
+
+**Delivers**: Full MVP application
+
+---
+
+### Phase 6: Polish & Landing
+**Goal**: Landing page, error handling, responsive design
+
+**Entry Criteria**: Phase 5 complete
+
+**Tasks**:
+- [ ] Build landing page (depends on: [components/ui])
+  - Acceptance criteria: / page with product info, CTA
+  - Test strategy: Visual review, responsive check
+- [ ] Implement global error handling (depends on: [lib/utils])
+  - Acceptance criteria: Error boundaries, toast notifications
+  - Test strategy: Trigger errors, verify handling
+- [ ] Responsive design pass (depends on: [all components])
+  - Acceptance criteria: All pages work on mobile
+  - Test strategy: Manual testing on various viewports
+
+**Exit Criteria**: Production-ready MVP
+
+**Delivers**: Complete, polished application
+
+</implementation-roadmap>
+
+---
+
+<test-strategy>
+## Test Pyramid
+
+```
+        /\
+       /E2E\       <- 10% (Critical user flows)
+      /------\
+     /Integration\ <- 30% (API routes, database)
+    /------------\
+   /  Unit Tests  \ <- 60% (Functions, components)
+  /----------------\
+```
+
+## Coverage Requirements
+- Line coverage: 70% minimum
+- Branch coverage: 60% minimum
+- Function coverage: 80% minimum
+
+## Critical Test Scenarios
+
+### Authentication Module
+**Happy path**:
+- User registers with valid email/password -> account created, session established
+- User logs in with correct credentials -> session created, redirect to dashboard
+
+**Edge cases**:
+- Registration with existing email -> proper error message
+- Login with wrong password -> error, no session
+- Password reset with valid token -> password updated
+
+**Error cases**:
+- Invalid email format -> validation error
+- Weak password -> validation error
+- Expired reset token -> error, prompt to request new
+
+### Content Generation Module
+**Happy path**:
+- Generate video with valid prompt -> video returned in < 60s
+- Generate image with valid prompt -> image returned in < 30s
+
+**Edge cases**:
+- Empty prompt -> validation error
+- Very long prompt -> truncated or error
+- Generation with brand context -> brand elements incorporated
+
+**Error cases**:
+- API rate limit hit -> friendly error, retry suggestion
+- API timeout -> error with retry option
+- Invalid format parameters -> validation error
+
+### Brand Management Module
+**Happy path**:
+- Create brand profile -> saved to database
+- Update brand colors -> changes persisted
+- Upload logo -> file stored, URL saved
+
+**Edge cases**:
+- Update non-existent brand -> auto-create
+- Invalid hex color -> validation error
+
+**Error cases**:
+- Logo too large -> size error
+- Invalid file type -> format error
+
+## Test Generation Guidelines
+- Use Vitest for unit tests
+- Use Playwright for E2E tests
+- Mock external APIs (Veo, Gemini) in unit/integration tests
+- Use real APIs in separate integration test suite (rate-limited)
+- Test loading and error states for all async operations
+
+</test-strategy>
+
+---
+
+<architecture>
+## System Components
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Next.js Application                     │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
+│  │   Pages     │  │    API      │  │     Components      │  │
+│  │  (App Dir)  │──│   Routes    │──│    (React/UI)       │  │
+│  └─────────────┘  └──────┬──────┘  └─────────────────────┘  │
+│                          │                                   │
+│  ┌───────────────────────┴───────────────────────────────┐  │
+│  │                    Service Layer                       │  │
+│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐   │  │
+│  │  │  Auth   │  │  Brand  │  │   AI    │  │ History │   │  │
+│  │  │ Service │  │ Service │  │ Clients │  │ Service │   │  │
+│  │  └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘   │  │
+│  └───────┼────────────┼────────────┼────────────┼────────┘  │
+│          │            │            │            │            │
+│  ┌───────┴────────────┴────────────┴────────────┴────────┐  │
+│  │                    Data Layer (Prisma)                 │  │
+│  └───────────────────────────┬───────────────────────────┘  │
+└──────────────────────────────┼──────────────────────────────┘
+                               │
+                    ┌──────────┴──────────┐
+                    │    PostgreSQL       │
+                    │    Database         │
+                    └─────────────────────┘
+
+External APIs:
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│  Google Veo 3.1 │  │  Gemini Image   │  │  Email Service  │
+│  (Video Gen)    │  │  (Image Gen)    │  │  (Resend)       │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+```
+
+## Data Models
 
 ### User
-- GET /api/user - Get current user
-- PUT /api/user - Update user settings
-- PUT /api/user/password - Change password
+```typescript
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  brand         Brand?
+  generations   Generation[]
+  sessions      Session[]
+}
+```
+
+### Brand
+```typescript
+model Brand {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  name            String
+  logoUrl         String?
+  primaryColor    String   @default("#000000")
+  secondaryColor  String   @default("#ffffff")
+  accentColor     String   @default("#3b82f6")
+  voiceDescription String?
+  industry        String   @default("other")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+```
+
+### Generation
+```typescript
+model Generation {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  prompt        String
+  contentType   ContentType // VIDEO or IMAGE
+  aspectRatio   String
+  duration      Int?     // For video only
+  resolution    String
+  includeBrand  Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+```
+
+### Session
+```typescript
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+```
+
+## Technology Stack
+
+**Framework**: Next.js 14+ (App Router)
+- **Rationale**: Full-stack React with API routes, great DX, Vercel deployment
+- **Trade-offs**: Larger bundle than pure SPA, but offset by SSR benefits
+- **Alternatives**: Remix, SvelteKit
+
+**Language**: TypeScript
+- **Rationale**: Type safety, better DX, catch errors at compile time
+- **Trade-offs**: Additional build step
+- **Alternatives**: JavaScript (rejected for type safety)
+
+**Database**: PostgreSQL + Prisma
+- **Rationale**: Robust relational DB, Prisma for type-safe queries
+- **Trade-offs**: More setup than SQLite, but better for production
+- **Alternatives**: MySQL, MongoDB
+
+**Auth**: NextAuth.js (Credentials provider)
+- **Rationale**: Built for Next.js, handles sessions
+- **Trade-offs**: Email/password only for MVP (no OAuth)
+- **Alternatives**: Custom auth, Clerk
+
+**Styling**: Tailwind CSS + shadcn/ui
+- **Rationale**: Rapid development, consistent design, accessible components
+- **Trade-offs**: Learning curve for utility classes
+- **Alternatives**: CSS Modules, Styled Components
+
+**AI APIs**: Google Veo 3.1, Gemini Image (Nano Banana)
+- **Rationale**: State-of-the-art generation quality, unified Google ecosystem
+- **Trade-offs**: API costs, rate limits
+- **Alternatives**: Runway, Midjourney (less suited for programmatic access)
+
+**Email**: Resend
+- **Rationale**: Simple API, good deliverability, React email support
+- **Trade-offs**: Cost at scale
+- **Alternatives**: SendGrid, AWS SES
+
+</architecture>
 
 ---
 
-## 8. UI/UX Requirements
+<risks>
+## Technical Risks
 
-### Design Principles
-- Clean, modern interface
-- Mobile-responsive
-- Fast loading times
-- Clear feedback during generation (progress states)
-- Intuitive navigation
+**Risk**: AI API rate limits block user generation
+- **Impact**: High - core functionality blocked
+- **Likelihood**: Medium - depends on user volume
+- **Mitigation**: Implement queue system, show estimated wait times
+- **Fallback**: Graceful degradation, retry with backoff
 
-### Key UI Components
-- Navigation bar with logo and user menu
-- Brand color picker with hex input
-- Prompt textarea with character count
-- Toggle switches for options
-- Loading spinner/progress bar for generation
-- Video player for preview
-- Toast notifications for success/error states
+**Risk**: Video generation latency affects UX
+- **Impact**: Medium - users wait 30-60+ seconds
+- **Likelihood**: High - inherent to video generation
+- **Mitigation**: Clear progress indicators, allow background generation
+- **Fallback**: Start with shorter duration videos (4s)
 
----
+**Risk**: Google API changes or deprecation
+- **Impact**: High - would require migration
+- **Likelihood**: Low - Veo 3.1 is current
+- **Mitigation**: Abstract AI clients behind interface
+- **Fallback**: Alternative providers (Runway, Pika)
 
-## 9. Security Requirements
+## Dependency Risks
 
-- Passwords hashed with bcrypt (minimum 10 rounds)
-- HTTPS only
-- CSRF protection
-- Rate limiting on auth endpoints
-- JWT or session-based authentication
-- Input validation and sanitization
-- Secure API key storage (environment variables)
+**Risk**: Google API access approval delays
+- **Impact**: High - blocks AI integration
+- **Likelihood**: Medium - depends on approval process
+- **Mitigation**: Apply for API access early, have test credentials
+- **Fallback**: Mock API for development, real API for production
 
----
+**Risk**: Email service deliverability issues
+- **Impact**: Medium - password reset broken
+- **Likelihood**: Low - using established provider
+- **Mitigation**: Use reputable provider (Resend), proper DNS setup
+- **Fallback**: Manual password reset via admin
 
-## 10. Performance Requirements
+## Scope Risks
 
-- Page load time: < 3 seconds
-- Generation API response: < 60 seconds for video, < 30 seconds for images
-- Support concurrent users: 100+ simultaneous generations
+**Risk**: Feature creep beyond MVP
+- **Impact**: Medium - delays launch
+- **Likelihood**: High - temptation to add features
+- **Mitigation**: Strict MVP scope definition (this PRD), defer non-essentials
+- **Fallback**: Cut to absolute minimum (just video gen + download)
 
----
+**Risk**: Brand integration complexity
+- **Impact**: Medium - affects generation quality
+- **Likelihood**: Medium - AI prompt engineering is iterative
+- **Mitigation**: Start simple (text-only brand context), iterate
+- **Fallback**: Make brand integration optional/toggle
 
-## 11. Out of Scope (Post-MVP)
-
-The following features are explicitly NOT included in the MVP:
-- Content scheduling and auto-posting
-- Direct social media platform integration
-- Analytics and performance tracking
-- Team collaboration and multi-user accounts
-- Cloud storage for generated content
-- Mobile applications (iOS/Android)
-- Template library
-- Batch generation
-- Video editing tools
-- A/B testing for content
-- Subscription/payment processing
+</risks>
 
 ---
 
-## 12. Success Metrics
+<appendix>
+## References
+- [Google Veo 3.1 Documentation](https://ai.google.dev/gemini-api/docs/video)
+- [Gemini Image Generation](https://ai.google.dev/gemini-api/docs/image-generation)
+- [Next.js 14 Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [NextAuth.js Documentation](https://next-auth.js.org/getting-started/introduction)
 
-- User registration rate
-- Generation completion rate
-- Downloads per user
-- Return user rate
-- Average generations per session
+## Glossary
+- **Veo 3.1**: Google's video generation AI model
+- **Nano Banana**: Nickname for Gemini Image generation model
+- **Generation**: A single AI-created content piece (video or image)
+- **Brand Profile**: User's stored brand identity (colors, logo, voice)
+- **Aspect Ratio**: Width-to-height ratio (9:16 vertical, 16:9 landscape)
 
----
-
-## 13. Dependencies
-
-### External Services
-- Google Cloud (Veo 3.1 API, Gemini Image API)
-- Email service for password reset (e.g., Resend, SendGrid)
-- PostgreSQL database hosting
-
-### API Keys Required
-- GOOGLE_API_KEY (for Veo 3.1 and Gemini Image)
-- Database connection string
-- Email service API key
-
----
-
-## 14. Timeline Considerations
-
-### Phase 1: Foundation
-- Project setup (Next.js, TypeScript, Tailwind)
-- Database schema and Prisma setup
-- Authentication system
-
-### Phase 2: Core Features
-- Brand profile management
-- Generation interface UI
-- AI API integration
-
-### Phase 3: Polish
-- History feature
-- Error handling
-- Loading states
-- Responsive design
-
-### Phase 4: Launch Prep
-- Testing
-- Performance optimization
-- Deployment
+## Open Questions
+- What is the exact API pricing for Veo 3.1 and Gemini Image?
+- Should we implement usage limits per user for MVP?
+- What file size limits should we enforce for logo uploads?
+- Should we store generation history indefinitely or implement retention policy?
+</appendix>
