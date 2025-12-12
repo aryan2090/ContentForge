@@ -412,6 +412,9 @@ No dependencies - these are built first.
 - [ ] Set up Prisma with PostgreSQL schema
   - Acceptance criteria: Schema defines users, brands, generations tables
   - Test strategy: `prisma db push` succeeds, can query empty tables
+- [ ] Provision Vercel Postgres database
+  - Acceptance criteria: Database created in Vercel dashboard, DATABASE_URL and POSTGRES_PRISMA_URL env vars configured, schema deployed
+  - Test strategy: `prisma db push` succeeds against production, connection verified from local dev
 - [ ] Create TypeScript types and Zod schemas
   - Acceptance criteria: Types for User, Brand, Generation, all API inputs
   - Test strategy: TypeScript compilation, Zod validation tests
