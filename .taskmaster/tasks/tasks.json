@@ -2,14 +2,14 @@
   "master": {
     "tasks": [
       {
-        "id": 1,
+        "id": "1",
         "title": "Initialize Next.js Project with TypeScript and Core Dependencies",
         "description": "Set up the Next.js 14+ project with TypeScript, Tailwind CSS, and App Router. Install and configure all core dependencies including shadcn/ui component library.",
         "details": "1. Initialize Next.js project:\n   ```bash\n   npx create-next-app@latest contentforge --typescript --tailwind --eslint --app --src-dir\n   ```\n\n2. Install core dependencies:\n   ```bash\n   npm install @prisma/client bcryptjs zod react-hook-form @hookform/resolvers\n   npm install -D prisma @types/bcryptjs\n   ```\n\n3. Initialize shadcn/ui:\n   ```bash\n   npx shadcn@latest init\n   npx shadcn@latest add button input card select label textarea tabs avatar dropdown-menu dialog toast form\n   ```\n\n4. Create directory structure as per PRD:\n   - src/app/(auth)/ - Auth route group\n   - src/app/(dashboard)/ - Protected dashboard routes\n   - src/app/api/ - API routes\n   - src/components/ui/ - Base UI components (shadcn)\n   - src/components/auth/ - Auth components\n   - src/components/brand/ - Brand management\n   - src/components/generate/ - Generation UI\n   - src/components/layout/ - Layout components\n   - src/lib/auth/ - Auth logic\n   - src/lib/db/ - Database client\n   - src/lib/ai/ - AI API clients\n   - src/lib/email/ - Email service\n   - src/lib/utils/ - Utilities\n   - src/types/ - TypeScript types\n\n5. Configure TypeScript paths in tsconfig.json:\n   ```json\n   {\n     \"compilerOptions\": {\n       \"paths\": {\n         \"@/*\": [\"./src/*\"]\n       }\n     }\n   }\n   ```\n\n6. Set up environment variables (.env.local):\n   - DATABASE_URL\n   - NEXTAUTH_SECRET\n   - NEXTAUTH_URL\n   - GOOGLE_AI_API_KEY\n   - RESEND_API_KEY",
         "testStrategy": "1. Verify `npm run dev` starts without errors\n2. Verify TypeScript compilation with `npm run build`\n3. Confirm all directories exist and are properly structured\n4. Test shadcn/ui components render correctly by importing Button in a test page\n5. Verify Tailwind CSS is working with a styled component",
         "priority": "high",
         "dependencies": [],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -17,8 +17,10 @@
             "description": "Initialize a new Next.js 14+ project using create-next-app with TypeScript, Tailwind CSS, ESLint, App Router, and src directory structure. Then install all required npm dependencies including Prisma client, bcryptjs, zod, and react-hook-form.",
             "dependencies": [],
             "details": "Execute the following commands in sequence:\n\n1. Create the Next.js project:\n```bash\nnpx create-next-app@latest contentforge --typescript --tailwind --eslint --app --src-dir\ncd contentforge\n```\n\n2. Install runtime dependencies:\n```bash\nnpm install @prisma/client bcryptjs zod react-hook-form @hookform/resolvers\n```\n\n3. Install dev dependencies:\n```bash\nnpm install -D prisma @types/bcryptjs\n```\n\nVerify the installation by checking package.json contains all dependencies and running `npm run dev` to ensure the development server starts without errors.",
-            "status": "pending",
-            "testStrategy": "Run `npm run dev` and verify the Next.js development server starts at localhost:3000 without errors. Check package.json to confirm all dependencies are listed correctly."
+            "status": "done",
+            "testStrategy": "Run `npm run dev` and verify the Next.js development server starts at localhost:3000 without errors. Check package.json to confirm all dependencies are listed correctly.",
+            "parentId": "undefined",
+            "updatedAt": "2025-12-12T23:34:45.006Z"
           },
           {
             "id": 2,
@@ -28,8 +30,10 @@
               1
             ],
             "details": "Execute the following commands:\n\n1. Initialize shadcn/ui (select default options when prompted - New York style, zinc color, CSS variables):\n```bash\nnpx shadcn@latest init\n```\n\n2. Add all required components:\n```bash\nnpx shadcn@latest add button input card select label textarea tabs avatar dropdown-menu dialog toast form\n```\n\nThis will create:\n- components.json configuration file\n- src/components/ui/ directory with all component files\n- Update tailwind.config.ts with shadcn theme\n- Add necessary CSS variables to globals.css",
-            "status": "pending",
-            "testStrategy": "Import and render a Button component in the main page.tsx to verify shadcn/ui is working. Check that src/components/ui/ contains all the added component files. Verify Tailwind CSS classes are applied correctly."
+            "status": "done",
+            "testStrategy": "Import and render a Button component in the main page.tsx to verify shadcn/ui is working. Check that src/components/ui/ contains all the added component files. Verify Tailwind CSS classes are applied correctly.",
+            "parentId": "undefined",
+            "updatedAt": "2025-12-12T23:37:05.646Z"
           },
           {
             "id": 3,
@@ -39,8 +43,10 @@
               1
             ],
             "details": "Create the following directory structure inside src/:\n\n```bash\n# App router directories\nmkdir -p src/app/\\(auth\\)\nmkdir -p src/app/\\(dashboard\\)\nmkdir -p src/app/api\n\n# Component directories\nmkdir -p src/components/auth\nmkdir -p src/components/brand\nmkdir -p src/components/generate\nmkdir -p src/components/layout\n\n# Library directories\nmkdir -p src/lib/auth\nmkdir -p src/lib/db\nmkdir -p src/lib/ai\nmkdir -p src/lib/email\nmkdir -p src/lib/utils\n\n# Types directory\nmkdir -p src/types\n```\n\nAdd .gitkeep files to empty directories to ensure they're tracked in git:\n```bash\ntouch src/app/\\(auth\\)/.gitkeep\ntouch src/app/\\(dashboard\\)/.gitkeep\ntouch src/components/auth/.gitkeep\ntouch src/components/brand/.gitkeep\ntouch src/components/generate/.gitkeep\ntouch src/components/layout/.gitkeep\ntouch src/lib/auth/.gitkeep\ntouch src/lib/db/.gitkeep\ntouch src/lib/ai/.gitkeep\ntouch src/lib/email/.gitkeep\ntouch src/types/.gitkeep\n```",
-            "status": "pending",
-            "testStrategy": "Verify all directories exist using `find src -type d | sort` and compare against the expected structure. Ensure .gitkeep files are present in empty directories."
+            "status": "done",
+            "testStrategy": "Verify all directories exist using `find src -type d | sort` and compare against the expected structure. Ensure .gitkeep files are present in empty directories.",
+            "parentId": "undefined",
+            "updatedAt": "2025-12-12T23:37:29.198Z"
           },
           {
             "id": 4,
@@ -50,20 +56,26 @@
               1
             ],
             "details": "1. Verify/update tsconfig.json to include path aliases (create-next-app should set this up, but verify):\n```json\n{\n  \"compilerOptions\": {\n    \"baseUrl\": \".\",\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  }\n}\n```\n\n2. Create .env.local file with all required environment variables:\n```env\n# Database\nDATABASE_URL=\"postgresql://user:password@host:5432/database\"\nDIRECT_URL=\"postgresql://user:password@host:5432/database\"\n\n# NextAuth.js\nNEXTAUTH_SECRET=\"generate-a-secret-key-here\"\nNEXTAUTH_URL=\"http://localhost:3000\"\n\n# Google AI APIs\nGOOGLE_AI_API_KEY=\"your-google-ai-api-key\"\n\n# Email (Resend)\nRESEND_API_KEY=\"your-resend-api-key\"\n```\n\n3. Add .env.local to .gitignore if not already present.\n\n4. Create .env.example as a template for other developers (same content with placeholder values).",
-            "status": "pending",
-            "testStrategy": "Test TypeScript path aliases by creating a test import like `import { cn } from '@/lib/utils'` in a component and running `npm run build` to verify compilation succeeds. Verify .env.local is in .gitignore and .env.example exists with all required keys."
+            "status": "done",
+            "testStrategy": "Test TypeScript path aliases by creating a test import like `import { cn } from '@/lib/utils'` in a component and running `npm run build` to verify compilation succeeds. Verify .env.local is in .gitignore and .env.example exists with all required keys.",
+            "parentId": "undefined",
+            "updatedAt": "2025-12-12T23:38:27.688Z"
           }
-        ]
+        ],
+        "complexity": 4,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the Next.js project initialization into subtasks covering: 1) Running create-next-app with correct flags, 2) Installing npm dependencies (prisma, bcryptjs, zod, react-hook-form), 3) Initializing and configuring shadcn/ui with required components, 4) Creating the directory structure per PRD specifications, 5) Setting up TypeScript path aliases in tsconfig.json, 6) Creating .env.local template with required environment variables",
+        "updatedAt": "2025-12-12T23:38:27.688Z"
       },
       {
-        "id": 2,
+        "id": "2",
         "title": "Set Up Prisma Schema and Vercel Postgres Database",
         "description": "Configure Prisma ORM with PostgreSQL schema defining users, brands, generations, and sessions tables. Provision Vercel Postgres database and deploy schema.",
         "details": "1. Initialize Prisma:\n   ```bash\n   npx prisma init\n   ```\n\n2. Create Prisma schema (prisma/schema.prisma):\n   ```prisma\n   generator client {\n     provider = \"prisma-client-js\"\n   }\n\n   datasource db {\n     provider = \"postgresql\"\n     url      = env(\"DATABASE_URL\")\n     directUrl = env(\"DIRECT_URL\")\n   }\n\n   model User {\n     id           String       @id @default(uuid())\n     email        String       @unique\n     passwordHash String\n     createdAt    DateTime     @default(now())\n     updatedAt    DateTime     @updatedAt\n     brand        Brand?\n     generations  Generation[]\n     sessions     Session[]\n   }\n\n   model Brand {\n     id               String   @id @default(uuid())\n     userId           String   @unique\n     user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n     name             String\n     logoUrl          String?\n     primaryColor     String   @default(\"#000000\")\n     secondaryColor   String   @default(\"#ffffff\")\n     accentColor      String   @default(\"#3b82f6\")\n     voiceDescription String?\n     industry         String   @default(\"other\")\n     createdAt        DateTime @default(now())\n     updatedAt        DateTime @updatedAt\n   }\n\n   enum ContentType {\n     VIDEO\n     IMAGE\n   }\n\n   model Generation {\n     id           String      @id @default(uuid())\n     userId       String\n     user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)\n     prompt       String\n     contentType  ContentType\n     model        String\n     aspectRatio  String\n     duration     Int?\n     resolution   String\n     includeBrand Boolean     @default(false)\n     createdAt    DateTime    @default(now())\n   }\n\n   model Session {\n     id        String   @id @default(uuid())\n     userId    String\n     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n     token     String   @unique\n     expiresAt DateTime\n     createdAt DateTime @default(now())\n   }\n   ```\n\n3. Provision Vercel Postgres:\n   - Create database in Vercel dashboard (Storage > Create Database > Postgres)\n   - Copy connection strings to .env.local\n   - Set DATABASE_URL (pooled) and DIRECT_URL (direct)\n\n4. Create Prisma client singleton (src/lib/db/index.ts):\n   ```typescript\n   import { PrismaClient } from '@prisma/client'\n\n   const globalForPrisma = globalThis as unknown as {\n     prisma: PrismaClient | undefined\n   }\n\n   export const prisma = globalForPrisma.prisma ?? new PrismaClient()\n\n   if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma\n   ```\n\n5. Deploy schema:\n   ```bash\n   npx prisma db push\n   npx prisma generate\n   ```",
         "testStrategy": "1. Run `npx prisma db push` - should succeed without errors\n2. Run `npx prisma studio` - should open and display empty tables\n3. Test connection with a simple script that creates and deletes a test user\n4. Verify schema generates TypeScript types with `npx prisma generate`\n5. Test Prisma client import works in a test file",
         "priority": "high",
         "dependencies": [
-          1
+          "1"
         ],
         "status": "pending",
         "subtasks": [
@@ -74,7 +86,8 @@
             "dependencies": [],
             "details": "Execute `npx prisma init` from the project root. This command will:\n1. Create a `prisma/` directory at the project root\n2. Generate a starter `prisma/schema.prisma` file with default PostgreSQL configuration\n3. Create or update `.env` file with DATABASE_URL placeholder\n\nAfter initialization, verify the prisma directory exists and contains schema.prisma. Update .gitignore to ensure .env is not committed but .env.example is tracked for reference. Create .env.example with placeholder values for DATABASE_URL and DIRECT_URL.",
             "status": "pending",
-            "testStrategy": "Verify prisma directory exists with schema.prisma file. Confirm .env file contains DATABASE_URL placeholder. Run `npx prisma --version` to confirm Prisma CLI is working."
+            "testStrategy": "Verify prisma directory exists with schema.prisma file. Confirm .env file contains DATABASE_URL placeholder. Run `npx prisma --version` to confirm Prisma CLI is working.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -85,7 +98,8 @@
             ],
             "details": "Replace the auto-generated schema.prisma content with the full schema:\n\n1. Configure generator for prisma-client-js\n2. Configure datasource for PostgreSQL with both pooled (DATABASE_URL) and direct (DIRECT_URL) connection strings for Vercel Postgres compatibility\n3. Define User model with uuid id, unique email, passwordHash, timestamps, and relations to Brand (one-to-one optional), Generation[] (one-to-many), and Session[] (one-to-many)\n4. Define Brand model with uuid id, unique userId foreign key, name, logoUrl (optional), color fields with defaults (primaryColor #000000, secondaryColor #ffffff, accentColor #3b82f6), voiceDescription (optional), industry with default 'other', timestamps, and User relation with onDelete Cascade\n5. Define ContentType enum with VIDEO and IMAGE values\n6. Define Generation model with uuid id, userId foreign key, prompt, contentType (enum), model, aspectRatio, duration (optional Int for videos), resolution, includeBrand boolean default false, createdAt timestamp, and User relation with onDelete Cascade\n7. Define Session model with uuid id, userId foreign key, unique token, expiresAt DateTime, createdAt timestamp, and User relation with onDelete Cascade",
             "status": "pending",
-            "testStrategy": "Run `npx prisma validate` to check schema syntax is valid. Run `npx prisma format` to ensure proper formatting. Verify all relations are correctly defined by inspecting the generated types after running prisma generate."
+            "testStrategy": "Run `npx prisma validate` to check schema syntax is valid. Run `npx prisma format` to ensure proper formatting. Verify all relations are correctly defined by inspecting the generated types after running prisma generate.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -96,7 +110,8 @@
             ],
             "details": "Create the directory structure `src/lib/db/` and add `index.ts` with the Prisma client singleton:\n\n1. Import PrismaClient from @prisma/client\n2. Extend globalThis type to include optional prisma property for TypeScript support\n3. Create prisma instance: use existing global instance if available, otherwise instantiate new PrismaClient()\n4. In non-production environments, assign the instance to globalThis.prisma to persist across hot module reloads\n5. Export the prisma instance as named export\n\nThis pattern prevents the \"Too many Prisma clients\" warning during Next.js development by reusing the same client instance across hot reloads while creating fresh instances in production for proper connection pooling.",
             "status": "pending",
-            "testStrategy": "Import prisma from the module and verify it's a valid PrismaClient instance. In development, trigger a hot reload and confirm no 'Too many clients' warning appears. Test that the exported prisma object has expected methods like $connect, $disconnect, user, brand, generation, session."
+            "testStrategy": "Import prisma from the module and verify it's a valid PrismaClient instance. In development, trigger a hot reload and confirm no 'Too many clients' warning appears. Test that the exported prisma object has expected methods like $connect, $disconnect, user, brand, generation, session.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -108,19 +123,23 @@
             ],
             "details": "1. In Vercel Dashboard:\n   - Navigate to Storage tab\n   - Click 'Create Database' and select 'Postgres'\n   - Choose region closest to expected users\n   - Copy the provided connection strings\n\n2. Configure environment variables:\n   - In .env.local (local development), set:\n     - DATABASE_URL = pooled connection string (includes ?pgbouncer=true)\n     - DIRECT_URL = direct connection string (for migrations)\n   - In Vercel project settings, add the same environment variables for production/preview\n\n3. Deploy schema to database:\n   - Run `npx prisma db push` to sync schema with database (creates tables)\n   - Run `npx prisma generate` to generate TypeScript client types\n\n4. Verify deployment:\n   - Run `npx prisma studio` to open database GUI\n   - Confirm all 4 tables (User, Brand, Generation, Session) exist with correct columns\n   - Verify ContentType enum is properly created",
             "status": "pending",
-            "testStrategy": "Run `npx prisma db push` and verify it completes without errors. Run `npx prisma studio` and confirm all tables are visible with correct columns and relations. Test connection by running a simple script that creates a test user, queries it, then deletes it. Verify generated types exist in node_modules/.prisma/client."
+            "testStrategy": "Run `npx prisma db push` and verify it completes without errors. Run `npx prisma studio` and confirm all tables are visible with correct columns and relations. Test connection by running a simple script that creates a test user, queries it, then deletes it. Verify generated types exist in node_modules/.prisma/client.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the Prisma and database setup into subtasks covering: 1) Initializing Prisma with npx prisma init, 2) Writing the complete schema.prisma file with User, Brand, Generation, Session models and ContentType enum with proper relations, 3) Creating the Prisma client singleton in src/lib/db/index.ts with global caching for dev mode, 4) Provisioning Vercel Postgres and configuring DATABASE_URL/DIRECT_URL, 5) Running prisma db push and prisma generate to deploy schema"
       },
       {
-        "id": 3,
+        "id": "3",
         "title": "Create TypeScript Types and Zod Validation Schemas",
         "description": "Define TypeScript types and Zod validation schemas for all entities including User, Brand, Generation, and API inputs/outputs.",
         "details": "1. Create auth types (src/types/auth.ts):\n   ```typescript\n   import { z } from 'zod'\n\n   export const registerSchema = z.object({\n     email: z.string().email('Invalid email address'),\n     password: z.string().min(8, 'Password must be at least 8 characters'),\n     confirmPassword: z.string()\n   }).refine(data => data.password === data.confirmPassword, {\n     message: 'Passwords do not match',\n     path: ['confirmPassword']\n   })\n\n   export const loginSchema = z.object({\n     email: z.string().email('Invalid email address'),\n     password: z.string().min(1, 'Password is required')\n   })\n\n   export const passwordResetRequestSchema = z.object({\n     email: z.string().email('Invalid email address')\n   })\n\n   export const passwordResetSchema = z.object({\n     token: z.string().min(1),\n     password: z.string().min(8),\n     confirmPassword: z.string()\n   }).refine(data => data.password === data.confirmPassword, {\n     message: 'Passwords do not match',\n     path: ['confirmPassword']\n   })\n\n   export type RegisterInput = z.infer<typeof registerSchema>\n   export type LoginInput = z.infer<typeof loginSchema>\n   ```\n\n2. Create brand types (src/types/brand.ts):\n   ```typescript\n   import { z } from 'zod'\n\n   const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\n\n   export const brandSchema = z.object({\n     name: z.string().min(1, 'Brand name is required').max(100),\n     logoUrl: z.string().url().optional().nullable(),\n     primaryColor: z.string().regex(hexColorRegex, 'Invalid hex color').default('#000000'),\n     secondaryColor: z.string().regex(hexColorRegex, 'Invalid hex color').default('#ffffff'),\n     accentColor: z.string().regex(hexColorRegex, 'Invalid hex color').default('#3b82f6'),\n     voiceDescription: z.string().max(500).optional().nullable(),\n     industry: z.string().default('other')\n   })\n\n   export const INDUSTRIES = [\n     'technology', 'retail', 'food', 'health', 'finance',\n     'education', 'entertainment', 'travel', 'fashion', 'other'\n   ] as const\n\n   export type BrandInput = z.infer<typeof brandSchema>\n   ```\n\n3. Create generation types (src/types/generation.ts):\n   ```typescript\n   import { z } from 'zod'\n\n   export const VIDEO_MODELS = [\n     { id: 'veo-3.1', label: 'Veo 3.1 (Best quality)', price: 0.40, unit: '$/second' },\n     { id: 'veo-3.1-fast', label: 'Veo 3.1 Fast', price: 0.15, unit: '$/second' },\n     { id: 'veo-3', label: 'Veo 3', price: 0.40, unit: '$/second' },\n     { id: 'veo-2', label: 'Veo 2 (Budget)', price: 0.35, unit: '$/second' }\n   ] as const\n\n   export const IMAGE_MODELS = [\n     { id: 'gemini-3-pro-image', label: 'Nano Banana Pro (4K)', price: 0.15, unit: '$/image' },\n     { id: 'gemini-2.5-flash-image', label: 'Nano Banana (Fast)', price: 0.04, unit: '$/image' }\n   ] as const\n\n   export const generateVideoSchema = z.object({\n     prompt: z.string().min(1).max(1000),\n     model: z.enum(['veo-3.1', 'veo-3.1-fast', 'veo-3', 'veo-2']).default('veo-3.1-fast'),\n     aspectRatio: z.enum(['9:16', '16:9']).default('9:16'),\n     duration: z.enum([4, 6, 8]).default(4),\n     resolution: z.enum(['720p', '1080p']).default('1080p'),\n     includeBrand: z.boolean().default(false)\n   })\n\n   export const generateImageSchema = z.object({\n     prompt: z.string().min(1).max(1000),\n     model: z.enum(['gemini-3-pro-image', 'gemini-2.5-flash-image']).default('gemini-2.5-flash-image'),\n     aspectRatio: z.enum(['9:16', '16:9', '1:1']).default('1:1'),\n     resolution: z.enum(['1080p', '2K', '4K']).default('1080p'),\n     includeBrand: z.boolean().default(false)\n   })\n\n   export type GenerateVideoInput = z.infer<typeof generateVideoSchema>\n   export type GenerateImageInput = z.infer<typeof generateImageSchema>\n\n   export function getEstimatedCost(modelId: string, duration?: number): number {\n     const videoModel = VIDEO_MODELS.find(m => m.id === modelId)\n     if (videoModel && duration) return videoModel.price * duration\n     const imageModel = IMAGE_MODELS.find(m => m.id === modelId)\n     if (imageModel) return imageModel.price\n     return 0\n   }\n   ```\n\n4. Create API response types (src/types/api.ts):\n   ```typescript\n   export type ApiResponse<T> = \n     | { success: true; data: T }\n     | { success: false; error: string }\n\n   export type PaginatedResponse<T> = {\n     data: T[]\n     page: number\n     pageSize: number\n     total: number\n     hasMore: boolean\n   }\n   ```\n\n5. Create barrel export (src/types/index.ts)",
         "testStrategy": "1. Write unit tests for each Zod schema validating happy path inputs\n2. Test edge cases: invalid email formats, short passwords, invalid hex colors\n3. Test schema refinements (password confirmation matching)\n4. Verify TypeScript types infer correctly from schemas\n5. Test getEstimatedCost function with various model/duration combinations",
         "priority": "high",
         "dependencies": [
-          1
+          "1"
         ],
         "status": "pending",
         "subtasks": [
@@ -131,7 +150,8 @@
             "dependencies": [],
             "details": "Create src/types/auth.ts file with the following schemas:\n\n1. registerSchema - z.object with email (z.string().email()), password (z.string().min(8)), and confirmPassword (z.string()), using .refine() to validate password matching with error path on confirmPassword field\n\n2. loginSchema - z.object with email (z.string().email()) and password (z.string().min(1))\n\n3. passwordResetRequestSchema - z.object with just email (z.string().email())\n\n4. passwordResetSchema - z.object with token (z.string().min(1)), password (z.string().min(8)), and confirmPassword (z.string()), with .refine() for password matching\n\n5. Export inferred TypeScript types using z.infer<typeof schemaName> for RegisterInput, LoginInput, PasswordResetRequestInput, and PasswordResetInput",
             "status": "pending",
-            "testStrategy": "Write unit tests validating: valid inputs pass validation, invalid emails are rejected, passwords under 8 chars fail, password mismatch triggers confirmPassword error, empty required fields fail validation"
+            "testStrategy": "Write unit tests validating: valid inputs pass validation, invalid emails are rejected, passwords under 8 chars fail, password mismatch triggers confirmPassword error, empty required fields fail validation",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -142,7 +162,8 @@
             ],
             "details": "Create src/types/brand.ts file with:\n\n1. Define hexColorRegex constant: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\n\n2. brandSchema - z.object with:\n   - name: z.string().min(1).max(100)\n   - logoUrl: z.string().url().optional().nullable()\n   - primaryColor: z.string().regex(hexColorRegex).default('#000000')\n   - secondaryColor: z.string().regex(hexColorRegex).default('#ffffff')\n   - accentColor: z.string().regex(hexColorRegex).default('#3b82f6')\n   - voiceDescription: z.string().max(500).optional().nullable()\n   - industry: z.string().default('other')\n\n3. INDUSTRIES const array with 'as const' assertion: ['technology', 'retail', 'food', 'health', 'finance', 'education', 'entertainment', 'travel', 'fashion', 'other']\n\n4. Export BrandInput type using z.infer<typeof brandSchema>",
             "status": "pending",
-            "testStrategy": "Test valid hex colors (#fff, #ffffff, #ABC123), invalid hex colors (fff, #gggggg, #12345), brand name length limits, URL validation for logoUrl, and default values are applied correctly"
+            "testStrategy": "Test valid hex colors (#fff, #ffffff, #ABC123), invalid hex colors (fff, #gggggg, #12345), brand name length limits, URL validation for logoUrl, and default values are applied correctly",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -153,7 +174,8 @@
             ],
             "details": "Create src/types/generation.ts file with:\n\n1. VIDEO_MODELS const array with 'as const':\n   - { id: 'veo-3.1', label: 'Veo 3.1 (Best quality)', price: 0.40, unit: '$/second' }\n   - { id: 'veo-3.1-fast', label: 'Veo 3.1 Fast', price: 0.15, unit: '$/second' }\n   - { id: 'veo-3', label: 'Veo 3', price: 0.40, unit: '$/second' }\n   - { id: 'veo-2', label: 'Veo 2 (Budget)', price: 0.35, unit: '$/second' }\n\n2. IMAGE_MODELS const array with pricing info\n\n3. generateVideoSchema - z.object with prompt, model (z.enum of model ids), aspectRatio (9:16, 16:9), duration (z.enum([4, 6, 8])), resolution, includeBrand boolean\n\n4. generateImageSchema - z.object with prompt, model, aspectRatio (includes 1:1), resolution (includes 2K, 4K), includeBrand\n\n5. getEstimatedCost(modelId: string, duration?: number): number function that looks up model pricing and calculates cost\n\n6. Export GenerateVideoInput and GenerateImageInput types",
             "status": "pending",
-            "testStrategy": "Test schema validation for all enum values, test getEstimatedCost returns correct prices for video (price * duration) and image models, test invalid model IDs return 0, verify TypeScript types infer correctly"
+            "testStrategy": "Test schema validation for all enum values, test getEstimatedCost returns correct prices for video (price * duration) and image models, test invalid model IDs return 0, verify TypeScript types infer correctly",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -166,19 +188,23 @@
             ],
             "details": "1. Create src/types/api.ts with:\n   - ApiResponse<T> discriminated union type:\n     | { success: true; data: T }\n     | { success: false; error: string }\n   \n   - PaginatedResponse<T> type with properties:\n     - data: T[]\n     - page: number\n     - pageSize: number\n     - total: number\n     - hasMore: boolean\n\n2. Create src/types/index.ts barrel export file:\n   - export * from './auth'\n   - export * from './brand'\n   - export * from './generation'\n   - export * from './api'\n\nThis enables clean imports like: import { loginSchema, brandSchema, ApiResponse } from '@/types'",
             "status": "pending",
-            "testStrategy": "Verify TypeScript compiler accepts the generic types correctly, test that barrel exports work with import statements, verify discriminated union narrowing works with success property check"
+            "testStrategy": "Verify TypeScript compiler accepts the generic types correctly, test that barrel exports work with import statements, verify discriminated union narrowing works with success property check",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 4,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the TypeScript types and Zod schemas into subtasks covering: 1) Creating auth schemas in src/types/auth.ts (registerSchema, loginSchema, passwordResetRequestSchema, passwordResetSchema with refinements for password matching), 2) Creating brand schemas in src/types/brand.ts (brandSchema with hex color regex, INDUSTRIES const), 3) Creating generation schemas in src/types/generation.ts (VIDEO_MODELS/IMAGE_MODELS arrays with pricing, generateVideoSchema, generateImageSchema, getEstimatedCost function), 4) Creating API response types in src/types/api.ts (ApiResponse<T>, PaginatedResponse<T>), 5) Creating barrel export in src/types/index.ts"
       },
       {
-        "id": 4,
+        "id": "4",
         "title": "Implement Error Handling Utilities",
         "description": "Create centralized error handling utilities including custom error classes, error handler functions, and input validation helpers for consistent error management across the application.",
         "details": "1. Create custom error class (src/lib/utils/errors.ts):\n   ```typescript\n   export class AppError extends Error {\n     constructor(\n       message: string,\n       public statusCode: number = 500,\n       public code?: string\n     ) {\n       super(message)\n       this.name = 'AppError'\n     }\n\n     static badRequest(message: string, code?: string) {\n       return new AppError(message, 400, code)\n     }\n\n     static unauthorized(message = 'Unauthorized') {\n       return new AppError(message, 401, 'UNAUTHORIZED')\n     }\n\n     static forbidden(message = 'Forbidden') {\n       return new AppError(message, 403, 'FORBIDDEN')\n     }\n\n     static notFound(message = 'Not found') {\n       return new AppError(message, 404, 'NOT_FOUND')\n     }\n\n     static tooManyRequests(message = 'Too many requests') {\n       return new AppError(message, 429, 'RATE_LIMIT')\n     }\n\n     static internal(message = 'Internal server error') {\n       return new AppError(message, 500, 'INTERNAL_ERROR')\n     }\n   }\n\n   export function handleError(error: unknown): { message: string; statusCode: number; code?: string } {\n     if (error instanceof AppError) {\n       return { message: error.message, statusCode: error.statusCode, code: error.code }\n     }\n     if (error instanceof Error) {\n       console.error('Unhandled error:', error)\n       return { message: 'An unexpected error occurred', statusCode: 500 }\n     }\n     return { message: 'An unknown error occurred', statusCode: 500 }\n   }\n   ```\n\n2. Create validation helper (src/lib/utils/validation.ts):\n   ```typescript\n   import { ZodSchema, ZodError } from 'zod'\n   import { AppError } from './errors'\n\n   export function validateInput<T>(schema: ZodSchema<T>, data: unknown): T {\n     try {\n       return schema.parse(data)\n     } catch (error) {\n       if (error instanceof ZodError) {\n         const message = error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ')\n         throw AppError.badRequest(message, 'VALIDATION_ERROR')\n       }\n       throw error\n     }\n   }\n\n   export function formatZodErrors(error: ZodError): Record<string, string> {\n     const errors: Record<string, string> = {}\n     error.errors.forEach(err => {\n       const path = err.path.join('.')\n       errors[path] = err.message\n     })\n     return errors\n   }\n   ```\n\n3. Create API response helpers (src/lib/utils/api.ts):\n   ```typescript\n   import { NextResponse } from 'next/server'\n   import { handleError } from './errors'\n\n   export function successResponse<T>(data: T, status = 200) {\n     return NextResponse.json({ success: true, data }, { status })\n   }\n\n   export function errorResponse(error: unknown) {\n     const { message, statusCode, code } = handleError(error)\n     return NextResponse.json(\n       { success: false, error: message, code },\n       { status: statusCode }\n     )\n   }\n   ```\n\n4. Create barrel export (src/lib/utils/index.ts):\n   ```typescript\n   export * from './errors'\n   export * from './validation'\n   export * from './api'\n   export { cn } from './cn' // from shadcn\n   ```",
         "testStrategy": "1. Unit test AppError static methods create correct error types\n2. Test handleError returns proper format for AppError vs generic Error\n3. Test validateInput throws AppError for invalid Zod schemas\n4. Test formatZodErrors produces correct error object structure\n5. Integration test API response helpers return correct NextResponse format",
         "priority": "high",
         "dependencies": [
-          3
+          "3"
         ],
         "status": "pending",
         "subtasks": [
@@ -189,7 +215,8 @@
             "dependencies": [],
             "details": "Create src/lib/utils/errors.ts with:\n1. AppError class extending Error with constructor accepting message, statusCode (default 500), and optional code\n2. Set this.name = 'AppError' in constructor\n3. Implement static factory methods:\n   - badRequest(message, code?) - returns 400 error\n   - unauthorized(message = 'Unauthorized') - returns 401 with UNAUTHORIZED code\n   - forbidden(message = 'Forbidden') - returns 403 with FORBIDDEN code\n   - notFound(message = 'Not found') - returns 404 with NOT_FOUND code\n   - tooManyRequests(message = 'Too many requests') - returns 429 with RATE_LIMIT code\n   - internal(message = 'Internal server error') - returns 500 with INTERNAL_ERROR code\n4. Export handleError function that:\n   - Returns {message, statusCode, code} for AppError instances\n   - Logs and returns generic 500 error for standard Error instances\n   - Returns generic 500 error for unknown error types",
             "status": "pending",
-            "testStrategy": "Unit test each static factory method creates correct error type with proper statusCode and code. Test handleError returns proper format for AppError, generic Error, and unknown types. Verify console.error is called for unhandled errors."
+            "testStrategy": "Unit test each static factory method creates correct error type with proper statusCode and code. Test handleError returns proper format for AppError, generic Error, and unknown types. Verify console.error is called for unhandled errors.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -200,7 +227,8 @@
             ],
             "details": "Create src/lib/utils/validation.ts with:\n1. Import ZodSchema and ZodError from 'zod'\n2. Import AppError from './errors'\n3. Implement validateInput<T>(schema: ZodSchema<T>, data: unknown): T that:\n   - Calls schema.parse(data)\n   - Catches ZodError and transforms to AppError.badRequest with VALIDATION_ERROR code\n   - Formats error message by joining all error paths and messages\n   - Re-throws non-Zod errors unchanged\n4. Implement formatZodErrors(error: ZodError): Record<string, string> that:\n   - Iterates through error.errors\n   - Maps each error path (joined with '.') to its message\n   - Returns object for field-level error display",
             "status": "pending",
-            "testStrategy": "Test validateInput returns valid data for valid input. Test validateInput throws AppError with VALIDATION_ERROR code for invalid input. Test formatZodErrors correctly maps nested paths to messages. Test error message formatting includes field paths."
+            "testStrategy": "Test validateInput returns valid data for valid input. Test validateInput throws AppError with VALIDATION_ERROR code for invalid input. Test formatZodErrors correctly maps nested paths to messages. Test error message formatting includes field paths.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -212,21 +240,25 @@
             ],
             "details": "1. Create src/lib/utils/api.ts with:\n   - Import NextResponse from 'next/server'\n   - Import handleError from './errors'\n   - Implement successResponse<T>(data: T, status = 200) returning NextResponse.json({ success: true, data }, { status })\n   - Implement errorResponse(error: unknown) that uses handleError to extract error details and returns NextResponse.json({ success: false, error: message, code }, { status: statusCode })\n\n2. Create src/lib/utils/index.ts barrel export:\n   - Export * from './errors'\n   - Export * from './validation'\n   - Export * from './api'\n   - Export { cn } from './cn' (preserving existing shadcn utility)",
             "status": "pending",
-            "testStrategy": "Test successResponse returns correct JSON structure with success: true. Test errorResponse returns correct structure with success: false for AppError and generic errors. Test barrel export makes all utilities accessible from '@/lib/utils'. Verify cn export is preserved."
+            "testStrategy": "Test successResponse returns correct JSON structure with success: true. Test errorResponse returns correct structure with success: false for AppError and generic errors. Test barrel export makes all utilities accessible from '@/lib/utils'. Verify cn export is preserved.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 3,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Break down error handling utilities into subtasks covering: 1) Creating custom AppError class with static factory methods (badRequest, unauthorized, forbidden, notFound, tooManyRequests, internal) in src/lib/utils/errors.ts, 2) Creating validation helper with validateInput and formatZodErrors functions in src/lib/utils/validation.ts, 3) Creating API response helpers (successResponse, errorResponse) in src/lib/utils/api.ts using NextResponse, 4) Creating barrel export in src/lib/utils/index.ts"
       },
       {
-        "id": 5,
+        "id": "5",
         "title": "Implement Authentication System with NextAuth.js",
         "description": "Build complete authentication system including password hashing, session management, and auth API routes using NextAuth.js v5 (Auth.js) with credentials provider.",
         "details": "1. Install NextAuth.js:\n   ```bash\n   npm install next-auth@beta\n   ```\n\n2. Create password utilities (src/lib/auth/password.ts):\n   ```typescript\n   import bcrypt from 'bcryptjs'\n\n   const SALT_ROUNDS = 12\n\n   export async function hashPassword(password: string): Promise<string> {\n     return bcrypt.hash(password, SALT_ROUNDS)\n   }\n\n   export async function verifyPassword(password: string, hash: string): Promise<boolean> {\n     return bcrypt.compare(password, hash)\n   }\n   ```\n\n3. Create NextAuth configuration (src/lib/auth/index.ts):\n   ```typescript\n   import NextAuth from 'next-auth'\n   import Credentials from 'next-auth/providers/credentials'\n   import { prisma } from '@/lib/db'\n   import { verifyPassword } from './password'\n   import { loginSchema } from '@/types/auth'\n\n   export const { handlers, signIn, signOut, auth } = NextAuth({\n     providers: [\n       Credentials({\n         credentials: {\n           email: { label: 'Email', type: 'email' },\n           password: { label: 'Password', type: 'password' }\n         },\n         async authorize(credentials) {\n           const parsed = loginSchema.safeParse(credentials)\n           if (!parsed.success) return null\n\n           const user = await prisma.user.findUnique({\n             where: { email: parsed.data.email }\n           })\n           if (!user) return null\n\n           const valid = await verifyPassword(parsed.data.password, user.passwordHash)\n           if (!valid) return null\n\n           return { id: user.id, email: user.email }\n         }\n       })\n     ],\n     callbacks: {\n       jwt({ token, user }) {\n         if (user) token.id = user.id\n         return token\n       },\n       session({ session, token }) {\n         if (session.user) session.user.id = token.id as string\n         return session\n       }\n     },\n     pages: {\n       signIn: '/login'\n     }\n   })\n   ```\n\n4. Create auth route handler (src/app/api/auth/[...nextauth]/route.ts):\n   ```typescript\n   import { handlers } from '@/lib/auth'\n   export const { GET, POST } = handlers\n   ```\n\n5. Create registration endpoint (src/app/api/auth/register/route.ts):\n   ```typescript\n   import { NextRequest } from 'next/server'\n   import { prisma } from '@/lib/db'\n   import { hashPassword } from '@/lib/auth/password'\n   import { registerSchema } from '@/types/auth'\n   import { validateInput, successResponse, errorResponse, AppError } from '@/lib/utils'\n\n   export async function POST(req: NextRequest) {\n     try {\n       const body = await req.json()\n       const { email, password } = validateInput(registerSchema, body)\n\n       const existing = await prisma.user.findUnique({ where: { email } })\n       if (existing) throw AppError.badRequest('Email already registered')\n\n       const passwordHash = await hashPassword(password)\n       const user = await prisma.user.create({\n         data: { email, passwordHash },\n         select: { id: true, email: true }\n       })\n\n       return successResponse(user, 201)\n     } catch (error) {\n       return errorResponse(error)\n     }\n   }\n   ```\n\n6. Create session helper (src/lib/auth/session.ts):\n   ```typescript\n   import { auth } from './index'\n   import { cache } from 'react'\n\n   export const getSession = cache(async () => {\n     const session = await auth()\n     return session\n   })\n\n   export async function requireAuth() {\n     const session = await getSession()\n     if (!session?.user) throw new Error('Unauthorized')\n     return session.user\n   }\n   ```\n\n7. Add middleware for protected routes (src/middleware.ts):\n   ```typescript\n   export { auth as middleware } from '@/lib/auth'\n\n   export const config = {\n     matcher: ['/dashboard/:path*', '/generate/:path*', '/brand/:path*', '/history/:path*']\n   }\n   ```",
         "testStrategy": "1. Unit test hashPassword produces different hashes for same password (salt)\n2. Unit test verifyPassword correctly validates passwords\n3. Integration test registration creates user in database\n4. Integration test registration rejects duplicate emails\n5. Integration test login returns session for valid credentials\n6. Integration test login rejects invalid credentials\n7. E2E test full registration and login flow",
         "priority": "high",
         "dependencies": [
-          2,
-          3,
-          4
+          "2",
+          "3",
+          "4"
         ],
         "status": "pending",
         "subtasks": [
@@ -237,7 +269,8 @@
             "dependencies": [],
             "details": "Run `npm install next-auth@beta bcryptjs` and `npm install -D @types/bcryptjs`. Add environment variables to .env.local: NEXTAUTH_SECRET (generate with `openssl rand -base64 32`), NEXTAUTH_URL (http://localhost:3000 for development). The NEXTAUTH_SECRET is critical for JWT encryption and session security. Update .env.example to document required auth variables without exposing actual values.",
             "status": "pending",
-            "testStrategy": "Verify packages are installed by checking package.json. Ensure TypeScript types resolve correctly. Test that environment variables are accessible via process.env in a simple test file."
+            "testStrategy": "Verify packages are installed by checking package.json. Ensure TypeScript types resolve correctly. Test that environment variables are accessible via process.env in a simple test file.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -248,7 +281,8 @@
             ],
             "details": "Create src/lib/auth/password.ts with two exported async functions: hashPassword(password: string) that uses bcrypt.hash with SALT_ROUNDS=12 (balance of security and performance), and verifyPassword(password: string, hash: string) that uses bcrypt.compare. Use a constant for salt rounds to make it configurable. Both functions should be async as bcrypt operations are CPU-intensive and should not block the event loop. Export types for function signatures.",
             "status": "pending",
-            "testStrategy": "Unit test that hashPassword produces valid bcrypt hash format. Test that same password produces different hashes (salt working). Test verifyPassword returns true for correct password and false for incorrect. Test with edge cases: empty strings, very long passwords, special characters."
+            "testStrategy": "Unit test that hashPassword produces valid bcrypt hash format. Test that same password produces different hashes (salt working). Test verifyPassword returns true for correct password and false for incorrect. Test with edge cases: empty strings, very long passwords, special characters.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -259,7 +293,8 @@
             ],
             "details": "Create src/lib/auth/index.ts exporting { handlers, signIn, signOut, auth } from NextAuth(). Configure Credentials provider with email/password fields and authorize callback that: 1) Validates input with loginSchema from @/types/auth, 2) Queries user by email via Prisma, 3) Verifies password using verifyPassword utility, 4) Returns user object {id, email} or null. Implement jwt callback to add user.id to token, session callback to expose user.id in session.user. Set pages.signIn to '/login' for custom login page redirect. Handle TypeScript module augmentation for extended session types.",
             "status": "pending",
-            "testStrategy": "Integration test that authorize returns null for invalid credentials. Test that authorize returns user object for valid credentials. Test jwt callback properly adds id to token. Test session callback exposes id in session.user. Verify custom signIn page redirect works."
+            "testStrategy": "Integration test that authorize returns null for invalid credentials. Test that authorize returns user object for valid credentials. Test jwt callback properly adds id to token. Test session callback exposes id in session.user. Verify custom signIn page redirect works.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -270,7 +305,8 @@
             ],
             "details": "Create the directory structure src/app/api/auth/[...nextauth]/ and add route.ts file. Import { handlers } from '@/lib/auth' and re-export as { GET, POST }. This catch-all route handles all NextAuth endpoints: /api/auth/signin, /api/auth/signout, /api/auth/callback/credentials, /api/auth/session, /api/auth/csrf. The [...nextauth] dynamic segment captures all auth-related paths. Ensure the file uses the App Router format with named exports for HTTP methods.",
             "status": "pending",
-            "testStrategy": "Test GET /api/auth/session returns session or null. Test POST /api/auth/callback/credentials with valid credentials creates session. Test CSRF token endpoint returns valid token. Test sign-out clears session cookie."
+            "testStrategy": "Test GET /api/auth/session returns session or null. Test POST /api/auth/callback/credentials with valid credentials creates session. Test CSRF token endpoint returns valid token. Test sign-out clears session cookie.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -281,7 +317,8 @@
             ],
             "details": "Create src/app/api/auth/register/route.ts with POST handler. Parse request body as JSON, validate with registerSchema (from @/types/auth) using validateInput utility. Check for existing user with same email via prisma.user.findUnique - throw AppError.badRequest('Email already registered') if found. Hash password using hashPassword utility. Create user with prisma.user.create including email and passwordHash fields, selecting only id and email in response. Return successResponse with 201 status. Wrap in try-catch using errorResponse for error handling. Consider rate limiting for production.",
             "status": "pending",
-            "testStrategy": "Integration test successful registration creates user in database. Test registration rejects duplicate email with 400 status. Test registration validates email format and password requirements. Test response excludes sensitive data (passwordHash). Test malformed JSON returns appropriate error."
+            "testStrategy": "Integration test successful registration creates user in database. Test registration rejects duplicate email with 400 status. Test registration validates email format and password requirements. Test response excludes sensitive data (passwordHash). Test malformed JSON returns appropriate error.",
+            "parentId": "undefined"
           },
           {
             "id": 6,
@@ -293,19 +330,23 @@
             ],
             "details": "Create src/lib/auth/session.ts with: 1) getSession wrapped in React cache() for request deduplication - calls auth() from NextAuth config, 2) requireAuth async function that calls getSession, throws Error('Unauthorized') if no session.user, returns session.user otherwise. Create src/middleware.ts that re-exports auth as middleware from '@/lib/auth'. Configure matcher array to protect routes: '/dashboard/:path*', '/generate/:path*', '/brand/:path*', '/history/:path*'. The middleware will automatically redirect unauthenticated users to the signIn page configured in NextAuth.",
             "status": "pending",
-            "testStrategy": "Test getSession returns null for unauthenticated requests. Test getSession returns session for authenticated requests. Test requireAuth throws for unauthenticated. Test middleware redirects unauthenticated users from protected routes to /login. Test middleware allows authenticated users through. Test unprotected routes remain accessible."
+            "testStrategy": "Test getSession returns null for unauthenticated requests. Test getSession returns session for authenticated requests. Test requireAuth throws for unauthenticated. Test middleware redirects unauthenticated users from protected routes to /login. Test middleware allows authenticated users through. Test unprotected routes remain accessible.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 6,
+        "expansionPrompt": "Break down the authentication system into subtasks covering: 1) Installing next-auth@beta and configuring environment variables, 2) Creating password utilities (hashPassword, verifyPassword) with bcryptjs in src/lib/auth/password.ts, 3) Creating NextAuth configuration with Credentials provider in src/lib/auth/index.ts including jwt and session callbacks, 4) Creating the auth route handler in src/app/api/auth/[...nextauth]/route.ts, 5) Creating the registration endpoint in src/app/api/auth/register/route.ts with validation and duplicate email checking, 6) Creating session helper utilities (getSession, requireAuth) in src/lib/auth/session.ts with React cache, 7) Implementing middleware.ts for protected route matching"
       },
       {
-        "id": 6,
+        "id": "6",
         "title": "Build Authentication UI Components and Pages",
         "description": "Create authentication form components (LoginForm, SignupForm, PasswordResetForm) and corresponding pages (/login, /signup, /forgot-password, /reset-password).",
         "details": "1. Create login form component (src/components/auth/login-form.tsx):\n   ```typescript\n   'use client'\n   import { useState } from 'react'\n   import { useForm } from 'react-hook-form'\n   import { zodResolver } from '@hookform/resolvers/zod'\n   import { signIn } from 'next-auth/react'\n   import { useRouter } from 'next/navigation'\n   import { loginSchema, LoginInput } from '@/types/auth'\n   import { Button } from '@/components/ui/button'\n   import { Input } from '@/components/ui/input'\n   import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'\n\n   export function LoginForm() {\n     const router = useRouter()\n     const [error, setError] = useState<string | null>(null)\n     const form = useForm<LoginInput>({\n       resolver: zodResolver(loginSchema),\n       defaultValues: { email: '', password: '' }\n     })\n\n     async function onSubmit(data: LoginInput) {\n       setError(null)\n       const result = await signIn('credentials', {\n         email: data.email,\n         password: data.password,\n         redirect: false\n       })\n       if (result?.error) {\n         setError('Invalid email or password')\n       } else {\n         router.push('/dashboard')\n         router.refresh()\n       }\n     }\n\n     return (\n       <Form {...form}>\n         <form onSubmit={form.handleSubmit(onSubmit)} className=\"space-y-4\">\n           {error && <p className=\"text-sm text-red-500\">{error}</p>}\n           <FormField\n             control={form.control}\n             name=\"email\"\n             render={({ field }) => (\n               <FormItem>\n                 <FormLabel>Email</FormLabel>\n                 <FormControl>\n                   <Input type=\"email\" {...field} />\n                 </FormControl>\n                 <FormMessage />\n               </FormItem>\n             )}\n           />\n           <FormField\n             control={form.control}\n             name=\"password\"\n             render={({ field }) => (\n               <FormItem>\n                 <FormLabel>Password</FormLabel>\n                 <FormControl>\n                   <Input type=\"password\" {...field} />\n                 </FormControl>\n                 <FormMessage />\n               </FormItem>\n             )}\n           />\n           <Button type=\"submit\" className=\"w-full\" disabled={form.formState.isSubmitting}>\n             {form.formState.isSubmitting ? 'Signing in...' : 'Sign In'}\n           </Button>\n         </form>\n       </Form>\n     )\n   }\n   ```\n\n2. Create signup form component (src/components/auth/signup-form.tsx) - similar structure with registration endpoint call\n\n3. Create auth pages:\n   - src/app/(auth)/login/page.tsx\n   - src/app/(auth)/signup/page.tsx\n   - src/app/(auth)/forgot-password/page.tsx\n   - src/app/(auth)/reset-password/page.tsx\n\n4. Create auth layout (src/app/(auth)/layout.tsx):\n   ```typescript\n   import { redirect } from 'next/navigation'\n   import { getSession } from '@/lib/auth/session'\n\n   export default async function AuthLayout({ children }: { children: React.ReactNode }) {\n     const session = await getSession()\n     if (session) redirect('/dashboard')\n     return (\n       <div className=\"min-h-screen flex items-center justify-center bg-gray-50\">\n         <div className=\"w-full max-w-md p-8\">\n           {children}\n         </div>\n       </div>\n     )\n   }\n   ```\n\n5. Add links between auth pages (Login -> Signup, Forgot Password links)",
         "testStrategy": "1. Component test: LoginForm renders all fields correctly\n2. Component test: Form validation displays error messages\n3. Component test: Submit button shows loading state\n4. E2E test: Navigate to /login, fill form, submit, verify redirect to dashboard\n5. E2E test: Navigate to /signup, complete registration, verify redirect\n6. E2E test: Authenticated user visiting /login is redirected to dashboard",
         "priority": "high",
         "dependencies": [
-          5
+          "5"
         ],
         "status": "pending",
         "subtasks": [
@@ -316,7 +357,8 @@
             "dependencies": [],
             "details": "Create src/app/(auth)/layout.tsx as a server component that imports getSession from @/lib/auth/session. Check if user has active session and redirect to /dashboard using next/navigation redirect(). Wrap children in a centered container with min-h-screen, flex, items-center, justify-center, and a max-w-md card-style wrapper for consistent auth page styling.",
             "status": "pending",
-            "testStrategy": "Test that authenticated users are redirected to dashboard when accessing /login or /signup. Test that unauthenticated users see the auth form content."
+            "testStrategy": "Test that authenticated users are redirected to dashboard when accessing /login or /signup. Test that unauthenticated users see the auth form content.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -327,7 +369,8 @@
             ],
             "details": "Create src/components/auth/login-form.tsx as a 'use client' component. Use useForm from react-hook-form with zodResolver and loginSchema from @/types/auth. Implement onSubmit handler calling signIn('credentials', {...}) with redirect: false. Handle result.error by setting error state. On success, call router.push('/dashboard') and router.refresh(). Use shadcn/ui Form, FormField, FormItem, FormLabel, FormControl, FormMessage, Input, and Button components. Show loading spinner in button during form.formState.isSubmitting.",
             "status": "pending",
-            "testStrategy": "Component test: LoginForm renders email and password fields. Test form validation shows error for invalid email format. Test submit button is disabled and shows loading text during submission. Test error message appears on invalid credentials."
+            "testStrategy": "Component test: LoginForm renders email and password fields. Test form validation shows error for invalid email format. Test submit button is disabled and shows loading text during submission. Test error message appears on invalid credentials.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -338,7 +381,8 @@
             ],
             "details": "Create src/components/auth/signup-form.tsx as a 'use client' component. Use useForm with zodResolver and registerSchema (includes confirmPassword field). On submit, POST to /api/auth/register with email and password. Handle errors (display API error message or generic error). On success (201), either auto-login via signIn or redirect to /login with success message. Include all form fields: email, password, confirmPassword with proper FormField components and validation messages.",
             "status": "pending",
-            "testStrategy": "Component test: SignupForm renders all three fields (email, password, confirmPassword). Test validation shows error when passwords don't match. Test successful registration calls register API and handles response. Test error state displays API error messages."
+            "testStrategy": "Component test: SignupForm renders all three fields (email, password, confirmPassword). Test validation shows error when passwords don't match. Test successful registration calls register API and handles response. Test error state displays API error messages.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -349,7 +393,8 @@
             ],
             "details": "Create src/components/auth/forgot-password-form.tsx with email field only. On submit, POST to /api/auth/forgot-password (can show success message without actual email sending for MVP). Create src/components/auth/reset-password-form.tsx accepting token from URL params, with newPassword and confirmPassword fields. POST to /api/auth/reset-password with token and new password. Both forms use react-hook-form with appropriate Zod schemas (create passwordResetSchema in @/types/auth if needed).",
             "status": "pending",
-            "testStrategy": "Test ForgotPasswordForm renders email field and submits correctly. Test ResetPasswordForm validates password confirmation matches. Test both forms handle success and error states appropriately."
+            "testStrategy": "Test ForgotPasswordForm renders email field and submits correctly. Test ResetPasswordForm validates password confirmation matches. Test both forms handle success and error states appropriately.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -362,20 +407,24 @@
             ],
             "details": "Create src/app/(auth)/login/page.tsx importing LoginForm, with heading 'Sign In' and links to /signup ('Create account') and /forgot-password ('Forgot password?'). Create src/app/(auth)/signup/page.tsx importing SignupForm with heading 'Create Account' and link to /login ('Already have an account?'). Create src/app/(auth)/forgot-password/page.tsx with ForgotPasswordForm and link back to /login. Create src/app/(auth)/reset-password/page.tsx with ResetPasswordForm accepting searchParams for token. Use consistent styling with Card component wrapper and Link from next/link for navigation.",
             "status": "pending",
-            "testStrategy": "E2E test: Navigate to /login, verify form renders and links work. E2E test: Complete signup flow from /signup to /login. Test all navigation links between auth pages are functional. Test reset-password page receives token from URL."
+            "testStrategy": "E2E test: Navigate to /login, verify form renders and links work. E2E test: Complete signup flow from /signup to /login. Test all navigation links between auth pages are functional. Test reset-password page receives token from URL.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down authentication UI into subtasks covering: 1) Creating LoginForm component with react-hook-form, zodResolver, signIn from next-auth/react, error handling, and loading state, 2) Creating SignupForm component with similar pattern but calling /api/auth/register, 3) Creating PasswordResetForm and ForgotPasswordForm components (can be placeholder for MVP), 4) Creating auth layout in src/app/(auth)/layout.tsx with redirect logic for authenticated users, 5) Creating auth pages (/login, /signup, /forgot-password, /reset-password) using the form components, 6) Adding navigation links between auth pages"
       },
       {
-        "id": 7,
+        "id": "7",
         "title": "Implement Brand Management API and UI",
         "description": "Create brand profile CRUD API endpoints and build brand management UI including BrandForm, ColorPicker, LogoUploader components and the /brand page.",
         "details": "1. Create brand API route (src/app/api/brand/route.ts):\n   ```typescript\n   import { NextRequest } from 'next/server'\n   import { prisma } from '@/lib/db'\n   import { requireAuth } from '@/lib/auth/session'\n   import { brandSchema } from '@/types/brand'\n   import { validateInput, successResponse, errorResponse } from '@/lib/utils'\n\n   export async function GET() {\n     try {\n       const user = await requireAuth()\n       const brand = await prisma.brand.findUnique({\n         where: { userId: user.id }\n       })\n       return successResponse(brand)\n     } catch (error) {\n       return errorResponse(error)\n     }\n   }\n\n   export async function POST(req: NextRequest) {\n     try {\n       const user = await requireAuth()\n       const body = await req.json()\n       const data = validateInput(brandSchema, body)\n\n       const brand = await prisma.brand.upsert({\n         where: { userId: user.id },\n         create: { ...data, userId: user.id },\n         update: data\n       })\n       return successResponse(brand)\n     } catch (error) {\n       return errorResponse(error)\n     }\n   }\n   ```\n\n2. Create color picker component (src/components/brand/color-picker.tsx):\n   ```typescript\n   'use client'\n   import { Input } from '@/components/ui/input'\n   import { Label } from '@/components/ui/label'\n\n   interface ColorPickerProps {\n     label: string\n     value: string\n     onChange: (value: string) => void\n   }\n\n   export function ColorPicker({ label, value, onChange }: ColorPickerProps) {\n     return (\n       <div className=\"space-y-2\">\n         <Label>{label}</Label>\n         <div className=\"flex gap-2\">\n           <input\n             type=\"color\"\n             value={value}\n             onChange={(e) => onChange(e.target.value)}\n             className=\"h-10 w-16 cursor-pointer rounded border\"\n           />\n           <Input\n             value={value}\n             onChange={(e) => onChange(e.target.value)}\n             placeholder=\"#000000\"\n             className=\"font-mono\"\n           />\n         </div>\n       </div>\n     )\n   }\n   ```\n\n3. Create logo uploader (src/components/brand/logo-uploader.tsx):\n   - Accept PNG, JPG, SVG up to 5MB\n   - Preview uploaded logo\n   - Store temporarily (local state) for MVP, or integrate with upload service\n\n4. Create brand form (src/components/brand/brand-form.tsx):\n   - Combine name, industry, colors, voice description, logo\n   - Use react-hook-form with brandSchema validation\n   - Save to /api/brand on submit\n\n5. Create brand page (src/app/(dashboard)/brand/page.tsx):\n   ```typescript\n   import { BrandForm } from '@/components/brand/brand-form'\n\n   export default function BrandPage() {\n     return (\n       <div className=\"container max-w-2xl py-8\">\n         <h1 className=\"text-2xl font-bold mb-6\">Brand Profile</h1>\n         <BrandForm />\n       </div>\n     )\n   }\n   ```\n\n6. Add industry dropdown with predefined options from INDUSTRIES constant",
         "testStrategy": "1. Integration test: GET /api/brand returns null for new user\n2. Integration test: POST /api/brand creates brand profile\n3. Integration test: POST /api/brand updates existing profile (upsert)\n4. Component test: ColorPicker updates value on color/text input\n5. Component test: BrandForm validates all fields\n6. E2E test: Navigate to /brand, fill form, submit, verify saved data persists on refresh",
         "priority": "medium",
         "dependencies": [
-          5,
-          6
+          "5",
+          "6"
         ],
         "status": "pending",
         "subtasks": [
@@ -386,7 +435,8 @@
             "dependencies": [],
             "details": "Create the API route file with proper imports from @/lib/db (prisma), @/lib/auth/session (requireAuth), @/types/brand (brandSchema), and @/lib/utils (validateInput, successResponse, errorResponse). Implement GET handler that uses requireAuth() to get authenticated user, then queries prisma.brand.findUnique with userId. Implement POST handler that parses request body, validates against brandSchema, and uses prisma.brand.upsert to create new or update existing brand profile. Both handlers should wrap logic in try-catch and return appropriate responses using successResponse/errorResponse utilities.",
             "status": "pending",
-            "testStrategy": "Integration test: GET /api/brand returns null for new user without brand profile. Integration test: POST /api/brand creates brand profile for first-time user. Integration test: POST /api/brand updates existing profile (upsert behavior). Test unauthorized access returns 401."
+            "testStrategy": "Integration test: GET /api/brand returns null for new user without brand profile. Integration test: POST /api/brand creates brand profile for first-time user. Integration test: POST /api/brand updates existing profile (upsert behavior). Test unauthorized access returns 401.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -395,7 +445,8 @@
             "dependencies": [],
             "details": "Create client component ('use client' directive) that accepts label, value, and onChange props via ColorPickerProps interface. Render a Label component from @/components/ui/label, followed by a flex container with gap-2 containing: 1) Native color input (type='color') with proper styling (h-10 w-16 cursor-pointer rounded border), 2) Text Input from @/components/ui/input for hex value entry with font-mono class and #000000 placeholder. Both inputs should call onChange with their values, ensuring bi-directional sync. Include proper TypeScript typing for all props.",
             "status": "pending",
-            "testStrategy": "Component test: Changing color picker updates the hex text input value. Component test: Entering valid hex in text input updates color picker. Component test: Label renders correctly. Test that onChange is called with correct hex value format."
+            "testStrategy": "Component test: Changing color picker updates the hex text input value. Component test: Entering valid hex in text input updates color picker. Component test: Label renders correctly. Test that onChange is called with correct hex value format.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -404,7 +455,8 @@
             "dependencies": [],
             "details": "Create client component with file input accepting image/png, image/jpeg, image/svg+xml MIME types. Implement file validation: check file size <= 5MB (5 * 1024 * 1024 bytes), validate file type against allowed list. Use FileReader API or URL.createObjectURL to generate preview URL for display. Store file in local state for MVP (useState for file and preview URL). Show upload area with drag-drop styling or click-to-upload button. Display preview image when logo is uploaded with option to remove/replace. Include error state for invalid files with appropriate user feedback. Export the uploaded file or base64 data via onChange callback for parent form consumption.",
             "status": "pending",
-            "testStrategy": "Component test: Rejects files larger than 5MB with error message. Component test: Rejects non-image file types. Component test: Accepts valid PNG/JPG/SVG files. Component test: Displays preview after successful upload. Component test: Remove button clears the uploaded file."
+            "testStrategy": "Component test: Rejects files larger than 5MB with error message. Component test: Rejects non-image file types. Component test: Accepts valid PNG/JPG/SVG files. Component test: Displays preview after successful upload. Component test: Remove button clears the uploaded file.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -417,7 +469,8 @@
             ],
             "details": "Create client component using react-hook-form with zodResolver for brandSchema validation. Fetch existing brand data on mount using GET /api/brand and populate form defaults. Include form fields: brand name (text input), industry (dropdown/select using INDUSTRIES constant), primary and secondary colors (using ColorPicker component), brand voice description (textarea), and logo (using LogoUploader component). Implement form submission that POSTs to /api/brand endpoint. Show loading states during fetch and submit operations. Display success toast on save, error messages on failure. Use proper form structure with Labels, error message displays for each field, and submit button with loading indicator.",
             "status": "pending",
-            "testStrategy": "Component test: Form loads and displays existing brand data. Component test: Validation errors display for required fields. Component test: Successful submit calls POST /api/brand with form data. Component test: Loading state shown during API operations. Integration test: Full form flow from load to save."
+            "testStrategy": "Component test: Form loads and displays existing brand data. Component test: Validation errors display for required fields. Component test: Successful submit calls POST /api/brand with form data. Component test: Loading state shown during API operations. Integration test: Full form flow from load to save.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -428,20 +481,24 @@
             ],
             "details": "Create the page component in the (dashboard) route group to inherit dashboard layout. Import and render BrandForm component. Apply container styling with max-w-2xl for optimal form width and py-8 for vertical padding. Add page heading 'Brand Profile' with text-2xl font-bold mb-6 styling. Ensure the page is protected by dashboard authentication middleware. Consider adding breadcrumb or back navigation if dashboard has that pattern. Page should be server component that renders client BrandForm, allowing for potential server-side data fetching in future iterations.",
             "status": "pending",
-            "testStrategy": "Integration test: Page renders successfully at /brand route. Integration test: Page is protected and redirects unauthenticated users. Component test: BrandForm is rendered within proper container. Visual test: Page layout matches design with heading and form styling."
+            "testStrategy": "Integration test: Page renders successfully at /brand route. Integration test: Page is protected and redirects unauthenticated users. Component test: BrandForm is rendered within proper container. Visual test: Page layout matches design with heading and form styling.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down brand management into subtasks covering: 1) Creating brand API route with GET (fetch user's brand) and POST (upsert brand) handlers in src/app/api/brand/route.ts, 2) Creating ColorPicker component with color input and hex text input synchronization, 3) Creating LogoUploader component with file validation (PNG/JPG/SVG, 5MB max), preview display, and temporary storage, 4) Creating BrandForm component combining all brand fields with react-hook-form and brandSchema validation, 5) Creating /brand page with the BrandForm and proper data fetching/hydration"
       },
       {
-        "id": 8,
+        "id": "8",
         "title": "Integrate Google Veo and Gemini Image AI APIs",
         "description": "Implement AI client modules for Google Veo (video generation) and Gemini Image (image generation) APIs with model selection, polling for async video completion, and prompt enhancement.",
         "details": "1. Install Google AI SDK:\n   ```bash\n   npm install @google/generative-ai\n   ```\n\n2. Create models config (src/lib/ai/models.ts):\n   ```typescript\n   import { VIDEO_MODELS, IMAGE_MODELS } from '@/types/generation'\n\n   export { VIDEO_MODELS, IMAGE_MODELS }\n\n   export function getVideoModel(id: string) {\n     return VIDEO_MODELS.find(m => m.id === id) ?? VIDEO_MODELS[1] // default: veo-3.1-fast\n   }\n\n   export function getImageModel(id: string) {\n     return IMAGE_MODELS.find(m => m.id === id) ?? IMAGE_MODELS[1] // default: gemini-2.5-flash-image\n   }\n   ```\n\n3. Create Veo client (src/lib/ai/veo.ts):\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateVideoInput } from '@/types/generation'\n   import { AppError } from '@/lib/utils'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface VideoGenerationResult {\n     videoUrl: string\n     durationSeconds: number\n   }\n\n   export async function generateVideo(\n     input: GenerateVideoInput,\n     brandContext?: string\n   ): Promise<VideoGenerationResult> {\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n\n     // Use the appropriate Veo model based on input.model\n     // Note: Actual API structure depends on Google's Veo API docs\n     // This is a placeholder implementation\n     const model = genAI.getGenerativeModel({ model: input.model })\n\n     // For video generation, Google uses async operations with polling\n     const operation = await model.generateContent({\n       contents: [{ role: 'user', parts: [{ text: prompt }] }],\n       generationConfig: {\n         // Video-specific config\n         aspectRatio: input.aspectRatio,\n         durationSeconds: input.duration,\n         resolution: input.resolution\n       }\n     })\n\n     // Poll for completion (placeholder - actual implementation depends on API)\n     const result = await pollForCompletion(operation)\n     return result\n   }\n\n   async function pollForCompletion(operation: any, maxAttempts = 60): Promise<VideoGenerationResult> {\n     // Implement polling logic with exponential backoff\n     // Throw AppError.internal if timeout\n   }\n   ```\n\n4. Create Gemini Image client (src/lib/ai/gemini-image.ts):\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateImageInput } from '@/types/generation'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface ImageGenerationResult {\n     imageData: string // base64 or URL\n     mimeType: string\n   }\n\n   export async function generateImage(\n     input: GenerateImageInput,\n     brandContext?: string\n   ): Promise<ImageGenerationResult> {\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n\n     const model = genAI.getGenerativeModel({ model: input.model })\n\n     const result = await model.generateContent({\n       contents: [{ role: 'user', parts: [{ text: prompt }] }],\n       generationConfig: {\n         // Image-specific config\n         aspectRatio: input.aspectRatio,\n         resolution: input.resolution\n       }\n     })\n\n     // Extract image from response\n     return {\n       imageData: result.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data ?? '',\n       mimeType: 'image/png'\n     }\n   }\n   ```\n\n5. Create prompt enhancer (src/lib/ai/prompt-enhancer.ts):\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export async function enhancePrompt(prompt: string, brandContext?: string): Promise<string> {\n     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })\n\n     const systemPrompt = `You are a prompt engineer specializing in AI content generation.\n     Improve the following prompt for ${brandContext ? 'brand-aligned' : ''} social media content generation.\n     Make it more descriptive, specific, and likely to produce high-quality results.\n     Keep the enhanced prompt under 500 characters.\n     ${brandContext ? `Brand context: ${brandContext}` : ''}`\n\n     const result = await model.generateContent([\n       { role: 'user', parts: [{ text: `${systemPrompt}\\n\\nOriginal prompt: ${prompt}` }] }\n     ])\n\n     return result.response.text() || prompt\n   }\n   ```",
         "testStrategy": "1. Unit test with mocked Google AI SDK for video generation flow\n2. Unit test with mocked SDK for image generation flow\n3. Unit test prompt enhancer improves prompt quality\n4. Integration test (separate suite) with real API for video generation\n5. Integration test with real API for image generation\n6. Test error handling for API failures, timeouts, rate limits\n7. Test polling mechanism with various completion scenarios",
         "priority": "high",
         "dependencies": [
-          3,
-          4
+          "3",
+          "4"
         ],
         "status": "pending",
         "subtasks": [
@@ -452,7 +509,8 @@
             "dependencies": [],
             "details": "1. Install the Google AI SDK:\n   ```bash\n   npm install @google/generative-ai\n   ```\n\n2. Create src/lib/ai/models.ts:\n   ```typescript\n   import { VIDEO_MODELS, IMAGE_MODELS } from '@/types/generation'\n\n   export { VIDEO_MODELS, IMAGE_MODELS }\n\n   export function getVideoModel(id: string) {\n     return VIDEO_MODELS.find(m => m.id === id) ?? VIDEO_MODELS[1] // default: veo-3.1-fast\n   }\n\n   export function getImageModel(id: string) {\n     return IMAGE_MODELS.find(m => m.id === id) ?? IMAGE_MODELS[1] // default: gemini-2.5-flash-image\n   }\n   ```\n\n3. Ensure GOOGLE_AI_API_KEY is documented in .env.example\n4. Export helper functions for use by Veo and Gemini Image clients",
             "status": "pending",
-            "testStrategy": "Unit test getVideoModel returns correct model for valid ID and default for invalid ID. Unit test getImageModel returns correct model for valid ID and default for invalid ID. Verify SDK installation by importing GoogleGenerativeAI."
+            "testStrategy": "Unit test getVideoModel returns correct model for valid ID and default for invalid ID. Unit test getImageModel returns correct model for valid ID and default for invalid ID. Verify SDK installation by importing GoogleGenerativeAI.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -463,7 +521,8 @@
             ],
             "details": "1. Create src/lib/ai/veo.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateVideoInput } from '@/types/generation'\n   import { AppError } from '@/lib/utils'\n   import { getVideoModel } from './models'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface VideoGenerationResult {\n     videoUrl: string\n     durationSeconds: number\n   }\n\n   export async function generateVideo(\n     input: GenerateVideoInput,\n     brandContext?: string\n   ): Promise<VideoGenerationResult> {\n     const model = getVideoModel(input.model)\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n     \n     const genModel = genAI.getGenerativeModel({ model: model.id })\n     // Initiate async video generation operation\n     // Return operation ID for polling\n   }\n   ```\n\n2. Consult Google's Veo API documentation for exact request/response structure\n3. Handle model-specific configurations (aspect ratio, duration, resolution)\n4. Return operation handle for async polling",
             "status": "pending",
-            "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateVideo constructs correct prompt with and without brand context. Test model selection passes correct model ID. Mock async operation initiation."
+            "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateVideo constructs correct prompt with and without brand context. Test model selection passes correct model ID. Mock async operation initiation.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -474,7 +533,8 @@
             ],
             "details": "1. Add polling implementation to src/lib/ai/veo.ts:\n   ```typescript\n   async function pollForCompletion(\n     operation: any,\n     maxAttempts = 60,\n     initialDelayMs = 2000\n   ): Promise<VideoGenerationResult> {\n     let attempts = 0\n     let delay = initialDelayMs\n\n     while (attempts < maxAttempts) {\n       const status = await checkOperationStatus(operation)\n       \n       if (status.done) {\n         if (status.error) {\n           throw AppError.internal(`Video generation failed: ${status.error.message}`)\n         }\n         return {\n           videoUrl: status.result.videoUrl,\n           durationSeconds: status.result.duration\n         }\n       }\n\n       await sleep(delay)\n       delay = Math.min(delay * 1.5, 30000) // Cap at 30s\n       attempts++\n     }\n\n     throw AppError.internal('Video generation timed out')\n   }\n\n   function sleep(ms: number): Promise<void> {\n     return new Promise(resolve => setTimeout(resolve, ms))\n   }\n   ```\n\n2. Implement exponential backoff starting at 2s, capping at 30s\n3. Set reasonable timeout (60 attempts ~= 5-10 minutes max)\n4. Handle operation status responses per Google API docs",
             "status": "pending",
-            "testStrategy": "Unit test polling with mock operation that completes after N attempts. Test exponential backoff delay calculation. Test timeout throws AppError after max attempts. Test error status throws AppError with message."
+            "testStrategy": "Unit test polling with mock operation that completes after N attempts. Test exponential backoff delay calculation. Test timeout throws AppError after max attempts. Test error status throws AppError with message.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -485,7 +545,8 @@
             ],
             "details": "1. Create src/lib/ai/gemini-image.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateImageInput } from '@/types/generation'\n   import { AppError } from '@/lib/utils'\n   import { getImageModel } from './models'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface ImageGenerationResult {\n     imageData: string // base64 encoded\n     mimeType: string\n   }\n\n   export async function generateImage(\n     input: GenerateImageInput,\n     brandContext?: string\n   ): Promise<ImageGenerationResult> {\n     const model = getImageModel(input.model)\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n\n     const genModel = genAI.getGenerativeModel({ model: model.id })\n     const result = await genModel.generateContent({\n       contents: [{ role: 'user', parts: [{ text: prompt }] }],\n       generationConfig: {\n         aspectRatio: input.aspectRatio,\n         resolution: input.resolution\n       }\n     })\n\n     const imageData = result.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data\n     if (!imageData) {\n       throw AppError.internal('No image data in response')\n     }\n\n     return { imageData, mimeType: 'image/png' }\n   }\n   ```\n\n2. Handle aspect ratio and resolution configuration\n3. Extract base64 image data from response\n4. Validate response contains image data",
             "status": "pending",
-            "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateImage constructs correct prompt with and without brand context. Test model selection uses correct model ID. Test throws AppError when no image data in response."
+            "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateImage constructs correct prompt with and without brand context. Test model selection uses correct model ID. Test throws AppError when no image data in response.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -496,7 +557,8 @@
             ],
             "details": "1. Create src/lib/ai/prompt-enhancer.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { AppError } from '@/lib/utils'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export async function enhancePrompt(\n     prompt: string,\n     brandContext?: string\n   ): Promise<string> {\n     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })\n\n     const systemPrompt = `You are a prompt engineer specializing in AI content generation.\nImprove the following prompt for ${brandContext ? 'brand-aligned' : ''} social media content generation.\nMake it more descriptive, specific, and likely to produce high-quality results.\nKeep the enhanced prompt under 500 characters.\n${brandContext ? `Brand context: ${brandContext}` : ''}`\n\n     try {\n       const result = await model.generateContent([\n         { role: 'user', parts: [{ text: `${systemPrompt}\\n\\nOriginal prompt: ${prompt}` }] }\n       ])\n       \n       const enhancedPrompt = result.response.text()\n       return enhancedPrompt || prompt // Fallback to original if empty\n     } catch (error) {\n       // Log error but return original prompt as fallback\n       console.error('Prompt enhancement failed:', error)\n       return prompt\n     }\n   }\n   ```\n\n2. Use Gemini 1.5 Flash for fast, cost-effective enhancement\n3. Gracefully fallback to original prompt on failure\n4. Respect 500 character limit in enhanced prompts",
             "status": "pending",
-            "testStrategy": "Unit test with mocked Gemini 1.5 Flash response. Test enhanced prompt is returned when successful. Test fallback to original prompt when API fails. Test brand context is included in system prompt when provided."
+            "testStrategy": "Unit test with mocked Gemini 1.5 Flash response. Test enhanced prompt is returned when successful. Test fallback to original prompt when API fails. Test brand context is included in system prompt when provided.",
+            "parentId": "undefined"
           },
           {
             "id": 6,
@@ -510,20 +572,24 @@
             ],
             "details": "1. Create src/lib/ai/errors.ts for AI-specific error handling:\n   ```typescript\n   import { AppError } from '@/lib/utils'\n\n   export function handleGoogleAIError(error: unknown): never {\n     if (error instanceof Error) {\n       // Rate limit errors\n       if (error.message.includes('429') || error.message.includes('quota')) {\n         throw AppError.badRequest('AI service rate limit exceeded. Please try again later.', 'AI_RATE_LIMIT')\n       }\n       // Authentication errors\n       if (error.message.includes('401') || error.message.includes('API key')) {\n         throw AppError.internal('AI service authentication failed', 'AI_AUTH_ERROR')\n       }\n       // Content policy violations\n       if (error.message.includes('safety') || error.message.includes('blocked')) {\n         throw AppError.badRequest('Content was blocked by safety filters. Please modify your prompt.', 'AI_CONTENT_BLOCKED')\n       }\n       // Network/timeout errors\n       if (error.message.includes('timeout') || error.message.includes('ECONNRESET')) {\n         throw AppError.internal('AI service unavailable. Please try again.', 'AI_TIMEOUT')\n       }\n     }\n     throw AppError.internal('AI generation failed unexpectedly', 'AI_UNKNOWN_ERROR')\n   }\n   ```\n\n2. Wrap all API calls in try-catch with handleGoogleAIError\n3. Add request timeout configuration (30s for image, 5min for video polling)\n4. Log errors for monitoring while returning user-friendly messages\n5. Update veo.ts, gemini-image.ts, and prompt-enhancer.ts to use error handler",
             "status": "pending",
-            "testStrategy": "Unit test handleGoogleAIError maps rate limit errors correctly. Test authentication error mapping. Test content blocked error mapping. Test timeout error mapping. Test unknown errors get generic message. Integration test error handling with intentionally invalid API key."
+            "testStrategy": "Unit test handleGoogleAIError maps rate limit errors correctly. Test authentication error mapping. Test content blocked error mapping. Test timeout error mapping. Test unknown errors get generic message. Integration test error handling with intentionally invalid API key.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 8,
+        "recommendedSubtasks": 6,
+        "expansionPrompt": "Break down AI API integration into subtasks covering: 1) Installing @google/generative-ai SDK and creating models config in src/lib/ai/models.ts with getVideoModel/getImageModel helpers, 2) Creating Veo client in src/lib/ai/veo.ts with generateVideo function handling multiple model variants, 3) Implementing async polling mechanism for video generation completion with exponential backoff and timeout handling, 4) Creating Gemini Image client in src/lib/ai/gemini-image.ts with generateImage function supporting both model variants, 5) Creating prompt enhancer in src/lib/ai/prompt-enhancer.ts using Gemini 1.5 Flash for prompt improvement, 6) Implementing comprehensive error handling for API failures, rate limits, and timeouts"
       },
       {
-        "id": 9,
+        "id": "9",
         "title": "Build Content Generation API Routes and UI",
         "description": "Create generation API endpoints (/api/generate/video, /api/generate/image) and build the complete generation UI including PromptInput, FormatSelector, ModelSelector with pricing, and preview components.",
         "details": "1. Create video generation endpoint (src/app/api/generate/video/route.ts):\n   ```typescript\n   import { NextRequest } from 'next/server'\n   import { prisma } from '@/lib/db'\n   import { requireAuth } from '@/lib/auth/session'\n   import { generateVideoSchema } from '@/types/generation'\n   import { generateVideo } from '@/lib/ai/veo'\n   import { validateInput, successResponse, errorResponse, AppError } from '@/lib/utils'\n\n   export async function POST(req: NextRequest) {\n     try {\n       const user = await requireAuth()\n       const body = await req.json()\n       const input = validateInput(generateVideoSchema, body)\n\n       // Get brand context if requested\n       let brandContext: string | undefined\n       if (input.includeBrand) {\n         const brand = await prisma.brand.findUnique({ where: { userId: user.id } })\n         if (brand) {\n           brandContext = `Brand: ${brand.name}, Industry: ${brand.industry}, Colors: ${brand.primaryColor}, ${brand.secondaryColor}, ${brand.accentColor}. Voice: ${brand.voiceDescription || 'Professional'}`\n         }\n       }\n\n       const result = await generateVideo(input, brandContext)\n\n       // Log generation to history\n       await prisma.generation.create({\n         data: {\n           userId: user.id,\n           prompt: input.prompt,\n           contentType: 'VIDEO',\n           model: input.model,\n           aspectRatio: input.aspectRatio,\n           duration: input.duration,\n           resolution: input.resolution,\n           includeBrand: input.includeBrand\n         }\n       })\n\n       return successResponse(result)\n     } catch (error) {\n       return errorResponse(error)\n     }\n   }\n   ```\n\n2. Create image generation endpoint (src/app/api/generate/image/route.ts) - similar structure\n\n3. Create model selector component (src/components/generate/model-selector.tsx):\n   ```typescript\n   'use client'\n   import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'\n   import { VIDEO_MODELS, IMAGE_MODELS, getEstimatedCost } from '@/types/generation'\n\n   interface ModelSelectorProps {\n     type: 'video' | 'image'\n     value: string\n     onChange: (value: string) => void\n     duration?: number // for video cost calculation\n   }\n\n   export function ModelSelector({ type, value, onChange, duration }: ModelSelectorProps) {\n     const models = type === 'video' ? VIDEO_MODELS : IMAGE_MODELS\n     const estimatedCost = getEstimatedCost(value, duration)\n\n     return (\n       <div className=\"space-y-2\">\n         <Select value={value} onValueChange={onChange}>\n           <SelectTrigger>\n             <SelectValue />\n           </SelectTrigger>\n           <SelectContent>\n             {models.map(model => (\n               <SelectItem key={model.id} value={model.id}>\n                 {model.label} - {model.price} {model.unit}\n               </SelectItem>\n             ))}\n           </SelectContent>\n         </Select>\n         <p className=\"text-sm text-muted-foreground\">\n           Estimated cost: ${estimatedCost.toFixed(2)}\n         </p>\n       </div>\n     )\n   }\n   ```\n\n4. Create format selector (src/components/generate/format-selector.tsx) for aspect ratio, duration, resolution\n\n5. Create prompt input (src/components/generate/prompt-input.tsx) with enhance button\n\n6. Create video preview (src/components/generate/video-preview.tsx):\n   ```typescript\n   interface VideoPreviewProps {\n     url: string\n     onDownload: () => void\n   }\n\n   export function VideoPreview({ url, onDownload }: VideoPreviewProps) {\n     return (\n       <div className=\"space-y-4\">\n         <video src={url} controls className=\"w-full rounded-lg\" />\n         <Button onClick={onDownload}>Download MP4</Button>\n       </div>\n     )\n   }\n   ```\n\n7. Create image preview similarly\n\n8. Create generation page (src/app/(dashboard)/generate/page.tsx):\n   - Tabs for Video/Image\n   - Form with prompt, model selector, format options, brand toggle\n   - Generate button with loading state\n   - Preview area showing result",
         "testStrategy": "1. Integration test: POST /api/generate/video with valid input returns video URL\n2. Integration test: POST /api/generate/image returns image data\n3. Integration test: Generation with includeBrand=true fetches brand context\n4. Integration test: Generation creates history record\n5. Component test: ModelSelector displays pricing correctly\n6. Component test: FormatSelector constrains options based on content type\n7. E2E test: Full generation flow - enter prompt, select options, generate, preview, download",
         "priority": "high",
         "dependencies": [
-          7,
-          8
+          "7",
+          "8"
         ],
         "status": "pending",
         "subtasks": [
@@ -534,7 +600,8 @@
             "dependencies": [],
             "details": "Create src/app/api/generate/video/route.ts implementing: 1) Import requireAuth from auth session module, 2) Parse and validate request body using generateVideoSchema from types/generation, 3) If includeBrand is true, fetch user's brand from Prisma and format brand context string with name, industry, colors, and voice description, 4) Call generateVideo from lib/ai/veo passing validated input and optional brand context, 5) Create generation record in database with userId, prompt, contentType='VIDEO', model, aspectRatio, duration, resolution, and includeBrand flag, 6) Return success response with generation result or handle errors with errorResponse utility. Handle edge cases like missing brand data gracefully.",
             "status": "pending",
-            "testStrategy": "Integration tests: POST with valid input returns video URL, POST without auth returns 401, invalid schema returns 400, includeBrand=true fetches and includes brand context, generation record is created in database after successful generation."
+            "testStrategy": "Integration tests: POST with valid input returns video URL, POST without auth returns 401, invalid schema returns 400, includeBrand=true fetches and includes brand context, generation record is created in database after successful generation.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -545,7 +612,8 @@
             ],
             "details": "Create src/app/api/generate/image/route.ts implementing: 1) Import requireAuth and validation utilities, 2) Validate request body using generateImageSchema from types/generation, 3) Fetch brand context if includeBrand is true (reuse same brand context formatting logic), 4) Call generateImage from lib/ai/gemini-image passing validated input and brand context, 5) Log generation to history with contentType='IMAGE', model, aspectRatio, and other relevant fields, 6) Return image data (base64 or URL) in success response. Consider extracting shared brand context fetching logic into a helper function to avoid duplication with video endpoint.",
             "status": "pending",
-            "testStrategy": "Integration tests: POST with valid input returns image data, authentication required, schema validation works, brand context included when requested, generation history record created with correct contentType='IMAGE'."
+            "testStrategy": "Integration tests: POST with valid input returns image data, authentication required, schema validation works, brand context included when requested, generation history record created with correct contentType='IMAGE'.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -554,7 +622,8 @@
             "dependencies": [],
             "details": "Create src/components/generate/model-selector.tsx as a client component: 1) Accept props for type ('video' | 'image'), value, onChange, and optional duration (for video cost calculation), 2) Import VIDEO_MODELS and IMAGE_MODELS from types/generation, 3) Use shadcn Select component to render dropdown with model options showing label and price per unit, 4) Call getEstimatedCost utility function with selected model and duration to calculate cost, 5) Display estimated cost below selector with proper formatting (e.g., '$0.50'), 6) Update cost display reactively when model or duration changes. Add TypeScript interface for ModelSelectorProps. Style with Tailwind classes for consistent spacing.",
             "status": "pending",
-            "testStrategy": "Component tests: renders correct models based on type prop, displays pricing info for each model option, calculates and displays estimated cost, cost updates when duration changes, onChange fires with correct model ID on selection."
+            "testStrategy": "Component tests: renders correct models based on type prop, displays pricing info for each model option, calculates and displays estimated cost, cost updates when duration changes, onChange fires with correct model ID on selection.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -563,7 +632,8 @@
             "dependencies": [],
             "details": "Create src/components/generate/format-selector.tsx as a client component: 1) Accept props for type ('video' | 'image'), values object containing aspectRatio/duration/resolution, and onChange handler, 2) Define aspect ratio options (16:9, 9:16, 1:1, 4:3), duration options for video (5s, 10s, 15s, 30s), and resolution options (720p, 1080p, 4K), 3) Render Select components for each option using shadcn UI, 4) Conditionally show duration selector only when type='video', 5) Emit onChange with updated values object when any selection changes, 6) Add helpful labels and descriptions for each format option. Consider grouping related options visually with proper spacing and labels.",
             "status": "pending",
-            "testStrategy": "Component tests: renders aspect ratio and resolution selectors for both types, duration selector only shown for video type, onChange emits correct values object, all format options are selectable and update parent state."
+            "testStrategy": "Component tests: renders aspect ratio and resolution selectors for both types, duration selector only shown for video type, onChange emits correct values object, all format options are selectable and update parent state.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -572,7 +642,8 @@
             "dependencies": [],
             "details": "Create src/components/generate/prompt-input.tsx as a client component: 1) Accept props for value, onChange, type ('video' | 'image'), and optional disabled state, 2) Render textarea with appropriate placeholder text based on generation type, 3) Add 'Enhance Prompt' button that calls enhancePrompt utility from lib/ai when clicked, 4) Show loading spinner on enhance button during API call, 5) Replace prompt value with enhanced version on success, 6) Handle and display errors from enhancement gracefully (toast notification), 7) Add character count display and optional max length validation, 8) Style textarea for comfortable multi-line input with proper resize behavior. Consider debouncing onChange for performance.",
             "status": "pending",
-            "testStrategy": "Component tests: renders textarea with correct placeholder based on type, enhance button calls API and updates prompt value, loading state shown during enhancement, error handling displays toast, onChange fires on textarea input, disabled state prevents interaction."
+            "testStrategy": "Component tests: renders textarea with correct placeholder based on type, enhance button calls API and updates prompt value, loading state shown during enhancement, error handling displays toast, onChange fires on textarea input, disabled state prevents interaction.",
+            "parentId": "undefined"
           },
           {
             "id": 6,
@@ -581,7 +652,8 @@
             "dependencies": [],
             "details": "Create src/components/generate/video-preview.tsx: 1) Accept props for url and onDownload callback, 2) Render HTML5 video element with controls, src set to url, responsive width with rounded corners, 3) Add Download MP4 button that triggers onDownload, 4) Include loading placeholder state for when video is still loading, 5) Handle video error states gracefully. Create src/components/generate/image-preview.tsx: 1) Accept props for url/base64 data and onDownload, 2) Render img element with proper alt text and responsive sizing, 3) Add Download button (PNG/JPG based on format), 4) Support both URL and base64 image sources, 5) Add zoom/lightbox functionality for larger preview. Both components should have consistent styling and error boundaries.",
             "status": "pending",
-            "testStrategy": "Component tests: VideoPreview renders video element with correct src, download button calls onDownload handler, ImagePreview renders image correctly, both handle loading and error states, download functionality works for both URL and base64 sources."
+            "testStrategy": "Component tests: VideoPreview renders video element with correct src, download button calls onDownload handler, ImagePreview renders image correctly, both handle loading and error states, download functionality works for both URL and base64 sources.",
+            "parentId": "undefined"
           },
           {
             "id": 7,
@@ -597,19 +669,23 @@
             ],
             "details": "Create src/app/(dashboard)/generate/page.tsx: 1) Implement Tabs component with Video and Image tab triggers, 2) Create form state using useState or react-hook-form for prompt, model, aspectRatio, duration, resolution, includeBrand, 3) Reset/adjust form state when switching tabs (duration only for video), 4) Render PromptInput, ModelSelector, FormatSelector, and brand toggle checkbox within each tab panel, 5) Add Generate button with loading state that calls appropriate API endpoint, 6) Handle long-running generation (30-60s for video) with progress indication or polling, 7) Display VideoPreview or ImagePreview component when generation completes, 8) Implement download handler that triggers file download from preview URL, 9) Show error states with retry option, 10) Display real-time cost estimate that updates as options change. Add proper TypeScript types for form state and API responses.",
             "status": "pending",
-            "testStrategy": "E2E tests: navigate to /generate, switch between tabs, fill form and submit video generation, verify preview displays, download works. Component tests: form state initializes correctly, tab switching resets appropriate fields, generate button disabled during loading, cost estimate updates reactively, error states display correctly with retry option."
+            "testStrategy": "E2E tests: navigate to /generate, switch between tabs, fill form and submit video generation, verify preview displays, download works. Component tests: form state initializes correctly, tab switching resets appropriate fields, generate button disabled during loading, cost estimate updates reactively, error states display correctly with retry option.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 7,
+        "expansionPrompt": "Break down content generation API and UI into subtasks covering: 1) Creating /api/generate/video endpoint with auth, validation, brand context fetching, AI generation call, and history logging, 2) Creating /api/generate/image endpoint with similar pattern, 3) Creating ModelSelector component with pricing display and estimated cost calculation based on duration, 4) Creating FormatSelector component for aspect ratio, duration (video only), and resolution selection, 5) Creating PromptInput component with textarea and enhance button that calls prompt enhancer, 6) Creating VideoPreview and ImagePreview components with download functionality, 7) Creating the /generate page with Tabs for video/image, form state management, and generation workflow"
       },
       {
-        "id": 10,
+        "id": "10",
         "title": "Implement Generation History and Dashboard",
         "description": "Create history API endpoint with pagination, build history display page, and create the main dashboard with quick actions and recent generation overview.",
         "details": "1. Create history API route (src/app/api/history/route.ts):\n   ```typescript\n   import { NextRequest } from 'next/server'\n   import { prisma } from '@/lib/db'\n   import { requireAuth } from '@/lib/auth/session'\n   import { successResponse, errorResponse } from '@/lib/utils'\n\n   export async function GET(req: NextRequest) {\n     try {\n       const user = await requireAuth()\n       const { searchParams } = new URL(req.url)\n       const page = parseInt(searchParams.get('page') || '1')\n       const pageSize = parseInt(searchParams.get('pageSize') || '10')\n\n       const [generations, total] = await Promise.all([\n         prisma.generation.findMany({\n           where: { userId: user.id },\n           orderBy: { createdAt: 'desc' },\n           skip: (page - 1) * pageSize,\n           take: pageSize\n         }),\n         prisma.generation.count({ where: { userId: user.id } })\n       ])\n\n       return successResponse({\n         data: generations,\n         page,\n         pageSize,\n         total,\n         hasMore: page * pageSize < total\n       })\n     } catch (error) {\n       return errorResponse(error)\n     }\n   }\n   ```\n\n2. Create history page (src/app/(dashboard)/history/page.tsx):\n   ```typescript\n   'use client'\n   import { useState, useEffect } from 'react'\n   import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'\n   import { Button } from '@/components/ui/button'\n\n   export default function HistoryPage() {\n     const [generations, setGenerations] = useState([])\n     const [page, setPage] = useState(1)\n     const [hasMore, setHasMore] = useState(false)\n\n     useEffect(() => {\n       fetch(`/api/history?page=${page}`)\n         .then(res => res.json())\n         .then(data => {\n           setGenerations(prev => page === 1 ? data.data.data : [...prev, ...data.data.data])\n           setHasMore(data.data.hasMore)\n         })\n     }, [page])\n\n     return (\n       <div className=\"container py-8\">\n         <h1 className=\"text-2xl font-bold mb-6\">Generation History</h1>\n         <div className=\"space-y-4\">\n           {generations.map((gen: any) => (\n             <Card key={gen.id}>\n               <CardHeader>\n                 <CardTitle className=\"text-sm font-medium\">\n                   {gen.contentType} - {new Date(gen.createdAt).toLocaleString()}\n                 </CardTitle>\n               </CardHeader>\n               <CardContent>\n                 <p className=\"text-sm text-muted-foreground truncate\">{gen.prompt}</p>\n                 <div className=\"flex gap-2 mt-2 text-xs\">\n                   <span>{gen.model}</span>\n                   <span>{gen.aspectRatio}</span>\n                   <span>{gen.resolution}</span>\n                   {gen.duration && <span>{gen.duration}s</span>}\n                 </div>\n               </CardContent>\n             </Card>\n           ))}\n         </div>\n         {hasMore && (\n           <Button onClick={() => setPage(p => p + 1)} className=\"mt-4\">\n             Load More\n           </Button>\n         )}\n       </div>\n     )\n   }\n   ```\n\n3. Create dashboard page (src/app/(dashboard)/dashboard/page.tsx):\n   ```typescript\n   import Link from 'next/link'\n   import { getSession } from '@/lib/auth/session'\n   import { prisma } from '@/lib/db'\n   import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'\n   import { Button } from '@/components/ui/button'\n\n   export default async function DashboardPage() {\n     const session = await getSession()\n     const recentGenerations = await prisma.generation.findMany({\n       where: { userId: session!.user.id },\n       orderBy: { createdAt: 'desc' },\n       take: 5\n     })\n\n     return (\n       <div className=\"container py-8\">\n         <h1 className=\"text-2xl font-bold mb-6\">Dashboard</h1>\n\n         <div className=\"grid gap-4 md:grid-cols-2 mb-8\">\n           <Card>\n             <CardHeader>\n               <CardTitle>Create Video</CardTitle>\n             </CardHeader>\n             <CardContent>\n               <p className=\"text-sm text-muted-foreground mb-4\">\n                 Generate AI-powered video content for social media\n               </p>\n               <Link href=\"/generate?type=video\">\n                 <Button>Generate Video</Button>\n               </Link>\n             </CardContent>\n           </Card>\n           <Card>\n             <CardHeader>\n               <CardTitle>Create Image</CardTitle>\n             </CardHeader>\n             <CardContent>\n               <p className=\"text-sm text-muted-foreground mb-4\">\n                 Generate AI-powered images for posts and stories\n               </p>\n               <Link href=\"/generate?type=image\">\n                 <Button>Generate Image</Button>\n               </Link>\n             </CardContent>\n           </Card>\n         </div>\n\n         <h2 className=\"text-xl font-semibold mb-4\">Recent Generations</h2>\n         {/* Recent generations list */}\n       </div>\n     )\n   }\n   ```\n\n4. Create dashboard layout (src/app/(dashboard)/layout.tsx) with navigation sidebar/navbar",
         "testStrategy": "1. Integration test: GET /api/history returns paginated results\n2. Integration test: Pagination works correctly (page 2 shows different results)\n3. Integration test: History filters by authenticated user only\n4. Component test: History page renders generation cards correctly\n5. Component test: Dashboard shows quick action cards\n6. E2E test: Navigate dashboard -> generate -> complete generation -> verify in history",
         "priority": "medium",
         "dependencies": [
-          9
+          "9"
         ],
         "status": "pending",
         "subtasks": [
@@ -620,7 +696,8 @@
             "dependencies": [],
             "details": "Create src/app/api/history/route.ts with:\n1. Import NextRequest, prisma, requireAuth, successResponse, and errorResponse\n2. Implement GET handler that:\n   - Authenticates user via requireAuth()\n   - Parses page (default 1) and pageSize (default 10) from searchParams\n   - Queries prisma.generation.findMany with userId filter, orderBy createdAt desc, skip/take for pagination\n   - Counts total generations for the user\n   - Returns successResponse with data array, page, pageSize, total, and hasMore boolean\n3. Wrap in try/catch and return errorResponse on failure\n4. Add input validation for page and pageSize to ensure positive integers",
             "status": "pending",
-            "testStrategy": "Integration tests: 1) GET /api/history returns 200 with paginated results for authenticated user, 2) Returns 401 for unauthenticated requests, 3) Page 2 returns different results than page 1, 4) pageSize limits results correctly, 5) hasMore is true when more pages exist and false on last page, 6) Only returns generations belonging to authenticated user (not other users' data)"
+            "testStrategy": "Integration tests: 1) GET /api/history returns 200 with paginated results for authenticated user, 2) Returns 401 for unauthenticated requests, 3) Page 2 returns different results than page 1, 4) pageSize limits results correctly, 5) hasMore is true when more pages exist and false on last page, 6) Only returns generations belonging to authenticated user (not other users' data)",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -631,7 +708,8 @@
             ],
             "details": "Create src/app/(dashboard)/history/page.tsx as a client component:\n1. Add 'use client' directive\n2. Import useState, useEffect, Card components, and Button\n3. Manage state for: generations array, current page number, hasMore boolean, loading state\n4. useEffect to fetch /api/history?page={page} on page change\n5. On response, append new generations to existing array (or replace if page 1), update hasMore\n6. Render page title 'Generation History'\n7. Map generations to Card components showing:\n   - contentType and formatted createdAt in CardTitle\n   - Truncated prompt in CardContent\n   - Model, aspectRatio, resolution, and optional duration badges\n8. Render 'Load More' Button when hasMore is true, onClick increments page\n9. Show loading skeleton while fetching\n10. Show empty state message when no generations exist",
             "status": "pending",
-            "testStrategy": "Component tests: 1) Renders loading state initially, 2) Displays generation cards after fetch completes, 3) Shows correct content type, date, prompt preview on cards, 4) Load More button appears when hasMore is true, 5) Load More button is hidden when hasMore is false, 6) Clicking Load More fetches next page and appends results, 7) Empty state shows when no generations exist"
+            "testStrategy": "Component tests: 1) Renders loading state initially, 2) Displays generation cards after fetch completes, 3) Shows correct content type, date, prompt preview on cards, 4) Load More button appears when hasMore is true, 5) Load More button is hidden when hasMore is false, 6) Clicking Load More fetches next page and appends results, 7) Empty state shows when no generations exist",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -640,7 +718,8 @@
             "dependencies": [],
             "details": "Create src/app/(dashboard)/dashboard/page.tsx as a server component:\n1. Import Link, getSession, prisma, Card components, and Button\n2. Fetch session via getSession() and query 5 most recent generations for user\n3. Render page structure:\n   - Page title 'Dashboard'\n   - Quick actions grid (2 columns on md+) with:\n     - 'Create Video' Card with description and Button linking to /generate?type=video\n     - 'Create Image' Card with description and Button linking to /generate?type=image\n   - 'Recent Generations' section heading\n   - Map recent generations to compact Card components showing type, date, and prompt preview\n   - Link each recent generation card to its detail view or regeneration\n   - Show 'View All History' link to /history\n4. Handle empty state when user has no generations yet\n5. Add appropriate spacing and responsive layout classes",
             "status": "pending",
-            "testStrategy": "Integration tests: 1) Dashboard page renders without error for authenticated user, 2) Quick action cards link to correct /generate URLs with type params, 3) Recent generations section shows up to 5 items, 4) Recent generations are ordered by newest first, 5) Empty state displays when user has no generations, 6) View All History link navigates to /history"
+            "testStrategy": "Integration tests: 1) Dashboard page renders without error for authenticated user, 2) Quick action cards link to correct /generate URLs with type params, 3) Recent generations section shows up to 5 items, 4) Recent generations are ordered by newest first, 5) Empty state displays when user has no generations, 6) View All History link navigates to /history",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -649,19 +728,23 @@
             "dependencies": [],
             "details": "Create src/app/(dashboard)/layout.tsx:\n1. Import getSession for auth check, redirect for unauthenticated users\n2. Create async layout function that checks session and redirects to /login if not authenticated\n3. Build navigation component (sidebar or top navbar) with:\n   - App logo/brand linking to /dashboard\n   - Navigation links: Dashboard (/dashboard), Generate (/generate), History (/history), Brand (/brand), Settings (/settings)\n   - Active state styling for current route using usePathname (may need client component for nav)\n   - User menu with email display and logout action\n4. Layout structure: sidebar/navbar on left or top, main content area for children\n5. Make navigation responsive: collapsible sidebar on mobile or hamburger menu\n6. Use consistent styling with shadcn/ui components and Tailwind classes\n7. Export layout as default wrapping children in the nav structure",
             "status": "pending",
-            "testStrategy": "Component tests: 1) Layout redirects to /login when session is null, 2) Navigation renders all required links (Dashboard, Generate, History, Brand, Settings), 3) Active link styling applies to current route, 4) Logo links to /dashboard, 5) User menu displays user email, 6) Logout action signs out user, 7) Navigation is responsive and works on mobile viewports, 8) Children render in main content area"
+            "testStrategy": "Component tests: 1) Layout redirects to /login when session is null, 2) Navigation renders all required links (Dashboard, Generate, History, Brand, Settings), 3) Active link styling applies to current route, 4) Logo links to /dashboard, 5) User menu displays user email, 6) Logout action signs out user, 7) Navigation is responsive and works on mobile viewports, 8) Children render in main content area",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down history and dashboard into subtasks covering: 1) Creating /api/history endpoint with pagination support (page, pageSize params) and proper sorting, 2) Creating history page with client-side state management, infinite scroll or load more pagination, and generation card display, 3) Creating dashboard page with server-side data fetching for recent generations, quick action cards linking to /generate?type=video|image, 4) Creating dashboard layout with navigation sidebar/navbar component for authenticated routes"
       },
       {
-        "id": 11,
+        "id": "11",
         "title": "Build Landing Page and Polish UI",
         "description": "Create the public landing page with product information and CTA, implement global error handling with toast notifications, and ensure responsive design across all pages.",
         "details": "1. Create landing page (src/app/page.tsx):\n   ```typescript\n   import Link from 'next/link'\n   import { Button } from '@/components/ui/button'\n\n   export default function LandingPage() {\n     return (\n       <div className=\"min-h-screen\">\n         {/* Hero Section */}\n         <section className=\"container py-24 text-center\">\n           <h1 className=\"text-4xl md:text-6xl font-bold mb-6\">\n             AI-Powered Content for <br /> Your Social Media\n           </h1>\n           <p className=\"text-xl text-muted-foreground mb-8 max-w-2xl mx-auto\">\n             Create professional videos and images in seconds. \n             No design skills required. Just describe what you want.\n           </p>\n           <div className=\"flex gap-4 justify-center\">\n             <Link href=\"/signup\">\n               <Button size=\"lg\">Get Started Free</Button>\n             </Link>\n             <Link href=\"/login\">\n               <Button variant=\"outline\" size=\"lg\">Sign In</Button>\n             </Link>\n           </div>\n         </section>\n\n         {/* Features Section */}\n         <section className=\"container py-16\">\n           <h2 className=\"text-3xl font-bold text-center mb-12\">Why ContentForge?</h2>\n           <div className=\"grid md:grid-cols-3 gap-8\">\n             <FeatureCard\n               title=\"AI Video Generation\"\n               description=\"Create stunning short-form videos for Reels and Stories\"\n             />\n             <FeatureCard\n               title=\"Brand Consistency\"\n               description=\"Your brand colors and voice in every generation\"\n             />\n             <FeatureCard\n               title=\"Instant Results\"\n               description=\"From idea to content in under 60 seconds\"\n             />\n           </div>\n         </section>\n\n         {/* CTA Section */}\n         <section className=\"container py-16 text-center\">\n           <h2 className=\"text-3xl font-bold mb-4\">Ready to transform your content?</h2>\n           <Link href=\"/signup\">\n             <Button size=\"lg\">Start Creating Now</Button>\n           </Link>\n         </section>\n       </div>\n     )\n   }\n   ```\n\n2. Set up toast notifications:\n   ```bash\n   npx shadcn@latest add toast sonner\n   ```\n\n3. Create global error boundary (src/components/error-boundary.tsx) and add to root layout\n\n4. Create toast provider and hooks (src/lib/hooks/use-toast.ts)\n\n5. Update all forms to show toast on success/error:\n   ```typescript\n   import { toast } from 'sonner'\n\n   // On success\n   toast.success('Content generated successfully!')\n\n   // On error\n   toast.error('Failed to generate content. Please try again.')\n   ```\n\n6. Responsive design pass:\n   - Audit all pages on mobile (320px), tablet (768px), desktop (1024px+)\n   - Fix any layout issues with Tailwind responsive classes\n   - Ensure forms are usable on mobile\n   - Test video/image previews on small screens\n\n7. Create navbar component (src/components/layout/navbar.tsx):\n   - Logo linking to home\n   - Auth state: show Login/Signup or Dashboard/Logout\n   - Mobile hamburger menu\n\n8. Create footer component (src/components/layout/footer.tsx)",
         "testStrategy": "1. Visual review: Landing page renders correctly on all breakpoints\n2. Visual review: All dashboard pages are usable on mobile\n3. Component test: Navbar shows correct links based on auth state\n4. E2E test: Click CTA on landing -> navigate to signup\n5. Manual test: Trigger errors, verify toast notifications appear\n6. Accessibility audit: Run axe-core on all pages",
         "priority": "medium",
         "dependencies": [
-          10
+          "10"
         ],
         "status": "pending",
         "subtasks": [
@@ -672,7 +755,8 @@
             "dependencies": [],
             "details": "1. Create src/app/page.tsx as the landing page with three main sections:\n   - Hero section with container, py-24 padding, centered text, h1 title with responsive sizing (text-4xl md:text-6xl), subtitle paragraph with muted-foreground styling, and two CTA buttons (Get Started Free -> /signup, Sign In -> /login)\n   - Features section with 3-column responsive grid (grid md:grid-cols-3) showcasing three FeatureCard components\n   - Bottom CTA section with heading and single button\n\n2. Create FeatureCard component (src/components/landing/feature-card.tsx):\n   - Accept title and description props\n   - Use Card component from shadcn/ui with appropriate padding and styling\n   - Add optional icon prop for visual enhancement\n\n3. Import Button from @/components/ui/button and Link from next/link\n\n4. Ensure the landing page is accessible to unauthenticated users (no auth check required on this route)",
             "status": "pending",
-            "testStrategy": "1. Visual review: Landing page renders correctly with hero, features, and CTA sections\n2. Test responsive layout at 320px, 768px, and 1024px+ breakpoints\n3. Verify CTA buttons link correctly to /signup and /login routes\n4. Test FeatureCard component renders title and description properly\n5. Accessibility check: Verify proper heading hierarchy (h1 -> h2)"
+            "testStrategy": "1. Visual review: Landing page renders correctly with hero, features, and CTA sections\n2. Test responsive layout at 320px, 768px, and 1024px+ breakpoints\n3. Verify CTA buttons link correctly to /signup and /login routes\n4. Test FeatureCard component renders title and description properly\n5. Accessibility check: Verify proper heading hierarchy (h1 -> h2)",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -681,7 +765,8 @@
             "dependencies": [],
             "details": "1. Install sonner toast component:\n   ```bash\n   npx shadcn@latest add sonner\n   ```\n\n2. Add Toaster component to root layout (src/app/layout.tsx):\n   ```typescript\n   import { Toaster } from '@/components/ui/sonner'\n   // In the body, add: <Toaster />\n   ```\n\n3. Create toast utility hook (src/lib/hooks/use-toast.ts) if additional abstraction needed beyond sonner's built-in toast function\n\n4. Document toast usage patterns for the team:\n   - Success: toast.success('Message')\n   - Error: toast.error('Message')\n   - Loading: toast.loading('Message')\n   - Promise: toast.promise(asyncFn, { loading, success, error })\n\n5. Configure toast defaults (position, duration, styling) in the Toaster component props to match app design",
             "status": "pending",
-            "testStrategy": "1. Verify Toaster component is rendered in root layout\n2. Test toast.success() displays success notification with correct styling\n3. Test toast.error() displays error notification with distinct error styling\n4. Verify toasts auto-dismiss after configured duration\n5. Test toast positioning works correctly on mobile and desktop"
+            "testStrategy": "1. Verify Toaster component is rendered in root layout\n2. Test toast.success() displays success notification with correct styling\n3. Test toast.error() displays error notification with distinct error styling\n4. Verify toasts auto-dismiss after configured duration\n5. Test toast positioning works correctly on mobile and desktop",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -692,7 +777,8 @@
             ],
             "details": "1. Create error boundary component (src/components/error-boundary.tsx):\n   ```typescript\n   'use client'\n   import { Component, ReactNode } from 'react'\n   import { Button } from '@/components/ui/button'\n\n   interface Props { children: ReactNode; fallback?: ReactNode }\n   interface State { hasError: boolean; error?: Error }\n\n   export class ErrorBoundary extends Component<Props, State> {\n     state = { hasError: false, error: undefined }\n\n     static getDerivedStateFromError(error: Error) {\n       return { hasError: true, error }\n     }\n\n     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {\n       console.error('Error caught by boundary:', error, errorInfo)\n       // Optionally integrate with error tracking service\n     }\n\n     render() {\n       if (this.state.hasError) {\n         return this.props.fallback || <DefaultErrorFallback onRetry={() => this.setState({ hasError: false })} />\n       }\n       return this.props.children\n     }\n   }\n   ```\n\n2. Create DefaultErrorFallback component with:\n   - Friendly error message\n   - 'Try Again' button that resets error state\n   - Optional 'Go Home' link\n\n3. Create Next.js error.tsx files for route-level error handling:\n   - src/app/error.tsx (global)\n   - src/app/dashboard/error.tsx (dashboard-specific)\n\n4. Wrap the main content in root layout with ErrorBoundary\n\n5. Integrate with toast notifications to show error toasts when appropriate",
             "status": "pending",
-            "testStrategy": "1. Test error boundary catches thrown errors and displays fallback UI\n2. Test 'Try Again' button resets error state and re-renders children\n3. Verify error is logged to console with component stack\n4. Test error.tsx page renders correctly when route throws error\n5. Manual test: Intentionally throw error in component and verify graceful handling"
+            "testStrategy": "1. Test error boundary catches thrown errors and displays fallback UI\n2. Test 'Try Again' button resets error state and re-renders children\n3. Verify error is logged to console with component stack\n4. Test error.tsx page renders correctly when route throws error\n5. Manual test: Intentionally throw error in component and verify graceful handling",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -701,7 +787,8 @@
             "dependencies": [],
             "details": "1. Create navbar component (src/components/layout/navbar.tsx):\n   ```typescript\n   'use client'\n   import Link from 'next/link'\n   import { useSession, signOut } from 'next-auth/react'\n   import { Button } from '@/components/ui/button'\n   import { Menu, X } from 'lucide-react'\n   import { useState } from 'react'\n\n   export function Navbar() {\n     const { data: session, status } = useSession()\n     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)\n     // ... implementation\n   }\n   ```\n\n2. Navbar structure:\n   - Container with flex, justify-between, items-center\n   - Logo (text or SVG) linking to '/'\n   - Desktop nav: hidden on mobile (hidden md:flex)\n   - Mobile hamburger button: visible only on mobile (md:hidden)\n   - Mobile menu overlay/drawer\n\n3. Auth-aware navigation:\n   - Loading state: Show skeleton or nothing\n   - Unauthenticated: 'Login' and 'Sign Up' buttons\n   - Authenticated: 'Dashboard' link, user avatar/name, 'Logout' button\n\n4. Mobile menu:\n   - Toggle with hamburger icon (Menu/X from lucide-react)\n   - Slide-down or drawer animation\n   - Same auth-aware links as desktop\n   - Close on link click or outside click\n\n5. Add navbar to root layout, positioned above main content\n\n6. Style with sticky positioning (sticky top-0) and backdrop blur for modern look",
             "status": "pending",
-            "testStrategy": "1. Test navbar renders logo and links on desktop viewport\n2. Test unauthenticated state shows Login/Signup buttons\n3. Test authenticated state shows Dashboard/Logout options\n4. Test mobile hamburger menu toggles visibility\n5. Test mobile menu closes when link is clicked\n6. Verify sticky positioning works correctly on scroll"
+            "testStrategy": "1. Test navbar renders logo and links on desktop viewport\n2. Test unauthenticated state shows Login/Signup buttons\n3. Test authenticated state shows Dashboard/Logout options\n4. Test mobile hamburger menu toggles visibility\n5. Test mobile menu closes when link is clicked\n6. Verify sticky positioning works correctly on scroll",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -713,20 +800,24 @@
             ],
             "details": "1. Create footer component (src/components/layout/footer.tsx):\n   - Container with appropriate padding (py-8 or py-12)\n   - Grid or flex layout for footer sections\n   - ContentForge branding/logo\n   - Copyright notice with current year\n   - Optional links: Privacy Policy, Terms of Service, Contact\n   - Optional social media icons\n   - Muted text color (text-muted-foreground)\n\n2. Add footer to root layout, positioned after main content with margin-top auto to push to bottom\n\n3. Responsive design audit checklist:\n   - Landing page: Hero text sizing, button stack on mobile, features grid collapses to single column\n   - Dashboard pages: Sidebar behavior on mobile, content area width\n   - Forms: Full-width inputs on mobile, proper touch target sizes (min 44px)\n   - Video/image previews: Aspect ratio maintained, max-width constraints\n   - Tables: Horizontal scroll on mobile or card view alternative\n   - Modals/dialogs: Proper sizing and padding on mobile\n\n4. Common fixes to apply:\n   - Add responsive text classes (text-sm md:text-base lg:text-lg)\n   - Use responsive padding/margin (p-4 md:p-6 lg:p-8)\n   - Ensure grid columns collapse (grid-cols-1 md:grid-cols-2 lg:grid-cols-3)\n   - Fix overflow issues with overflow-x-hidden or proper width constraints\n   - Ensure forms are usable with proper spacing on mobile\n\n5. Test using browser dev tools device emulation at specified breakpoints",
             "status": "pending",
-            "testStrategy": "1. Visual review: Footer renders correctly with all elements\n2. Test footer sticks to bottom on pages with little content\n3. Test landing page at 320px, 768px, 1024px breakpoints\n4. Test all dashboard pages at same breakpoints\n5. Verify forms are usable on mobile (touch targets, input sizing)\n6. Test video/image preview components maintain aspect ratio on small screens\n7. Document any remaining responsive issues for future fixes"
+            "testStrategy": "1. Visual review: Footer renders correctly with all elements\n2. Test footer sticks to bottom on pages with little content\n3. Test landing page at 320px, 768px, 1024px breakpoints\n4. Test all dashboard pages at same breakpoints\n5. Verify forms are usable on mobile (touch targets, input sizing)\n6. Test video/image preview components maintain aspect ratio on small screens\n7. Document any remaining responsive issues for future fixes",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 4,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down landing page and UI polish into subtasks covering: 1) Creating landing page with hero section, features grid using FeatureCard component, and CTA sections, 2) Setting up toast notifications with shadcn/ui sonner and creating toast provider, 3) Creating global error boundary component and adding to root layout, 4) Creating responsive navbar with logo, auth-aware navigation, and mobile hamburger menu, 5) Creating footer component, 6) Performing responsive design audit and fixing layout issues across all pages for mobile/tablet/desktop"
       },
       {
-        "id": 12,
+        "id": "12",
         "title": "Implement Email Service for Password Reset",
         "description": "Set up Resend email service for transactional emails, implement password reset token generation and validation, and create forgot/reset password flow.",
         "details": "1. Install Resend:\n   ```bash\n   npm install resend\n   ```\n\n2. Create email service (src/lib/email/index.ts):\n   ```typescript\n   import { Resend } from 'resend'\n\n   const resend = new Resend(process.env.RESEND_API_KEY)\n\n   export async function sendPasswordResetEmail(email: string, token: string) {\n     const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`\n\n     await resend.emails.send({\n       from: 'ContentForge <noreply@contentforge.app>',\n       to: email,\n       subject: 'Reset your password',\n       html: `\n         <h1>Password Reset</h1>\n         <p>Click the link below to reset your password:</p>\n         <a href=\"${resetUrl}\">${resetUrl}</a>\n         <p>This link expires in 1 hour.</p>\n         <p>If you didn't request this, ignore this email.</p>\n       `\n     })\n   }\n   ```\n\n3. Add password reset token to Prisma schema:\n   ```prisma\n   model PasswordResetToken {\n     id        String   @id @default(uuid())\n     userId    String\n     user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n     token     String   @unique\n     expiresAt DateTime\n     createdAt DateTime @default(now())\n   }\n   ```\n\n4. Create password reset utilities (src/lib/auth/password-reset.ts):\n   ```typescript\n   import { randomBytes } from 'crypto'\n   import { prisma } from '@/lib/db'\n   import { hashPassword } from './password'\n\n   export async function generateResetToken(userId: string): Promise<string> {\n     const token = randomBytes(32).toString('hex')\n     const expiresAt = new Date(Date.now() + 60 * 60 * 1000) // 1 hour\n\n     // Delete any existing tokens for this user\n     await prisma.passwordResetToken.deleteMany({ where: { userId } })\n\n     await prisma.passwordResetToken.create({\n       data: { userId, token, expiresAt }\n     })\n\n     return token\n   }\n\n   export async function validateResetToken(token: string) {\n     const resetToken = await prisma.passwordResetToken.findUnique({\n       where: { token },\n       include: { user: true }\n     })\n\n     if (!resetToken || resetToken.expiresAt < new Date()) {\n       return null\n     }\n\n     return resetToken\n   }\n\n   export async function resetPassword(token: string, newPassword: string) {\n     const resetToken = await validateResetToken(token)\n     if (!resetToken) throw new Error('Invalid or expired token')\n\n     const passwordHash = await hashPassword(newPassword)\n     await prisma.user.update({\n       where: { id: resetToken.userId },\n       data: { passwordHash }\n     })\n\n     await prisma.passwordResetToken.delete({ where: { id: resetToken.id } })\n   }\n   ```\n\n5. Create API routes:\n   - POST /api/auth/forgot-password - request reset\n   - POST /api/auth/reset-password - complete reset\n\n6. Update forgot-password and reset-password pages with forms",
         "testStrategy": "1. Unit test: generateResetToken creates token in database\n2. Unit test: validateResetToken returns null for expired tokens\n3. Unit test: resetPassword updates user password hash\n4. Integration test: Full forgot password flow sends email\n5. Integration test: Reset password with valid token succeeds\n6. Integration test: Reset password with invalid/expired token fails\n7. E2E test: Complete password reset flow with email verification (use test inbox)",
         "priority": "low",
         "dependencies": [
-          5,
-          6
+          "5",
+          "6"
         ],
         "status": "pending",
         "subtasks": [
@@ -737,7 +828,8 @@
             "dependencies": [],
             "details": "1. Install Resend package: `npm install resend`\n2. Create src/lib/email/index.ts with:\n   - Import Resend and initialize with RESEND_API_KEY env variable\n   - Create sendPasswordResetEmail(email: string, token: string) async function\n   - Construct resetUrl using NEXTAUTH_URL env variable and token\n   - Send email via resend.emails.send() with from address, subject, and HTML template\n   - Include password reset link, 1-hour expiry notice, and safety message\n3. Add RESEND_API_KEY to .env.example with placeholder\n4. Export the function for use in API routes",
             "status": "pending",
-            "testStrategy": "Unit test: Mock Resend client and verify sendPasswordResetEmail calls resend.emails.send with correct parameters. Test that resetUrl is properly constructed with the token. Integration test: Verify email sends successfully in development with Resend test mode."
+            "testStrategy": "Unit test: Mock Resend client and verify sendPasswordResetEmail calls resend.emails.send with correct parameters. Test that resetUrl is properly constructed with the token. Integration test: Verify email sends successfully in development with Resend test mode.",
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -746,7 +838,8 @@
             "dependencies": [],
             "details": "1. Add PasswordResetToken model to prisma/schema.prisma:\n   - id: String @id @default(uuid())\n   - userId: String (foreign key to User)\n   - user: User @relation with onDelete: Cascade\n   - token: String @unique (for lookup)\n   - expiresAt: DateTime (for expiry validation)\n   - createdAt: DateTime @default(now())\n2. Add passwordResetTokens relation to User model\n3. Run `npx prisma migrate dev --name add_password_reset_token` to create migration\n4. Run `npx prisma generate` to regenerate Prisma client\n5. Verify the model appears correctly in Prisma Studio",
             "status": "pending",
-            "testStrategy": "Database test: Verify PasswordResetToken can be created with valid userId. Test cascade delete removes tokens when user is deleted. Test unique constraint on token field prevents duplicates."
+            "testStrategy": "Database test: Verify PasswordResetToken can be created with valid userId. Test cascade delete removes tokens when user is deleted. Test unique constraint on token field prevents duplicates.",
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -757,7 +850,8 @@
             ],
             "details": "1. Create src/lib/auth/password-reset.ts with:\n2. generateResetToken(userId: string): Promise<string>\n   - Generate 32-byte random token using crypto.randomBytes\n   - Set expiresAt to 1 hour from now\n   - Delete any existing tokens for user (cleanup)\n   - Create new token record in database\n   - Return the token string\n3. validateResetToken(token: string): Promise<PasswordResetToken | null>\n   - Find token by unique token string with user included\n   - Return null if not found or expired (expiresAt < new Date())\n   - Return the full token record with user if valid\n4. resetPassword(token: string, newPassword: string): Promise<void>\n   - Validate token using validateResetToken\n   - Throw error if invalid/expired\n   - Hash new password using existing hashPassword utility\n   - Update user's passwordHash in database\n   - Delete the used token record\n5. Export all functions",
             "status": "pending",
-            "testStrategy": "Unit test: generateResetToken creates token in database with correct expiry. Unit test: validateResetToken returns null for expired tokens and valid token for unexpired. Unit test: resetPassword updates user password hash and deletes token. Test cleanup of existing tokens when generating new one."
+            "testStrategy": "Unit test: generateResetToken creates token in database with correct expiry. Unit test: validateResetToken returns null for expired tokens and valid token for unexpired. Unit test: resetPassword updates user password hash and deletes token. Test cleanup of existing tokens when generating new one.",
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -769,7 +863,8 @@
             ],
             "details": "1. Create src/app/api/auth/forgot-password/route.ts:\n   - POST handler accepts { email: string } in body\n   - Validate email format with Zod schema\n   - Find user by email (don't reveal if user exists - return success either way)\n   - If user exists: generate reset token and send email\n   - Return generic success message: 'If an account exists, you will receive a reset email'\n   - Wrap in try/catch with errorResponse for failures\n\n2. Create src/app/api/auth/reset-password/route.ts:\n   - POST handler accepts { token: string, password: string } in body\n   - Validate inputs with Zod (password min length, token required)\n   - Call resetPassword utility function\n   - Return success message on completion\n   - Return appropriate error for invalid/expired token\n   - Wrap in try/catch with errorResponse for failures",
             "status": "pending",
-            "testStrategy": "Integration test: forgot-password returns success even for non-existent email (security). Integration test: forgot-password sends email for valid user. Integration test: reset-password returns error for invalid token. Integration test: reset-password successfully updates password with valid token. Test password validation rules are enforced."
+            "testStrategy": "Integration test: forgot-password returns success even for non-existent email (security). Integration test: forgot-password sends email for valid user. Integration test: reset-password returns error for invalid token. Integration test: reset-password successfully updates password with valid token. Test password validation rules are enforced.",
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -780,15 +875,23 @@
             ],
             "details": "1. Update src/app/(auth)/forgot-password/page.tsx:\n   - Create form with email input field\n   - Handle form submission calling POST /api/auth/forgot-password\n   - Show loading state during submission\n   - Display success message after submission (generic for security)\n   - Add link back to login page\n   - Use react-hook-form with Zod validation\n\n2. Update src/app/(auth)/reset-password/page.tsx:\n   - Extract token from URL searchParams\n   - Create form with new password and confirm password fields\n   - Validate passwords match and meet requirements\n   - Handle form submission calling POST /api/auth/reset-password\n   - Show loading state during submission\n   - Display success message and redirect to login on success\n   - Handle and display error for invalid/expired token\n   - Use react-hook-form with Zod validation\n\n3. Ensure both pages follow existing auth page styling patterns",
             "status": "pending",
-            "testStrategy": "Component test: Forgot password form validates email format before submission. Component test: Reset password form validates password match and minimum length. Component test: Forms display loading state during API calls. Component test: Success and error messages render correctly. E2E test: Complete forgot/reset password flow works end-to-end."
+            "testStrategy": "Component test: Forgot password form validates email format before submission. Component test: Reset password form validates password match and minimum length. Component test: Forms display loading state during API calls. Component test: Success and error messages render correctly. E2E test: Complete forgot/reset password flow works end-to-end.",
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down email service and password reset into subtasks covering: 1) Installing Resend and creating email service in src/lib/email/index.ts with sendPasswordResetEmail function, 2) Adding PasswordResetToken model to Prisma schema with proper relations and regenerating client, 3) Creating password reset utilities (generateResetToken, validateResetToken, resetPassword) in src/lib/auth/password-reset.ts, 4) Creating /api/auth/forgot-password endpoint that generates token and sends email, 5) Creating /api/auth/reset-password endpoint that validates token and updates password, 6) Updating forgot-password and reset-password pages with working forms"
       }
     ],
     "metadata": {
-      "created": "2025-12-12T20:49:07.329Z",
-      "updated": "2025-12-12T20:49:07.329Z",
-      "description": "Tasks for master context"
+      "version": "1.0.0",
+      "lastModified": "2025-12-12T23:38:27.688Z",
+      "taskCount": 12,
+      "completedCount": 1,
+      "tags": [
+        "master"
+      ]
     }
   }
 }
