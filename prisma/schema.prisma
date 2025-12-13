@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  brand        Brand?
+  generations  Generation[]
+  sessions     Session[]
+}
+
+model Brand {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name             String
+  logoUrl          String?
+  primaryColor     String   @default("#000000")
+  secondaryColor   String   @default("#ffffff")
+  accentColor      String   @default("#3b82f6")
+  voiceDescription String?
+  industry         String   @default("other")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+enum ContentType {
+  VIDEO
+  IMAGE
+}
+
+model Generation {
+  id           String      @id @default(uuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prompt       String
+  contentType  ContentType
+  model        String
+  aspectRatio  String
+  duration     Int?
+  resolution   String
+  includeBrand Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

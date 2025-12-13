@@ -77,7 +77,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -85,9 +85,10 @@
             "description": "Run npx prisma init to set up Prisma in the project, which creates the prisma directory with schema.prisma file and adds DATABASE_URL placeholder to .env file.",
             "dependencies": [],
             "details": "Execute `npx prisma init` from the project root. This command will:\n1. Create a `prisma/` directory at the project root\n2. Generate a starter `prisma/schema.prisma` file with default PostgreSQL configuration\n3. Create or update `.env` file with DATABASE_URL placeholder\n\nAfter initialization, verify the prisma directory exists and contains schema.prisma. Update .gitignore to ensure .env is not committed but .env.example is tracked for reference. Create .env.example with placeholder values for DATABASE_URL and DIRECT_URL.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify prisma directory exists with schema.prisma file. Confirm .env file contains DATABASE_URL placeholder. Run `npx prisma --version` to confirm Prisma CLI is working.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T00:24:20.162Z"
           },
           {
             "id": 2,
@@ -97,9 +98,10 @@
               1
             ],
             "details": "Replace the auto-generated schema.prisma content with the full schema:\n\n1. Configure generator for prisma-client-js\n2. Configure datasource for PostgreSQL with both pooled (DATABASE_URL) and direct (DIRECT_URL) connection strings for Vercel Postgres compatibility\n3. Define User model with uuid id, unique email, passwordHash, timestamps, and relations to Brand (one-to-one optional), Generation[] (one-to-many), and Session[] (one-to-many)\n4. Define Brand model with uuid id, unique userId foreign key, name, logoUrl (optional), color fields with defaults (primaryColor #000000, secondaryColor #ffffff, accentColor #3b82f6), voiceDescription (optional), industry with default 'other', timestamps, and User relation with onDelete Cascade\n5. Define ContentType enum with VIDEO and IMAGE values\n6. Define Generation model with uuid id, userId foreign key, prompt, contentType (enum), model, aspectRatio, duration (optional Int for videos), resolution, includeBrand boolean default false, createdAt timestamp, and User relation with onDelete Cascade\n7. Define Session model with uuid id, userId foreign key, unique token, expiresAt DateTime, createdAt timestamp, and User relation with onDelete Cascade",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `npx prisma validate` to check schema syntax is valid. Run `npx prisma format` to ensure proper formatting. Verify all relations are correctly defined by inspecting the generated types after running prisma generate.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T00:24:20.164Z"
           },
           {
             "id": 3,
@@ -109,9 +111,10 @@
               1
             ],
             "details": "Create the directory structure `src/lib/db/` and add `index.ts` with the Prisma client singleton:\n\n1. Import PrismaClient from @prisma/client\n2. Extend globalThis type to include optional prisma property for TypeScript support\n3. Create prisma instance: use existing global instance if available, otherwise instantiate new PrismaClient()\n4. In non-production environments, assign the instance to globalThis.prisma to persist across hot module reloads\n5. Export the prisma instance as named export\n\nThis pattern prevents the \"Too many Prisma clients\" warning during Next.js development by reusing the same client instance across hot reloads while creating fresh instances in production for proper connection pooling.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Import prisma from the module and verify it's a valid PrismaClient instance. In development, trigger a hot reload and confirm no 'Too many clients' warning appears. Test that the exported prisma object has expected methods like $connect, $disconnect, user, brand, generation, session.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T00:24:20.166Z"
           },
           {
             "id": 4,
@@ -122,14 +125,16 @@
               3
             ],
             "details": "1. In Vercel Dashboard:\n   - Navigate to Storage tab\n   - Click 'Create Database' and select 'Postgres'\n   - Choose region closest to expected users\n   - Copy the provided connection strings\n\n2. Configure environment variables:\n   - In .env.local (local development), set:\n     - DATABASE_URL = pooled connection string (includes ?pgbouncer=true)\n     - DIRECT_URL = direct connection string (for migrations)\n   - In Vercel project settings, add the same environment variables for production/preview\n\n3. Deploy schema to database:\n   - Run `npx prisma db push` to sync schema with database (creates tables)\n   - Run `npx prisma generate` to generate TypeScript client types\n\n4. Verify deployment:\n   - Run `npx prisma studio` to open database GUI\n   - Confirm all 4 tables (User, Brand, Generation, Session) exist with correct columns\n   - Verify ContentType enum is properly created",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Run `npx prisma db push` and verify it completes without errors. Run `npx prisma studio` and confirm all tables are visible with correct columns and relations. Test connection by running a simple script that creates a test user, queries it, then deletes it. Verify generated types exist in node_modules/.prisma/client.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T00:24:20.167Z"
           }
         ],
         "complexity": 5,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Break down the Prisma and database setup into subtasks covering: 1) Initializing Prisma with npx prisma init, 2) Writing the complete schema.prisma file with User, Brand, Generation, Session models and ContentType enum with proper relations, 3) Creating the Prisma client singleton in src/lib/db/index.ts with global caching for dev mode, 4) Provisioning Vercel Postgres and configuring DATABASE_URL/DIRECT_URL, 5) Running prisma db push and prisma generate to deploy schema"
+        "expansionPrompt": "Break down the Prisma and database setup into subtasks covering: 1) Initializing Prisma with npx prisma init, 2) Writing the complete schema.prisma file with User, Brand, Generation, Session models and ContentType enum with proper relations, 3) Creating the Prisma client singleton in src/lib/db/index.ts with global caching for dev mode, 4) Provisioning Vercel Postgres and configuring DATABASE_URL/DIRECT_URL, 5) Running prisma db push and prisma generate to deploy schema",
+        "updatedAt": "2025-12-13T00:24:20.167Z"
       },
       {
         "id": "3",
@@ -886,9 +891,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-12-12T23:38:27.688Z",
+      "lastModified": "2025-12-13T00:24:20.167Z",
       "taskCount": 12,
-      "completedCount": 1,
+      "completedCount": 2,
       "tags": [
         "master"
       ]

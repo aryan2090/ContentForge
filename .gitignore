@@ -55,3 +55,5 @@ next-env.d.ts
 # Logs
 logs
 *.log
+
+/src/generated/prisma
