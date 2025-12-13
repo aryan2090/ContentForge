@@ -28,8 +28,8 @@ export class AppError extends Error {
     return new AppError(message, 429, 'RATE_LIMIT')
   }
 
-  static internal(message = 'Internal server error') {
-    return new AppError(message, 500, 'INTERNAL_ERROR')
+  static internal(message = 'Internal server error', code = 'INTERNAL_ERROR') {
+    return new AppError(message, 500, code)
   }
 }
 

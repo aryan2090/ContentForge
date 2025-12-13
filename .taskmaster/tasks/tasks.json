@@ -514,7 +514,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -522,9 +522,10 @@
             "description": "Install the @google/generative-ai npm package and create the models configuration module with helper functions for video and image model selection.",
             "dependencies": [],
             "details": "1. Install the Google AI SDK:\n   ```bash\n   npm install @google/generative-ai\n   ```\n\n2. Create src/lib/ai/models.ts:\n   ```typescript\n   import { VIDEO_MODELS, IMAGE_MODELS } from '@/types/generation'\n\n   export { VIDEO_MODELS, IMAGE_MODELS }\n\n   export function getVideoModel(id: string) {\n     return VIDEO_MODELS.find(m => m.id === id) ?? VIDEO_MODELS[1] // default: veo-3.1-fast\n   }\n\n   export function getImageModel(id: string) {\n     return IMAGE_MODELS.find(m => m.id === id) ?? IMAGE_MODELS[1] // default: gemini-2.5-flash-image\n   }\n   ```\n\n3. Ensure GOOGLE_AI_API_KEY is documented in .env.example\n4. Export helper functions for use by Veo and Gemini Image clients",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test getVideoModel returns correct model for valid ID and default for invalid ID. Unit test getImageModel returns correct model for valid ID and default for invalid ID. Verify SDK installation by importing GoogleGenerativeAI.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.370Z"
           },
           {
             "id": 2,
@@ -534,9 +535,10 @@
               1
             ],
             "details": "1. Create src/lib/ai/veo.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateVideoInput } from '@/types/generation'\n   import { AppError } from '@/lib/utils'\n   import { getVideoModel } from './models'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface VideoGenerationResult {\n     videoUrl: string\n     durationSeconds: number\n   }\n\n   export async function generateVideo(\n     input: GenerateVideoInput,\n     brandContext?: string\n   ): Promise<VideoGenerationResult> {\n     const model = getVideoModel(input.model)\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n     \n     const genModel = genAI.getGenerativeModel({ model: model.id })\n     // Initiate async video generation operation\n     // Return operation ID for polling\n   }\n   ```\n\n2. Consult Google's Veo API documentation for exact request/response structure\n3. Handle model-specific configurations (aspect ratio, duration, resolution)\n4. Return operation handle for async polling",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateVideo constructs correct prompt with and without brand context. Test model selection passes correct model ID. Mock async operation initiation.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.372Z"
           },
           {
             "id": 3,
@@ -546,9 +548,10 @@
               2
             ],
             "details": "1. Add polling implementation to src/lib/ai/veo.ts:\n   ```typescript\n   async function pollForCompletion(\n     operation: any,\n     maxAttempts = 60,\n     initialDelayMs = 2000\n   ): Promise<VideoGenerationResult> {\n     let attempts = 0\n     let delay = initialDelayMs\n\n     while (attempts < maxAttempts) {\n       const status = await checkOperationStatus(operation)\n       \n       if (status.done) {\n         if (status.error) {\n           throw AppError.internal(`Video generation failed: ${status.error.message}`)\n         }\n         return {\n           videoUrl: status.result.videoUrl,\n           durationSeconds: status.result.duration\n         }\n       }\n\n       await sleep(delay)\n       delay = Math.min(delay * 1.5, 30000) // Cap at 30s\n       attempts++\n     }\n\n     throw AppError.internal('Video generation timed out')\n   }\n\n   function sleep(ms: number): Promise<void> {\n     return new Promise(resolve => setTimeout(resolve, ms))\n   }\n   ```\n\n2. Implement exponential backoff starting at 2s, capping at 30s\n3. Set reasonable timeout (60 attempts ~= 5-10 minutes max)\n4. Handle operation status responses per Google API docs",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test polling with mock operation that completes after N attempts. Test exponential backoff delay calculation. Test timeout throws AppError after max attempts. Test error status throws AppError with message.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.374Z"
           },
           {
             "id": 4,
@@ -558,9 +561,10 @@
               1
             ],
             "details": "1. Create src/lib/ai/gemini-image.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { GenerateImageInput } from '@/types/generation'\n   import { AppError } from '@/lib/utils'\n   import { getImageModel } from './models'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export interface ImageGenerationResult {\n     imageData: string // base64 encoded\n     mimeType: string\n   }\n\n   export async function generateImage(\n     input: GenerateImageInput,\n     brandContext?: string\n   ): Promise<ImageGenerationResult> {\n     const model = getImageModel(input.model)\n     const prompt = brandContext ? `${input.prompt}\\n\\nBrand context: ${brandContext}` : input.prompt\n\n     const genModel = genAI.getGenerativeModel({ model: model.id })\n     const result = await genModel.generateContent({\n       contents: [{ role: 'user', parts: [{ text: prompt }] }],\n       generationConfig: {\n         aspectRatio: input.aspectRatio,\n         resolution: input.resolution\n       }\n     })\n\n     const imageData = result.response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data\n     if (!imageData) {\n       throw AppError.internal('No image data in response')\n     }\n\n     return { imageData, mimeType: 'image/png' }\n   }\n   ```\n\n2. Handle aspect ratio and resolution configuration\n3. Extract base64 image data from response\n4. Validate response contains image data",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test with mocked GoogleGenerativeAI SDK. Test generateImage constructs correct prompt with and without brand context. Test model selection uses correct model ID. Test throws AppError when no image data in response.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.376Z"
           },
           {
             "id": 5,
@@ -570,9 +574,10 @@
               1
             ],
             "details": "1. Create src/lib/ai/prompt-enhancer.ts:\n   ```typescript\n   import { GoogleGenerativeAI } from '@google/generative-ai'\n   import { AppError } from '@/lib/utils'\n\n   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY!)\n\n   export async function enhancePrompt(\n     prompt: string,\n     brandContext?: string\n   ): Promise<string> {\n     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })\n\n     const systemPrompt = `You are a prompt engineer specializing in AI content generation.\nImprove the following prompt for ${brandContext ? 'brand-aligned' : ''} social media content generation.\nMake it more descriptive, specific, and likely to produce high-quality results.\nKeep the enhanced prompt under 500 characters.\n${brandContext ? `Brand context: ${brandContext}` : ''}`\n\n     try {\n       const result = await model.generateContent([\n         { role: 'user', parts: [{ text: `${systemPrompt}\\n\\nOriginal prompt: ${prompt}` }] }\n       ])\n       \n       const enhancedPrompt = result.response.text()\n       return enhancedPrompt || prompt // Fallback to original if empty\n     } catch (error) {\n       // Log error but return original prompt as fallback\n       console.error('Prompt enhancement failed:', error)\n       return prompt\n     }\n   }\n   ```\n\n2. Use Gemini 1.5 Flash for fast, cost-effective enhancement\n3. Gracefully fallback to original prompt on failure\n4. Respect 500 character limit in enhanced prompts",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test with mocked Gemini 1.5 Flash response. Test enhanced prompt is returned when successful. Test fallback to original prompt when API fails. Test brand context is included in system prompt when provided.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.378Z"
           },
           {
             "id": 6,
@@ -585,14 +590,16 @@
               5
             ],
             "details": "1. Create src/lib/ai/errors.ts for AI-specific error handling:\n   ```typescript\n   import { AppError } from '@/lib/utils'\n\n   export function handleGoogleAIError(error: unknown): never {\n     if (error instanceof Error) {\n       // Rate limit errors\n       if (error.message.includes('429') || error.message.includes('quota')) {\n         throw AppError.badRequest('AI service rate limit exceeded. Please try again later.', 'AI_RATE_LIMIT')\n       }\n       // Authentication errors\n       if (error.message.includes('401') || error.message.includes('API key')) {\n         throw AppError.internal('AI service authentication failed', 'AI_AUTH_ERROR')\n       }\n       // Content policy violations\n       if (error.message.includes('safety') || error.message.includes('blocked')) {\n         throw AppError.badRequest('Content was blocked by safety filters. Please modify your prompt.', 'AI_CONTENT_BLOCKED')\n       }\n       // Network/timeout errors\n       if (error.message.includes('timeout') || error.message.includes('ECONNRESET')) {\n         throw AppError.internal('AI service unavailable. Please try again.', 'AI_TIMEOUT')\n       }\n     }\n     throw AppError.internal('AI generation failed unexpectedly', 'AI_UNKNOWN_ERROR')\n   }\n   ```\n\n2. Wrap all API calls in try-catch with handleGoogleAIError\n3. Add request timeout configuration (30s for image, 5min for video polling)\n4. Log errors for monitoring while returning user-friendly messages\n5. Update veo.ts, gemini-image.ts, and prompt-enhancer.ts to use error handler",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test handleGoogleAIError maps rate limit errors correctly. Test authentication error mapping. Test content blocked error mapping. Test timeout error mapping. Test unknown errors get generic message. Integration test error handling with intentionally invalid API key.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T02:29:03.379Z"
           }
         ],
         "complexity": 8,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Break down AI API integration into subtasks covering: 1) Installing @google/generative-ai SDK and creating models config in src/lib/ai/models.ts with getVideoModel/getImageModel helpers, 2) Creating Veo client in src/lib/ai/veo.ts with generateVideo function handling multiple model variants, 3) Implementing async polling mechanism for video generation completion with exponential backoff and timeout handling, 4) Creating Gemini Image client in src/lib/ai/gemini-image.ts with generateImage function supporting both model variants, 5) Creating prompt enhancer in src/lib/ai/prompt-enhancer.ts using Gemini 1.5 Flash for prompt improvement, 6) Implementing comprehensive error handling for API failures, rate limits, and timeouts"
+        "expansionPrompt": "Break down AI API integration into subtasks covering: 1) Installing @google/generative-ai SDK and creating models config in src/lib/ai/models.ts with getVideoModel/getImageModel helpers, 2) Creating Veo client in src/lib/ai/veo.ts with generateVideo function handling multiple model variants, 3) Implementing async polling mechanism for video generation completion with exponential backoff and timeout handling, 4) Creating Gemini Image client in src/lib/ai/gemini-image.ts with generateImage function supporting both model variants, 5) Creating prompt enhancer in src/lib/ai/prompt-enhancer.ts using Gemini 1.5 Flash for prompt improvement, 6) Implementing comprehensive error handling for API failures, rate limits, and timeouts",
+        "updatedAt": "2025-12-13T02:29:03.379Z"
       },
       {
         "id": "9",
@@ -900,9 +907,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-12-13T01:57:24.440Z",
+      "lastModified": "2025-12-13T02:29:03.380Z",
       "taskCount": 12,
-      "completedCount": 4,
+      "completedCount": 5,
       "tags": [
         "master"
       ]
