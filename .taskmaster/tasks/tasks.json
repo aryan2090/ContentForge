@@ -146,7 +146,7 @@
         "dependencies": [
           "1"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -154,9 +154,10 @@
             "description": "Create src/types/auth.ts with Zod validation schemas for user authentication flows including registration, login, and password reset functionality.",
             "dependencies": [],
             "details": "Create src/types/auth.ts file with the following schemas:\n\n1. registerSchema - z.object with email (z.string().email()), password (z.string().min(8)), and confirmPassword (z.string()), using .refine() to validate password matching with error path on confirmPassword field\n\n2. loginSchema - z.object with email (z.string().email()) and password (z.string().min(1))\n\n3. passwordResetRequestSchema - z.object with just email (z.string().email())\n\n4. passwordResetSchema - z.object with token (z.string().min(1)), password (z.string().min(8)), and confirmPassword (z.string()), with .refine() for password matching\n\n5. Export inferred TypeScript types using z.infer<typeof schemaName> for RegisterInput, LoginInput, PasswordResetRequestInput, and PasswordResetInput",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Write unit tests validating: valid inputs pass validation, invalid emails are rejected, passwords under 8 chars fail, password mismatch triggers confirmPassword error, empty required fields fail validation",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:41:23.832Z"
           },
           {
             "id": 2,
@@ -166,9 +167,10 @@
               1
             ],
             "details": "Create src/types/brand.ts file with:\n\n1. Define hexColorRegex constant: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/\n\n2. brandSchema - z.object with:\n   - name: z.string().min(1).max(100)\n   - logoUrl: z.string().url().optional().nullable()\n   - primaryColor: z.string().regex(hexColorRegex).default('#000000')\n   - secondaryColor: z.string().regex(hexColorRegex).default('#ffffff')\n   - accentColor: z.string().regex(hexColorRegex).default('#3b82f6')\n   - voiceDescription: z.string().max(500).optional().nullable()\n   - industry: z.string().default('other')\n\n3. INDUSTRIES const array with 'as const' assertion: ['technology', 'retail', 'food', 'health', 'finance', 'education', 'entertainment', 'travel', 'fashion', 'other']\n\n4. Export BrandInput type using z.infer<typeof brandSchema>",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test valid hex colors (#fff, #ffffff, #ABC123), invalid hex colors (fff, #gggggg, #12345), brand name length limits, URL validation for logoUrl, and default values are applied correctly",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:41:23.834Z"
           },
           {
             "id": 3,
@@ -178,9 +180,10 @@
               1
             ],
             "details": "Create src/types/generation.ts file with:\n\n1. VIDEO_MODELS const array with 'as const':\n   - { id: 'veo-3.1', label: 'Veo 3.1 (Best quality)', price: 0.40, unit: '$/second' }\n   - { id: 'veo-3.1-fast', label: 'Veo 3.1 Fast', price: 0.15, unit: '$/second' }\n   - { id: 'veo-3', label: 'Veo 3', price: 0.40, unit: '$/second' }\n   - { id: 'veo-2', label: 'Veo 2 (Budget)', price: 0.35, unit: '$/second' }\n\n2. IMAGE_MODELS const array with pricing info\n\n3. generateVideoSchema - z.object with prompt, model (z.enum of model ids), aspectRatio (9:16, 16:9), duration (z.enum([4, 6, 8])), resolution, includeBrand boolean\n\n4. generateImageSchema - z.object with prompt, model, aspectRatio (includes 1:1), resolution (includes 2K, 4K), includeBrand\n\n5. getEstimatedCost(modelId: string, duration?: number): number function that looks up model pricing and calculates cost\n\n6. Export GenerateVideoInput and GenerateImageInput types",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test schema validation for all enum values, test getEstimatedCost returns correct prices for video (price * duration) and image models, test invalid model IDs return 0, verify TypeScript types infer correctly",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:41:23.836Z"
           },
           {
             "id": 4,
@@ -192,14 +195,16 @@
               3
             ],
             "details": "1. Create src/types/api.ts with:\n   - ApiResponse<T> discriminated union type:\n     | { success: true; data: T }\n     | { success: false; error: string }\n   \n   - PaginatedResponse<T> type with properties:\n     - data: T[]\n     - page: number\n     - pageSize: number\n     - total: number\n     - hasMore: boolean\n\n2. Create src/types/index.ts barrel export file:\n   - export * from './auth'\n   - export * from './brand'\n   - export * from './generation'\n   - export * from './api'\n\nThis enables clean imports like: import { loginSchema, brandSchema, ApiResponse } from '@/types'",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify TypeScript compiler accepts the generic types correctly, test that barrel exports work with import statements, verify discriminated union narrowing works with success property check",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:41:23.838Z"
           }
         ],
         "complexity": 4,
         "recommendedSubtasks": 4,
-        "expansionPrompt": "Break down the TypeScript types and Zod schemas into subtasks covering: 1) Creating auth schemas in src/types/auth.ts (registerSchema, loginSchema, passwordResetRequestSchema, passwordResetSchema with refinements for password matching), 2) Creating brand schemas in src/types/brand.ts (brandSchema with hex color regex, INDUSTRIES const), 3) Creating generation schemas in src/types/generation.ts (VIDEO_MODELS/IMAGE_MODELS arrays with pricing, generateVideoSchema, generateImageSchema, getEstimatedCost function), 4) Creating API response types in src/types/api.ts (ApiResponse<T>, PaginatedResponse<T>), 5) Creating barrel export in src/types/index.ts"
+        "expansionPrompt": "Break down the TypeScript types and Zod schemas into subtasks covering: 1) Creating auth schemas in src/types/auth.ts (registerSchema, loginSchema, passwordResetRequestSchema, passwordResetSchema with refinements for password matching), 2) Creating brand schemas in src/types/brand.ts (brandSchema with hex color regex, INDUSTRIES const), 3) Creating generation schemas in src/types/generation.ts (VIDEO_MODELS/IMAGE_MODELS arrays with pricing, generateVideoSchema, generateImageSchema, getEstimatedCost function), 4) Creating API response types in src/types/api.ts (ApiResponse<T>, PaginatedResponse<T>), 5) Creating barrel export in src/types/index.ts",
+        "updatedAt": "2025-12-13T01:41:23.838Z"
       },
       {
         "id": "4",
@@ -891,9 +896,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-12-13T00:24:20.167Z",
+      "lastModified": "2025-12-13T01:41:23.838Z",
       "taskCount": 12,
-      "completedCount": 2,
+      "completedCount": 3,
       "tags": [
         "master"
       ]
