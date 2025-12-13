@@ -216,7 +216,7 @@
         "dependencies": [
           "3"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -224,9 +224,10 @@
             "description": "Implement the custom AppError class extending Error with static factory methods for common HTTP error types, plus a handleError function for consistent error formatting.",
             "dependencies": [],
             "details": "Create src/lib/utils/errors.ts with:\n1. AppError class extending Error with constructor accepting message, statusCode (default 500), and optional code\n2. Set this.name = 'AppError' in constructor\n3. Implement static factory methods:\n   - badRequest(message, code?) - returns 400 error\n   - unauthorized(message = 'Unauthorized') - returns 401 with UNAUTHORIZED code\n   - forbidden(message = 'Forbidden') - returns 403 with FORBIDDEN code\n   - notFound(message = 'Not found') - returns 404 with NOT_FOUND code\n   - tooManyRequests(message = 'Too many requests') - returns 429 with RATE_LIMIT code\n   - internal(message = 'Internal server error') - returns 500 with INTERNAL_ERROR code\n4. Export handleError function that:\n   - Returns {message, statusCode, code} for AppError instances\n   - Logs and returns generic 500 error for standard Error instances\n   - Returns generic 500 error for unknown error types",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test each static factory method creates correct error type with proper statusCode and code. Test handleError returns proper format for AppError, generic Error, and unknown types. Verify console.error is called for unhandled errors.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:57:24.437Z"
           },
           {
             "id": 2,
@@ -236,9 +237,10 @@
               1
             ],
             "details": "Create src/lib/utils/validation.ts with:\n1. Import ZodSchema and ZodError from 'zod'\n2. Import AppError from './errors'\n3. Implement validateInput<T>(schema: ZodSchema<T>, data: unknown): T that:\n   - Calls schema.parse(data)\n   - Catches ZodError and transforms to AppError.badRequest with VALIDATION_ERROR code\n   - Formats error message by joining all error paths and messages\n   - Re-throws non-Zod errors unchanged\n4. Implement formatZodErrors(error: ZodError): Record<string, string> that:\n   - Iterates through error.errors\n   - Maps each error path (joined with '.') to its message\n   - Returns object for field-level error display",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test validateInput returns valid data for valid input. Test validateInput throws AppError with VALIDATION_ERROR code for invalid input. Test formatZodErrors correctly maps nested paths to messages. Test error message formatting includes field paths.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:57:24.439Z"
           },
           {
             "id": 3,
@@ -249,14 +251,16 @@
               2
             ],
             "details": "1. Create src/lib/utils/api.ts with:\n   - Import NextResponse from 'next/server'\n   - Import handleError from './errors'\n   - Implement successResponse<T>(data: T, status = 200) returning NextResponse.json({ success: true, data }, { status })\n   - Implement errorResponse(error: unknown) that uses handleError to extract error details and returns NextResponse.json({ success: false, error: message, code }, { status: statusCode })\n\n2. Create src/lib/utils/index.ts barrel export:\n   - Export * from './errors'\n   - Export * from './validation'\n   - Export * from './api'\n   - Export { cn } from './cn' (preserving existing shadcn utility)",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test successResponse returns correct JSON structure with success: true. Test errorResponse returns correct structure with success: false for AppError and generic errors. Test barrel export makes all utilities accessible from '@/lib/utils'. Verify cn export is preserved.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T01:57:24.440Z"
           }
         ],
         "complexity": 3,
         "recommendedSubtasks": 3,
-        "expansionPrompt": "Break down error handling utilities into subtasks covering: 1) Creating custom AppError class with static factory methods (badRequest, unauthorized, forbidden, notFound, tooManyRequests, internal) in src/lib/utils/errors.ts, 2) Creating validation helper with validateInput and formatZodErrors functions in src/lib/utils/validation.ts, 3) Creating API response helpers (successResponse, errorResponse) in src/lib/utils/api.ts using NextResponse, 4) Creating barrel export in src/lib/utils/index.ts"
+        "expansionPrompt": "Break down error handling utilities into subtasks covering: 1) Creating custom AppError class with static factory methods (badRequest, unauthorized, forbidden, notFound, tooManyRequests, internal) in src/lib/utils/errors.ts, 2) Creating validation helper with validateInput and formatZodErrors functions in src/lib/utils/validation.ts, 3) Creating API response helpers (successResponse, errorResponse) in src/lib/utils/api.ts using NextResponse, 4) Creating barrel export in src/lib/utils/index.ts",
+        "updatedAt": "2025-12-13T01:57:24.440Z"
       },
       {
         "id": "5",
@@ -896,9 +900,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-12-13T01:41:23.838Z",
+      "lastModified": "2025-12-13T01:57:24.440Z",
       "taskCount": 12,
-      "completedCount": 3,
+      "completedCount": 4,
       "tags": [
         "master"
       ]
