@@ -274,7 +274,7 @@
           "3",
           "4"
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -282,9 +282,10 @@
             "description": "Install the required packages (next-auth@beta and bcryptjs) and set up all necessary environment variables for authentication including NEXTAUTH_SECRET and NEXTAUTH_URL.",
             "dependencies": [],
             "details": "Run `npm install next-auth@beta bcryptjs` and `npm install -D @types/bcryptjs`. Add environment variables to .env.local: NEXTAUTH_SECRET (generate with `openssl rand -base64 32`), NEXTAUTH_URL (http://localhost:3000 for development). The NEXTAUTH_SECRET is critical for JWT encryption and session security. Update .env.example to document required auth variables without exposing actual values.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify packages are installed by checking package.json. Ensure TypeScript types resolve correctly. Test that environment variables are accessible via process.env in a simple test file.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.129Z"
           },
           {
             "id": 2,
@@ -294,9 +295,10 @@
               1
             ],
             "details": "Create src/lib/auth/password.ts with two exported async functions: hashPassword(password: string) that uses bcrypt.hash with SALT_ROUNDS=12 (balance of security and performance), and verifyPassword(password: string, hash: string) that uses bcrypt.compare. Use a constant for salt rounds to make it configurable. Both functions should be async as bcrypt operations are CPU-intensive and should not block the event loop. Export types for function signatures.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit test that hashPassword produces valid bcrypt hash format. Test that same password produces different hashes (salt working). Test verifyPassword returns true for correct password and false for incorrect. Test with edge cases: empty strings, very long passwords, special characters.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.130Z"
           },
           {
             "id": 3,
@@ -306,9 +308,10 @@
               2
             ],
             "details": "Create src/lib/auth/index.ts exporting { handlers, signIn, signOut, auth } from NextAuth(). Configure Credentials provider with email/password fields and authorize callback that: 1) Validates input with loginSchema from @/types/auth, 2) Queries user by email via Prisma, 3) Verifies password using verifyPassword utility, 4) Returns user object {id, email} or null. Implement jwt callback to add user.id to token, session callback to expose user.id in session.user. Set pages.signIn to '/login' for custom login page redirect. Handle TypeScript module augmentation for extended session types.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Integration test that authorize returns null for invalid credentials. Test that authorize returns user object for valid credentials. Test jwt callback properly adds id to token. Test session callback exposes id in session.user. Verify custom signIn page redirect works.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.132Z"
           },
           {
             "id": 4,
@@ -318,9 +321,10 @@
               3
             ],
             "details": "Create the directory structure src/app/api/auth/[...nextauth]/ and add route.ts file. Import { handlers } from '@/lib/auth' and re-export as { GET, POST }. This catch-all route handles all NextAuth endpoints: /api/auth/signin, /api/auth/signout, /api/auth/callback/credentials, /api/auth/session, /api/auth/csrf. The [...nextauth] dynamic segment captures all auth-related paths. Ensure the file uses the App Router format with named exports for HTTP methods.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test GET /api/auth/session returns session or null. Test POST /api/auth/callback/credentials with valid credentials creates session. Test CSRF token endpoint returns valid token. Test sign-out clears session cookie.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.134Z"
           },
           {
             "id": 5,
@@ -330,9 +334,10 @@
               2
             ],
             "details": "Create src/app/api/auth/register/route.ts with POST handler. Parse request body as JSON, validate with registerSchema (from @/types/auth) using validateInput utility. Check for existing user with same email via prisma.user.findUnique - throw AppError.badRequest('Email already registered') if found. Hash password using hashPassword utility. Create user with prisma.user.create including email and passwordHash fields, selecting only id and email in response. Return successResponse with 201 status. Wrap in try-catch using errorResponse for error handling. Consider rate limiting for production.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Integration test successful registration creates user in database. Test registration rejects duplicate email with 400 status. Test registration validates email format and password requirements. Test response excludes sensitive data (passwordHash). Test malformed JSON returns appropriate error.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.135Z"
           },
           {
             "id": 6,
@@ -343,14 +348,16 @@
               4
             ],
             "details": "Create src/lib/auth/session.ts with: 1) getSession wrapped in React cache() for request deduplication - calls auth() from NextAuth config, 2) requireAuth async function that calls getSession, throws Error('Unauthorized') if no session.user, returns session.user otherwise. Create src/middleware.ts that re-exports auth as middleware from '@/lib/auth'. Configure matcher array to protect routes: '/dashboard/:path*', '/generate/:path*', '/brand/:path*', '/history/:path*'. The middleware will automatically redirect unauthenticated users to the signIn page configured in NextAuth.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test getSession returns null for unauthenticated requests. Test getSession returns session for authenticated requests. Test requireAuth throws for unauthenticated. Test middleware redirects unauthenticated users from protected routes to /login. Test middleware allows authenticated users through. Test unprotected routes remain accessible.",
-            "parentId": "undefined"
+            "parentId": "undefined",
+            "updatedAt": "2025-12-13T16:03:02.136Z"
           }
         ],
         "complexity": 7,
         "recommendedSubtasks": 6,
-        "expansionPrompt": "Break down the authentication system into subtasks covering: 1) Installing next-auth@beta and configuring environment variables, 2) Creating password utilities (hashPassword, verifyPassword) with bcryptjs in src/lib/auth/password.ts, 3) Creating NextAuth configuration with Credentials provider in src/lib/auth/index.ts including jwt and session callbacks, 4) Creating the auth route handler in src/app/api/auth/[...nextauth]/route.ts, 5) Creating the registration endpoint in src/app/api/auth/register/route.ts with validation and duplicate email checking, 6) Creating session helper utilities (getSession, requireAuth) in src/lib/auth/session.ts with React cache, 7) Implementing middleware.ts for protected route matching"
+        "expansionPrompt": "Break down the authentication system into subtasks covering: 1) Installing next-auth@beta and configuring environment variables, 2) Creating password utilities (hashPassword, verifyPassword) with bcryptjs in src/lib/auth/password.ts, 3) Creating NextAuth configuration with Credentials provider in src/lib/auth/index.ts including jwt and session callbacks, 4) Creating the auth route handler in src/app/api/auth/[...nextauth]/route.ts, 5) Creating the registration endpoint in src/app/api/auth/register/route.ts with validation and duplicate email checking, 6) Creating session helper utilities (getSession, requireAuth) in src/lib/auth/session.ts with React cache, 7) Implementing middleware.ts for protected route matching",
+        "updatedAt": "2025-12-13T16:03:02.136Z"
       },
       {
         "id": "6",
@@ -907,9 +914,9 @@
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-12-13T02:29:03.380Z",
+      "lastModified": "2025-12-13T16:03:02.137Z",
       "taskCount": 12,
-      "completedCount": 5,
+      "completedCount": 6,
       "tags": [
         "master"
       ]
